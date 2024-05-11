@@ -1,10 +1,10 @@
 {
-    "appName": "Share-a-review Community",
+    "appName": "Share-A-Review Community",
     "menu": {
         "home": "Accueil",
         "top5": "Top 5",
         "myPlaylists": "Mes listes de lecture",
-        "applicationName": "Share-a-review Home page",
+        "applicationName": "Share-A-Review Home page",
         "changelog": "Change log",
         "changeThemeMode": "Changer le thème"
     },
@@ -26,8 +26,8 @@
         "signIn": "Connexion",
         "search": "Rechercher",
         "switchLanguage": "{{lang}}",
-        "account": "Mon compte Share-a-review",
-        "profile": "Mon profil Share-a-review"
+        "account": "Mon compte Share-A-Review",
+        "profile": "Mon profil Share-A-Review"
     },
     "dataGrid": {
         "search": {
