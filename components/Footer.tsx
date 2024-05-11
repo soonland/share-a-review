@@ -15,7 +15,13 @@ const StyledFooter = styled(Box)(({ theme }) => ({
 const Footer: FC = (): ReactElement => {
   const versionNumber = process.env.NEXT_PUBLIC_BUILD_TIMESTAMP ?? "local";
   return (
-    <StyledFooter sx={{ flexGrow: 1 }} alignContent={"center"} alignItems={"center"} textAlign={"center"}>
+    <StyledFooter
+      sx={{ flexGrow: 1 }}
+      alignContent={"center"}
+      alignItems={"center"}
+      textAlign={"center"}
+      data-testid="testid.footer"
+    >
       <Typography variant={"body2"}>© {new Date().getFullYear()}</Typography>
       <Typography variant={"body2"}>{versionNumber}</Typography>
     </StyledFooter>
