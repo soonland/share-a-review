@@ -1,10 +1,10 @@
 {
-    "appName": "Share-a-review Community",
+    "appName": "Share-A-Review Community",
     "menu": {
         "home": "Home",
         "top5": "Top 5",
         "myPlaylists": "My Playlists",
-        "applicationName": "Share-a-review Home page",
+        "applicationName": "Share-A-Review Home page",
         "changelog": "Change Log",
         "changeThemeMode": "Change Theme Mode"
     },
@@ -18,8 +18,8 @@
         "signIn": "Sign in",
         "search": "Search",
         "switchLanguage": "{{lang}}",
-        "account": "My Share-a-review Account",
-        "profile": "My Share-a-review Profile"
+        "account": "My Share-A-Review Account",
+        "profile": "My Share-A-Review Profile"
     },
     "queue": {
         "queue": "Queue ({{count}})",

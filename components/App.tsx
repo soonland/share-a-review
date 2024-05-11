@@ -13,7 +13,7 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>Spotify App</title>
+        <title>Share-A-Review App</title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
