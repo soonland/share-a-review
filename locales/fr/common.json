@@ -1,0 +1,66 @@
+{
+    "appName": "Share-a-review Community",
+    "menu": {
+        "home": "Accueil",
+        "top5": "Top 5",
+        "myPlaylists": "Mes listes de lecture",
+        "applicationName": "Share-a-review Home page",
+        "changelog": "Change log",
+        "changeThemeMode": "Changer le thème"
+    },
+    "queue": {
+        "queue": "File d'attente ({{count}})",
+        "artistName": "Artiste",
+        "albumName": "Album",
+        "trackName": "Chanson",
+        "listen": "Ecouter",
+        "remove": "Supprimer"
+    },
+    "common": {
+        "loading": "Chargement ...",
+        "error": "Erreur",
+        "noDataFound": "Aucune donnée trouvée",
+        "notSignedIn": "Vous n'êtes pas connecté",
+        "signedInAs": "Connecté en tant que {{name}}",
+        "signOut": "Déconnexion",
+        "signIn": "Connexion",
+        "search": "Rechercher",
+        "switchLanguage": "{{lang}}",
+        "account": "Mon compte Share-a-review",
+        "profile": "Mon profil Share-a-review"
+    },
+    "dataGrid": {
+        "search": {
+            "type": "Type",
+            "artistName": "Artiste",
+            "albumName": "Album",
+            "trackName": "Chanson",
+            "imgCover": "Couverture",
+            "spotifyLink": "Spotify",
+            "recommandationLink": "Recommandation",
+            "addToPlaylist": "Ajouter à la file d'attente"
+        },
+        "rows": {
+            "type": {
+                "artist": "Artiste",
+                "album": "Album",
+                "track": "Chanson",
+                "playlist": "Liste de lecture"
+            },
+            "track": {
+                "trackName": "Chanson",
+                "trackDuration": "Durée",
+                "trackPreview": "Prévisualisation"
+            }
+        }
+    },
+    "search": {
+        "search": "Rechercher",
+        "searchArtist": "Rechercher un artiste",
+        "searchAlbum": "Rechercher un album",
+        "searchTrack": "Rechercher une chanson",
+        "searchPlaylist": "Rechercher une liste de lecture",
+        "searchButton": "Rechercher",
+        "searchPlaceholder": "Rechercher ..."
+    }
+}
