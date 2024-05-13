@@ -2,8 +2,8 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { useSession } from "next-auth/react";
 
-import { mockSessionAuth, mockSessionUnAuth } from "./mockData";
 import { IThemeContext, ThemeContext } from "../context/ThemeProvider";
+import { mockSessionAuth, mockSessionUnAuth } from "../mockData";
 import TopMenuBar from "../TopMenuBar";
 
 jest.mock("next-auth/react");
