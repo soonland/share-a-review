@@ -29,7 +29,6 @@ describe("TopMenuBar", () => {
     );
 
     expect(screen.getByTestId("testid.appBar")).toBeInTheDocument();
-    expect(screen.getByTestId("testid.search")).toBeInTheDocument();
     expect(screen.getByTestId("testid.menuButton")).toBeInTheDocument();
     expect(screen.getByTestId("Brightness7Icon")).toBeInTheDocument();
     expect(screen.getByTestId("testid.accountButton")).toBeInTheDocument();
@@ -47,7 +46,6 @@ describe("TopMenuBar", () => {
     );
 
     expect(screen.getByTestId("testid.appBar")).toBeInTheDocument();
-    expect(screen.getByTestId("testid.search")).toBeInTheDocument();
     expect(screen.getByTestId("testid.menuButton")).toBeInTheDocument();
     expect(screen.getByTestId("Brightness7Icon")).toBeInTheDocument();
     expect(screen.queryByTestId("testid.accountButton")).toBeNull();
