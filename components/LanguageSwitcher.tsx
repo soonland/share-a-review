@@ -23,7 +23,7 @@ const LanguageSwitcher: FC = () => {
   };
 
   return (
-    <MenuItem onClick={handleLanguageSwitch}>
+    <MenuItem onClick={handleLanguageSwitch} data-testid="testid.menu.languageSwitcher">
       {switchTo.toUpperCase()}
       <Language fontSize="small" sx={{ mr: 1 }} />
     </MenuItem>

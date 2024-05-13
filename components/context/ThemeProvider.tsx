@@ -33,7 +33,6 @@ export const ThemeProvider = ({ children }) => {
   const context = useMemo(() => {
     // Function to add an item to the queue
     const dark = (isDark: string) => {
-      console.log("isDark", isDark);
       setIsDark(isDark);
     };
     return { dark, isDark };
