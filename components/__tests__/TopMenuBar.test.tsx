@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { useSession } from "next-auth/react";
 
+import { mockSessionAuth, mockSessionUnAuth } from "./mockData";
 import { IThemeContext, ThemeContext } from "../context/ThemeProvider";
 import TopMenuBar from "../TopMenuBar";
 
@@ -9,37 +10,6 @@ jest.mock("next-auth/react");
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
-const mockSessionAuth = {
-  expires: new Date(Date.now() + 2 * 86400).toISOString(),
-  status: "authenticated",
-  data: {
-    user: {
-      name: "test",
-      image: {
-        src: "/img.jpg",
-        height: 24,
-        width: 24,
-        blurDataURL: "data:image/png;base64,imagedata",
-      },
-    },
-  },
-};
-
-const mockSessionUnAuth = {
-  expires: new Date(Date.now() + 2 * 86400).toISOString(),
-  status: "unauthenticated",
-  data: {
-    user: {
-      name: "test",
-      image: {
-        src: "/img.jpg",
-        height: 24,
-        width: 24,
-        blurDataURL: "data:image/png;base64,imagedata",
-      },
-    },
-  },
-};
 
 describe("TopMenuBar", () => {
   beforeEach(() => {
