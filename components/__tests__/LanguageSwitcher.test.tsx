@@ -13,13 +13,13 @@ describe("LanguageSwitcher", () => {
     jest.mock("next/navigation", () => ({
       usePathname: jest.fn(() => "/"),
     }));
-  });
-  it("renders a LanguageSwitcher - EN -> FR", async () => {
-    (useTranslation as jest.Mock).mockReturnValue({ lang: "en" });
     Object.defineProperty(window, "location", {
       value: new URL("http://example.com"),
       configurable: true,
     });
+  });
+  it("renders a LanguageSwitcher - EN -> FR", async () => {
+    (useTranslation as jest.Mock).mockReturnValue({ lang: "en" });
     render(<LanguageSwitcher />);
 
     const langSwitcher = screen.getByTestId("testid.menu.languageSwitcher");
@@ -32,10 +32,7 @@ describe("LanguageSwitcher", () => {
 
   it("renders a LanguageSwitcher - FR -> EN", async () => {
     (useTranslation as jest.Mock).mockReturnValue({ lang: "fr" });
-    Object.defineProperty(window, "location", {
-      value: new URL("http://example.com"),
-      configurable: true,
-    });
+
     render(<LanguageSwitcher />);
 
     const langSwitcher = screen.getByTestId("testid.menu.languageSwitcher");
