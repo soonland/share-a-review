@@ -11,7 +11,6 @@ import useTranslation from "next-translate/useTranslation";
 import { FC, ReactElement } from "react";
 
 import ChangeThemeMode from "./ChangeThemeMode";
-import Search from "./Search";
 import UserMenu from "./UserMenu";
 
 const TopMenuBar: FC = (): ReactElement => {
@@ -47,7 +46,6 @@ const TopMenuBar: FC = (): ReactElement => {
             {t("appName")}
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Search />
           {session.status === "authenticated" && <UserMenu />}
           <ChangeThemeMode />
         </Toolbar>
