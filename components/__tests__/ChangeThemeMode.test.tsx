@@ -21,12 +21,12 @@ describe("ChangeThemeMode", () => {
       </ThemeContext.Provider>,
     );
 
-    let changeThemeMode = screen.getByTestId("testid.changeThemeMode");
+    const changeThemeMode = screen.getByTestId("testid.changeThemeMode");
     expect(changeThemeMode).toBeInTheDocument();
     expect(changeThemeMode).toHaveAttribute("title", "menu.changeThemeMode");
     expect(screen.getByTestId("Brightness7Icon")).toBeInTheDocument();
     await userEvent.click(changeThemeMode);
-    changeThemeMode = screen.getByTestId("testid.changeThemeMode");
+
     expect(context.dark).toHaveBeenCalledTimes(1);
     expect(context.dark).toHaveBeenCalledWith("dark");
   });
@@ -42,12 +42,10 @@ describe("ChangeThemeMode", () => {
       </ThemeContext.Provider>,
     );
 
-    let changeThemeMode = screen.getByTestId("testid.changeThemeMode");
-    expect(changeThemeMode).toBeInTheDocument();
-    expect(changeThemeMode).toHaveAttribute("title", "menu.changeThemeMode");
+    const changeThemeMode = screen.getByTestId("testid.changeThemeMode");
     expect(screen.getByTestId("Brightness4Icon")).toBeInTheDocument();
     await userEvent.click(changeThemeMode);
-    changeThemeMode = screen.getByTestId("testid.changeThemeMode");
+
     expect(context.dark).toHaveBeenCalledTimes(1);
     expect(context.dark).toHaveBeenCalledWith("light");
   });
