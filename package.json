@@ -11,7 +11,7 @@
     "prepare": "husky",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage && open coverage/index.html"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
