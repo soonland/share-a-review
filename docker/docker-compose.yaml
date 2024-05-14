@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      # Host:Container
+      # 5432 is the default port for PostgreSQL
+      # Left side is the host machine port, right side is the container port
+      - 5432:5432
+    volumes:
+      - ~/DockerData/pg:/var/lib/postgresql/data
+    environment:
+      # Syntax for environment variables: VARIABLE_NAME=VALUE
+      # ${VARIABLE_NAME:-DEFAULT_VALUE} is used to set a default value
+      # if the environment variable is not set
+      # POSTGRES_DB: Database name
+      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      # POSTGRES_PASSWORD: Database password
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      # POSTGRES_USER: Database user
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      # PGDATA: Database data directory
+      - PGDATA=/var/lib/postgresql/data
+    networks:
+      - postgres-db-network
+
+  pgadmin4:
+    image: dpage/pgadmin4
+    restart: always
+    # Override the default entrypoint to copy the pgpass file
+    entrypoint: >
+      /bin/sh -c "
+      cp -f /pgadmin4/pgpass /var/lib/pgadmin/;
+      chmod 600 /var/lib/pgadmin/pgpass;
+      chown pgadmin:pgadmin /var/lib/pgadmin/pgpass;
+      /entrypoint.sh
+      "
+    environment:
+      # Syntax for environment variables: VARIABLE_NAME=VALUE
+      # ${VARIABLE_NAME:-DEFAULT_VALUE} is used to set a default value
+      # if the environment variable is not set
+      # PGADMIN_DEFAULT_EMAIL: Default email for pgAdmin4
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
+      # PGADMIN_DEFAULT_PASSWORD: Default password for pgAdmin4
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-admin}
+      # PGADMIN_LISTEN_PORT: Port on which pgAdmin4 will listen
+      - PGADMIN_LISTEN_PORT=8080
+      # PGPASSFILE: Path to the pgpass file
+      - PGPASSFILE=/var/lib/pgadmin/pgpass
+    ports:
+      # Host:Container
+      # 8080 is the default port for pgAdmin4
+      # Left side is the host machine port, right side is the container port
+      - 8080:8080
+    volumes:
+      # Mount the servers.json file to the container
+      # This file contains the list of servers that pgAdmin4 will connect to
+      - ./pgpass:/pgadmin4/pgpass
+      # Mount the pgpass file to the container
+      # This file contains the password for the PostgreSQL server
+      - ./servers.json:/pgadmin4/servers.json
+    networks:
+        - postgres-db-network
+
+networks:
+    postgres-db-network:
+        driver: bridge

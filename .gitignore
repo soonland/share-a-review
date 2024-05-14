@@ -37,3 +37,10 @@ next-env.d.ts
 
 # TrelloKanbanBoard extension
 .tkb
+
+# pgpass file
+# This file contains the password for PostgreSQL user, and should not be included in the repository.
+pgpass
+
+# local server config
+servers.json
