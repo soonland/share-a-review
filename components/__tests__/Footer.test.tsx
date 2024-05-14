@@ -10,11 +10,22 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
 }));
 
-describe("Footer", () => {
-  it("renders a Footer", async () => {
+describe("Footer component", () => {
+  it("renders correctly", () => {
     render(<Footer />);
+    const footerElement = screen.getByTestId("testid.footer");
+    expect(footerElement).toBeInTheDocument();
+  });
 
-    const footer = screen.getByTestId("testid.footer");
-    expect(footer).toBeInTheDocument();
+  it("displays the current year", () => {
+    const { getByText } = render(<Footer />);
+    const currentYear = new Date().getFullYear().toString();
+    expect(getByText(`© ${currentYear}`)).toBeInTheDocument();
+  });
+
+  it("displays the version number", () => {
+    process.env.NEXT_PUBLIC_BUILD_TIMESTAMP = "2024-05-13T12:00:00Z"; // Mocking the version number
+    const { getByText } = render(<Footer />);
+    expect(getByText("2024-05-13T12:00:00Z")).toBeInTheDocument();
   });
 });
