@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "share-a-review",
+      "Group": "soonland",
+      "Host": "[host]",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "[username from POSTGRES_DB env]",
+      "PassFile": "/var/lib/pgadmin/pgpass",
+      "SSLMode": "prefer"
+    }
+  }
+}

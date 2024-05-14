@@ -1,0 +1,15 @@
+# Values should be copied into "pgpass" file
+# services:
+#   postgres: <- host
+#     image: postgres:latest
+#     ports:
+#       - 5432:5432 <- port: format is local_port:remote_port, should used local_port
+#     volumes:
+#       - ~/DockerData/pg:/var/lib/postgresql/data
+#     environment:
+#       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres} <- password: should used the appropriate value
+#       - POSTGRES_USER=${POSTGRES_USER:-postgres} <- username: should used the appropriate value
+#       - PGDATA=/var/lib/postgresql/data
+#     networks:
+#       - postgres-db-network
+host:5432:database:username:password
