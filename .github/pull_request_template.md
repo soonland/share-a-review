@@ -10,7 +10,10 @@ This pull request addresses key issues and introduces enhancements to our codeba
 - [ ] Ensured code adherence to standards.
 
 ## Testing
-Thorough testing has been conducted to validate the integrity of the code.
+- [ ] Updated Jest Tests if required
+- [ ] Executed Jest Tests
+- [ ] Updated Cypress if required
+- [ ] Executed Cypress Tests
 
 ## Additional Remarks
 Your feedback and review are greatly appreciated.
