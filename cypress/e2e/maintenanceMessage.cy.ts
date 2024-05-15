@@ -1,15 +1,13 @@
 describe("Test for maintenance message", () => {
   context("When maintenanceMode is true", () => {
     beforeEach(() => {
-      cy.intercept("GET", "http://localhost:3000/api/maintenance", (req) => {
-        req.reply({
-          statusCode: 200,
-          body: {
-            maintenanceMode: "true",
-          },
-        });
+      cy.intercept("GET", "/api/maintenance", {
+        statusCode: 200,
+        body: {
+          maintenanceMode: "true",
+        },
       });
-      cy.visit("http://localhost:3000");
+      cy.visit("/");
     });
 
     it("Check if the maintenance message is displayed", () => {
@@ -19,15 +17,13 @@ describe("Test for maintenance message", () => {
 
   context("When maintenanceMode is false", () => {
     beforeEach(() => {
-      cy.intercept("GET", "http://localhost:3000/api/maintenance", (req) => {
-        req.reply({
-          statusCode: 200,
-          body: {
-            maintenanceMode: "false",
-          },
-        });
+      cy.intercept("GET", "/api/maintenance", {
+        statusCode: 200,
+        body: {
+          maintenanceMode: "true",
+        },
       });
-      cy.visit("http://localhost:3000");
+      cy.visit("/");
     });
 
     it("Check if the maintenance message is not displayed", () => {
