@@ -7,13 +7,6 @@
     "pages": {
         "*": [
             "common"
-        ],
-        "/": [
-            "home",
-            "example"
-        ],
-        "/about": [
-            "about"
         ]
     }
 }
