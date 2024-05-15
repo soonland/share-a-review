@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Head from "next/head";
+import useSWR from "swr";
 
 import Footer from "@/components/Footer";
 import TopMenuBar from "@/components/TopMenuBar";
@@ -10,6 +11,12 @@ import TopMenuBar from "@/components/TopMenuBar";
 import MyProfile from "./MyProfile";
 
 const App = ({ Component, pageProps }) => {
+  const fetcher = async (url: string) => {
+    const res = await fetch(`${url}`);
+    return await res.json();
+  };
+  const { data: { maintenanceMode } = { maintenanceMode: "false" } } = useSWR("/api/maintenance", fetcher);
+
   return (
     <>
       <Head>
@@ -18,9 +25,8 @@ const App = ({ Component, pageProps }) => {
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <CssBaseline />
-      {process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true" && (
+      {maintenanceMode === "true" && (
         <Backdrop sx={{ zIndex: 1200 }} open={true}>
-          {" "}
           <Box
             bgcolor={"error.main"}
             color={"warning.contrastText"}
