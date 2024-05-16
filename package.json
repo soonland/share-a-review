@@ -12,7 +12,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage && open coverage/index.html",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open -C cypress/config/cypress.config.local.ts",
+    "cy:run": "cypress run -C cypress/config/cypress.config.local.ts",
+    "cy:open:dev": "cypress open -C cypress/config/cypress.config.dev.ts",
+    "cy:run:dev": "cypress run -C cypress/config/cypress.config.dev.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
