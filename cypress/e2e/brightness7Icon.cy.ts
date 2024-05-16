@@ -1,13 +1,19 @@
-describe("Test for the presence of the Brightness icon", () => {
-  it("Check the presence of the Brightness7 icon", () => {
-    cy.visit("http://localhost:3000");
+describe("Test for Brightness7Icon", () => {
+  beforeEach(() => {
+    cy.intercept("GET", "/api/maintenance", {
+      statusCode: 200,
+      body: {
+        maintenanceMode: "false",
+      },
+    });
+    cy.visit("/");
+  });
+
+  it("Check if Brightness7Icon exist", () => {
     cy.get('[data-testid="Brightness7Icon"]').should("exist");
   });
-});
 
-describe("Test for theme change", () => {
-  it("Verify theme change", () => {
-    cy.visit("http://localhost:3000");
+  it("Verify theme change from Light to Dark and Dark to Light", () => {
     cy.get('[data-testid="Brightness7Icon"]')
       .should("exist")
       .then(() => {
