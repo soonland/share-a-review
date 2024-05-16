@@ -44,3 +44,11 @@ pgpass
 
 # local server config
 servers.json
+
+# Cypress specific
+cypress/screenshots/
+cypress/videos/
+cypress/reports/
+cypress/logs/
+cypress/results/
+cypress/coverage/
