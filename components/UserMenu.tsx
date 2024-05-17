@@ -1,12 +1,18 @@
 import { AccountCircle, Logout, ManageAccounts } from "@mui/icons-material";
-import { IconButton, Menu, MenuItem } from "@mui/material";
-import { signOut } from "next-auth/react";
+import { Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
+import { signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, ReactElement, FC } from "react";
 
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const UserMenu = () => {
+interface UserMenuProps {
+  sx?: SxProps<Theme>;
+}
+
+const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
+  const session = useSession();
   const { t } = useTranslation("common");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -27,8 +33,8 @@ const UserMenu = () => {
   };
 
   return (
-    <>
-      <IconButton edge="end" onClick={handleClick} data-testid="testid.accountButton" sx={{ ml: 1 }}>
+    <Box sx={sx}>
+      <IconButton edge="end" onClick={handleClick} data-testid="testid.menu.accountButton" sx={{ ml: 1 }}>
         <AccountCircle htmlColor="white" />
       </IconButton>
       <Menu
@@ -45,21 +51,28 @@ const UserMenu = () => {
           "& .MuiSvgIcon-root": { marginLeft: 1 },
         }}
       >
-        <MenuItem onClick={openMyAccount} data-testid="testid.account">
-          {t("common.account")}
+        <MenuItem onClick={openMyAccount} data-testid="testid.menu.account">
+          {t("userMenu.account")}
           <ManageAccounts fontSize="small" sx={{ mr: 1 }} />
         </MenuItem>
-        <MenuItem onClick={openMyProfile} data-testid="testid.profile">
-          {t("common.profile")}
+        <MenuItem onClick={openMyProfile} data-testid="testid.menu.profile">
+          {t("userMenu.profile")}
           <AccountCircle fontSize="small" sx={{ mr: 1 }} />
         </MenuItem>
         <LanguageSwitcher />
-        <MenuItem onClick={() => signOut()} data-testid="testid.logout">
-          {t("common.signOut")}
-          <Logout fontSize="small" sx={{ mr: 1 }} />
-        </MenuItem>
+        {session.status === "authenticated" ? (
+          <MenuItem onClick={() => signOut()} data-testid="testid.menu.signOut">
+            {t("userMenu.signOut")}
+            <Logout fontSize="small" sx={{ mr: 1 }} />
+          </MenuItem>
+        ) : (
+          <MenuItem onClick={() => signIn()} data-testid="testid.menu.signIn">
+            {t("userMenu.signIn")}
+            <Logout fontSize="small" sx={{ mr: 1 }} />
+          </MenuItem>
+        )}
       </Menu>
-    </>
+    </Box>
   );
 };
 

@@ -23,7 +23,7 @@ describe("ChangeThemeMode", () => {
 
     const changeThemeMode = screen.getByTestId("testid.changeThemeMode");
     expect(changeThemeMode).toBeInTheDocument();
-    expect(changeThemeMode).toHaveAttribute("title", "menu.changeThemeMode");
+    expect(changeThemeMode).toHaveAttribute("title", "common.changeThemeMode");
     expect(screen.getByTestId("Brightness7Icon")).toBeInTheDocument();
     await userEvent.click(changeThemeMode);
 

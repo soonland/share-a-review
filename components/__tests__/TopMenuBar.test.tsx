@@ -31,9 +31,10 @@ describe("TopMenuBar", () => {
     expect(screen.getByTestId("testid.appBar")).toBeInTheDocument();
     expect(screen.getByTestId("testid.menuButton")).toBeInTheDocument();
     expect(screen.getByTestId("Brightness7Icon")).toBeInTheDocument();
-    expect(screen.getByTestId("testid.accountButton")).toBeInTheDocument();
+    expect(screen.getByTestId("testid.menu.accountButton")).toBeInTheDocument();
   });
-  it("renders a TopMenuBar - LIGHT -> DARK", async () => {
+
+  it("renders a TopMenuBar - Unauthenticated", async () => {
     const context: IThemeContext = {
       dark: jest.fn(),
       isDark: "light",
@@ -48,6 +49,6 @@ describe("TopMenuBar", () => {
     expect(screen.getByTestId("testid.appBar")).toBeInTheDocument();
     expect(screen.getByTestId("testid.menuButton")).toBeInTheDocument();
     expect(screen.getByTestId("Brightness7Icon")).toBeInTheDocument();
-    expect(screen.queryByTestId("testid.accountButton")).toBeNull();
+    expect(screen.queryByTestId("testid.menu.accountButton")).toBeInTheDocument();
   });
 });
