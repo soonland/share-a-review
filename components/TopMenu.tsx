@@ -12,8 +12,6 @@ interface TopMenuItemProps {
   title: string;
   icon?: ReactElement;
   subMenus?: { id: string; title: string }[];
-  handleOpen: (anchorEl: HTMLElement | null) => void;
-  open: boolean;
 }
 
 const TopMenuItem: FC<TopMenuItemProps> = ({ id, title, icon, subMenus }): ReactElement => {
@@ -31,7 +29,14 @@ const TopMenuItem: FC<TopMenuItemProps> = ({ id, title, icon, subMenus }): React
 
   return (
     <>
-      <Button key={id} onClick={handleClick} onMouseOver={handleClick} sx={{ my: 2, color: "white" }} endIcon={icon}>
+      <Button
+        key={id}
+        onClick={handleClick}
+        onMouseOver={handleClick}
+        sx={{ my: 2, color: "white" }}
+        endIcon={icon}
+        data-testid={`testid.topMenu.${id}`}
+      >
         {title}
       </Button>
       {subMenus && subMenus.length > 0 && (
@@ -45,7 +50,7 @@ const TopMenuItem: FC<TopMenuItemProps> = ({ id, title, icon, subMenus }): React
           }}
         >
           {subMenus.map((subPage) => (
-            <MenuItem key={subPage.id} onClick={handleClose}>
+            <MenuItem key={subPage.id} onClick={handleClose} data-testid={`testid.subMenus.${subPage.id}`}>
               {subPage.title}
             </MenuItem>
           ))}
@@ -57,19 +62,6 @@ const TopMenuItem: FC<TopMenuItemProps> = ({ id, title, icon, subMenus }): React
 
 const TopMenu: FC<TopMenuProps> = (): ReactElement => {
   const { t } = useTranslation("common");
-  const [anchorElOpened, setAnchorElOpened] = useState<{ id: string; open: boolean }[]>([]);
-
-  const handleOpen = (id: string) => {
-    console.log("id", id);
-    const newAnchorElOpened = anchorElOpened.map((anchorEl) => {
-      if (anchorEl.id === id) {
-        return { id, open: !anchorEl.open };
-      } else {
-        return { id: anchorEl.id, open: false };
-      }
-    });
-    setAnchorElOpened(newAnchorElOpened);
-  };
 
   const reviewMenus = [
     { id: "allReviews", title: t("topMenu.reviewsMenu.allReviews") },
@@ -97,12 +89,7 @@ const TopMenu: FC<TopMenuProps> = (): ReactElement => {
   return (
     <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "space-evenly" }}>
       {sarMenus.map((page) => (
-        <TopMenuItem
-          key={page.id}
-          {...page}
-          handleOpen={(anchorEl) => handleOpen(anchorEl ? page.id : "")}
-          open={anchorElOpened.find((anchorEl) => anchorEl.id === page.id)?.open || false}
-        />
+        <TopMenuItem key={page.id} {...page} />
       ))}
     </Box>
   );

@@ -1,7 +1,6 @@
 import { AccountCircle, Logout, ManageAccounts } from "@mui/icons-material";
 import { Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
-import { signIn, signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useState, MouseEvent, ReactElement, FC } from "react";
 

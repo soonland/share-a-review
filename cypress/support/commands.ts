@@ -25,13 +25,25 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+Cypress.Commands.add("openUserMenu", () => {
+  cy.get("[data-testid='testid.menu.accountButton']").should("exist").click();
+  cy.get("[role='menu']").should("exist").should("be.visible");
+  cy.get("[data-testid='testid.menu.account']").should("exist");
+  cy.get("[data-testid='testid.menu.profile']").should("exist");
+  cy.get("[data-testid='testid.menu.languageSwitcher']").should("exist");
+  cy.get("@session")
+    .its("response.body")
+    .then((body) => {
+      cy.log(body);
+      cy.log("adfasdfa");
+      if (body.status === "authenticated") {
+        cy.get("[data-testid='testid.menu.signIn']").should("not.exist");
+        cy.get("[data-testid='testid.menu.signOut']").should("exist");
+      } else {
+        cy.get("[data-testid='testid.menu.signOut']").should("not.exist");
+        cy.get("[data-testid='testid.menu.signIn']").should("exist");
+      }
+    });
+  cy.get("body").click();
+});
