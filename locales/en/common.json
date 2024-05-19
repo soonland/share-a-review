@@ -1,5 +1,5 @@
 {
-    "appName": "Share-A-Review Community",
+    "appName": "S-A-R Community",
     "common": {
         "loading": "Loading",
         "error": "Error",
@@ -11,7 +11,7 @@
         "search": "Search",
         "changeThemeMode": "Change Theme Mode"
     },
-    "topMenu": {
+    "mainMenu": {
         "home": "Home",
         "reviews": "Reviews",
         "writeReview": "Write Review",

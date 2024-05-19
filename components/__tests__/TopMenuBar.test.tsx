@@ -11,12 +11,12 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-describe("TopMenuBar", () => {
+describe("Topmenubar", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders a TopMenuBar - Authenticated", async () => {
+  it("renders a Topmenubar - Authenticated", async () => {
     const context: IThemeContext = {
       dark: jest.fn(),
       isDark: "light",
@@ -34,7 +34,7 @@ describe("TopMenuBar", () => {
     expect(screen.getByTestId("testid.menu.accountButton")).toBeInTheDocument();
   });
 
-  it("renders a TopMenuBar - Unauthenticated", async () => {
+  it("renders a Topmenubar - Unauthenticated", async () => {
     const context: IThemeContext = {
       dark: jest.fn(),
       isDark: "light",

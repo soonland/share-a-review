@@ -35,8 +35,6 @@ Cypress.Commands.add("openUserMenu", () => {
   cy.get("@session")
     .its("response.body")
     .then((body) => {
-      cy.log(body);
-      cy.log("adfasdfa");
       if (body.status === "authenticated") {
         cy.get("[data-testid='testid.menu.signIn']").should("not.exist");
         cy.get("[data-testid='testid.menu.signOut']").should("exist");
@@ -44,6 +42,13 @@ Cypress.Commands.add("openUserMenu", () => {
         cy.get("[data-testid='testid.menu.signOut']").should("not.exist");
         cy.get("[data-testid='testid.menu.signIn']").should("exist");
       }
+      cy.get("body").type("{esc}");
     });
-  cy.get("body").click();
+});
+
+Cypress.Commands.add("openReviewsMenu", (menu: string) => {
+  cy.get("[data-testid='testid.mainMenu.reviews']").should("exist").click();
+  if (menu) {
+    cy.get(`[data-testid='testid.reviewsMenu.${menu}']`).should("exist").click();
+  }
 });
