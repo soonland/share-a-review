@@ -2,26 +2,9 @@ describe("Home page", () => {
   context("Given the website is online", () => {
     context("When the user is authenticated", () => {
       beforeEach(() => {
-        cy.intercept("GET", "/api/maintenance", {
-          statusCode: 200,
-          body: {
-            maintenanceMode: "false",
-          },
-        }).as("maintenanceMode");
-        cy.intercept("GET", "/api/auth/session", {
-          statusCode: 200,
-          body: {
-            status: "authenticated",
-            user: {
-              id: "123",
-              email: "",
-              name: "",
-              picture: "",
-              locale: "",
-              roles: [],
-            },
-          },
-        }).as("session");
+        cy.mockApiMaintenance("false");
+        cy.mockApiAuthSession(true);
+
         cy.visit("/");
         cy.wait("@maintenanceMode");
         cy.wait("@session");
@@ -35,16 +18,8 @@ describe("Home page", () => {
 
     context("When the user is not authenticated", () => {
       beforeEach(() => {
-        cy.intercept("GET", "/api/maintenance", {
-          statusCode: 200,
-          body: {
-            maintenanceMode: "false",
-          },
-        }).as("maintenanceMode");
-        cy.intercept("GET", "/api/auth/session", {
-          statusCode: 200,
-          body: {},
-        }).as("session");
+        cy.mockApiMaintenance("false");
+        cy.mockApiAuthSession(false);
 
         cy.visit("/");
         cy.wait("@maintenanceMode");

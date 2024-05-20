@@ -52,3 +52,36 @@ Cypress.Commands.add("openReviewsMenu", (menu: string) => {
     cy.get(`[data-testid='testid.reviewsMenu.${menu}']`).should("exist").click();
   }
 });
+
+Cypress.Commands.add("mockApiMaintenance", (maintenanceMode: string) => {
+  cy.intercept("GET", "/api/maintenance", {
+    statusCode: 200,
+    body: {
+      maintenanceMode,
+    },
+  }).as("maintenanceMode");
+});
+
+Cypress.Commands.add("mockApiAuthSession", (isAuthenticated: boolean) => {
+  if (isAuthenticated) {
+    cy.intercept("GET", "/api/auth/session", {
+      statusCode: 200,
+      body: {
+        status: "authenticated",
+        user: {
+          id: "123",
+          email: "",
+          name: "",
+          picture: "",
+          locale: "",
+          roles: [],
+        },
+      },
+    }).as("session");
+  } else {
+    cy.intercept("GET", "/api/auth/session", {
+      statusCode: 200,
+      body: {},
+    }).as("session");
+  }
+});
