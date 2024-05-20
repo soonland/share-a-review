@@ -37,6 +37,7 @@ const App = ({ Component, pageProps }) => {
             justifyContent="center"
             alignItems="center"
             zIndex={1300}
+            data-testid="testid.maintenanceMessage"
           >
             This app is currently in maintenance mode. Please try again later.
           </Box>

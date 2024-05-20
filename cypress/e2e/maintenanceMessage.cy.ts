@@ -6,12 +6,13 @@ describe("Test for maintenance message", () => {
         body: {
           maintenanceMode: "true",
         },
-      });
-      cy.visit("/");
+      }).as("maintenanceMode");
     });
 
     it("Check if the maintenance message is displayed", () => {
-      cy.get(".MuiBackdrop-root > .MuiBox-root").should("exist");
+      cy.visit("/");
+      cy.wait("@maintenanceMode");
+      cy.get("[data-testid='testid.maintenanceMessage']").should("exist");
     });
   });
 
@@ -20,14 +21,15 @@ describe("Test for maintenance message", () => {
       cy.intercept("GET", "/api/maintenance", {
         statusCode: 200,
         body: {
-          maintenanceMode: "true",
+          maintenanceMode: "false",
         },
-      });
-      cy.visit("/");
+      }).as("maintenanceMode");
     });
 
     it("Check if the maintenance message is not displayed", () => {
-      cy.get(".MuiBackdrop-root > .MuiBox-root").should("not.exist");
+      cy.visit("/");
+      cy.wait("@maintenanceMode");
+      cy.get("[data-testid='testid.maintenanceMessage']").should("not.exist");
     });
   });
 });

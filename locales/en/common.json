@@ -1,13 +1,5 @@
 {
-    "appName": "Share-A-Review Community",
-    "menu": {
-        "home": "Home",
-        "top5": "Top 5",
-        "myPlaylists": "My Playlists",
-        "applicationName": "Share-A-Review Home page",
-        "changelog": "Change Log",
-        "changeThemeMode": "Change Theme Mode"
-    },
+    "appName": "S-A-R Community",
     "common": {
         "loading": "Loading",
         "error": "Error",
@@ -17,50 +9,52 @@
         "signOut": "Sign out",
         "signIn": "Sign in",
         "search": "Search",
-        "switchLanguage": "{{lang}}",
-        "account": "My Share-A-Review Account",
-        "profile": "My Share-A-Review Profile"
+        "changeThemeMode": "Change Theme Mode"
     },
-    "queue": {
-        "queue": "Queue ({{count}})",
-        "artistName": "Artist",
-        "albumName": "Album",
-        "trackName": "Track",
-        "listen": "Listen",
-        "remove": "Remove"
-    },
-    "dataGrid": {
-        "search": {
-            "type": "Type",
-            "artistName": "Artist",
-            "albumName": "Album",
-            "trackName": "Track",
-            "imgCover": "Cover",
-            "spotifyLink": "Spotify",
-            "recommandationLink": "Recommandation",
-            "addToPlaylist": "Add to playlist"
-        },
-        "rows": {
-            "type": {
-                "artist": "Artist",
-                "album": "Album",
-                "track": "Track",
-                "playlist": "Playlist"
-            },
-            "track": {
-                "trackName": "Track",
-                "trackDuration": "Duration",
-                "trackPreview": "Preview"
-            }
+    "mainMenu": {
+        "home": "Home",
+        "reviews": "Reviews",
+        "writeReview": "Write Review",
+        "myReviews": "My Reviews",
+        "reviewsMenu": {
+            "allReviews": "All Reviews",
+            "movies": "Movies",
+            "books": "Books",
+            "music": "Music",
+            "games": "Games",
+            "products": "Products",
+            "places": "Places",
+            "restaurants": "Restaurants",
+            "recipes": "Recipes",
+            "videos": "Videos",
+            "apps": "Apps",
+            "services": "Services",
+            "events": "Events",
+            "other": "Other"
         }
     },
-    "search": {
-        "search": "Search",
-        "searchArtist": "Search an artist",
-        "searchAlbum": "Search an album",
-        "searchTrack": "Search a track",
-        "searchPlaylist": "Search a playlist",
-        "searchButton": "Search",
-        "searchPlaceholder": "Search..."
+    "userMenu": {
+        "home": "Home",
+        "switchLanguage": "{{lang}}",
+        "account": "My Share-A-Review Account",
+        "profile": "My Share-A-Review Profile",
+        "signIn": "Sign in",
+        "signOut": "Sign out"
+    },
+    "home": {
+        "title": "Welcome to Share-A-Review Community",
+        "subtitle": "Share your reviews and experiences with the world",
+        "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
+        "getStarted": "Get Started"
+    },
+    "footer": {
+        "title": "Share-A-Review Community",
+        "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
+        "contactUs": "Contact Us",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service",
+        "aboutUs": "About Us",
+        "changelog": "Change Log",
+        "changeThemeMode": "Change Theme Mode"
     }
 }

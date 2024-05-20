@@ -13,7 +13,7 @@ const config: Config = {
   collectCoverage: true,
   coverageReporters: ["json", "html"],
   coverageDirectory: "coverage",
-  collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/.next/**"],
+  collectCoverageFrom: ["**/*.{ts,tsx}", "**/*.cy.ts", "!**/node_modules/**", "!**/.next/**"],
   // setupFiles: ["jest-fetch-mock"],
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
