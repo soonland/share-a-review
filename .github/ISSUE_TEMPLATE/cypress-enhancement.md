@@ -3,8 +3,8 @@ name: Cypress enhancement
 about: This template should be used to request describe a new Cypress test or a change
   in an existing one.
 title: 'Cypress: <insert a relevant test name>'
-labels: ''
-assignees: ''
+labels: 'cypress'
+assignees: 'soonland'
 
 ---
 
