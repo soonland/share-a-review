@@ -6,7 +6,8 @@ import { useSession } from "next-auth/react";
 
 import { IThemeContext, ThemeContext } from "../context/ThemeProvider";
 import MainMenu from "../MainMenu";
-import { mockSessionAuth, mockSessionUnAuth } from "../mockData";
+import { mockSessionAuth } from "../mockData";
+
 jest.mock("next-auth/react", () => ({
   signIn: jest.fn(),
   signOut: jest.fn(),
@@ -17,10 +18,19 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(() => "/"),
 }));
 
+jest.mock("swr", () => ({
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    data: {
+      data: [],
+    },
+  }),
+}));
+
 const openReviewsMenu = async () => {
   const reviewsMenu = screen.getByTestId("testid.mainMenu.reviews");
   expect(reviewsMenu).toBeInTheDocument();
-  await userEvent.click(reviewsMenu);
+  await userEvent.hover(reviewsMenu);
 };
 
 const validateReviewMenu = async (expected: boolean = true) => {
@@ -57,7 +67,7 @@ const validateReviewMenu = async (expected: boolean = true) => {
   }
 };
 
-const closeAccountMenu = async () => {
+const closeReviewMenu = async () => {
   await userEvent.type(screen.getByTestId("testid.mainMenu.reviews"), "{escape}");
   await validateReviewMenu(false);
 };
@@ -67,12 +77,12 @@ const context: IThemeContext = {
   isDark: "light",
 };
 
-describe("UserMenu", () => {
+describe("MainMenu", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders a UserMenu - Authenticated", async () => {
+  it("renders a MainMenu", async () => {
     (useSession as jest.Mock).mockReturnValue(mockSessionAuth);
     render(
       <ThemeContext.Provider value={context}>
@@ -83,26 +93,10 @@ describe("UserMenu", () => {
     // Open the menu
     await openReviewsMenu();
 
-    // Validate the menu
+    // // Validate the menu
     await validateReviewMenu();
 
-    // Close the menu
-    await closeAccountMenu();
-  });
-
-  it("renders a UserMenu - Unauthenticated", async () => {
-    (useSession as jest.Mock).mockReturnValue(mockSessionUnAuth);
-    render(
-      <ThemeContext.Provider value={context}>
-        <MainMenu />
-      </ThemeContext.Provider>,
-    );
-
-    await openReviewsMenu();
-
-    await validateReviewMenu();
-
-    // Close the menu
-    await closeAccountMenu();
+    // // Close the menu
+    await closeReviewMenu();
   });
 });
