@@ -30,7 +30,7 @@ jest.mock("swr", () => ({
 const openReviewsMenu = async () => {
   const reviewsMenu = screen.getByTestId("testid.mainMenu.reviews");
   expect(reviewsMenu).toBeInTheDocument();
-  await userEvent.hover(reviewsMenu);
+  await userEvent.click(reviewsMenu);
 };
 
 const validateReviewMenu = async (expected: boolean = true) => {

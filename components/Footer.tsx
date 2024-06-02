@@ -4,7 +4,7 @@ import { FC, ReactElement } from "react";
 
 const StyledFooter = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
-  color: theme.palette.common.white,
+  color: theme.palette.text.secondary,
   padding: theme.spacing(2),
   marginTop: "calc(10% + 120px)",
   position: "fixed",

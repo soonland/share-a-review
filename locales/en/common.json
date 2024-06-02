@@ -9,6 +9,7 @@
         "signOut": "Sign out",
         "signIn": "Sign in",
         "search": "Search",
+        "switchLanguage": "{{lang}}",
         "changeThemeMode": "Change Theme Mode"
     },
     "mainMenu": {
@@ -36,8 +37,8 @@
     "userMenu": {
         "home": "Home",
         "switchLanguage": "{{lang}}",
-        "account": "My Share-A-Review Account",
-        "profile": "My Share-A-Review Profile",
+        "account": "My Account",
+        "profile": "My Profile",
         "signIn": "Sign in",
         "signOut": "Sign out"
     },

@@ -56,7 +56,6 @@ const LeftMenu: FC<LeftMenuProps> = ({ sx }): ReactElement => {
         key={"menuButton"}
         sx={{ ...sx }}
         edge="start"
-        color="inherit"
         aria-label="menu"
         onClick={() => setIsDrawerOpen(true)}
         data-testid="testid.mainMenu.reviews"
@@ -78,7 +77,7 @@ const LeftMenu: FC<LeftMenuProps> = ({ sx }): ReactElement => {
               data-testid={`testid.drawer.${menu.id}`}
               sx={{ px: 1, py: 1, cursor: "pointer" }}
             >
-              <ListItemIcon color="inherit" aria-label={t(menu.title)} data-testid={`testid.drawer.${menu.id}.icon`}>
+              <ListItemIcon aria-label={t(menu.title)} data-testid={`testid.drawer.${menu.id}.icon`}>
                 {iconMap[menu.icon as string]}
                 {menu.subMenus && (
                   <List>
@@ -89,11 +88,7 @@ const LeftMenu: FC<LeftMenuProps> = ({ sx }): ReactElement => {
                         data-testid={`testid.drawer.${subMenu.id}`}
                         sx={{ px: 1, py: 1, cursor: "pointer" }}
                       >
-                        <ListItemIcon
-                          color="inherit"
-                          aria-label={t(subMenu.title)}
-                          data-testid={`testid.drawer.${subMenu.id}.icon`}
-                        >
+                        <ListItemIcon aria-label={t(subMenu.title)} data-testid={`testid.drawer.${subMenu.id}.icon`}>
                           {iconMap[subMenu.icon as string]}
                         </ListItemIcon>
                         <ListItemText>{t(subMenu.title)}</ListItemText>

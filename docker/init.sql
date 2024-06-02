@@ -19,6 +19,8 @@ CREATE TABLE users (
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO users (name, email, password) VALUES ('admin', 'admin@admin.com', 'admin');
+
 -- Category table
 -- The category table stores information about the categories of items in the application
 -- It includes fields for the category name and a description template
@@ -28,6 +30,8 @@ CREATE TABLE categories (
     name VARCHAR(100),
     description_template jsonb -- Description de l'item (peut être un objet JSON)
 );
+
+INSERT INTO categories (name, description_template) VALUES ('Electronics', '{"brand": "text", "model": "text", "price": "number", "color": "text"}');
 
 -- Item table
 -- The item table stores information about the items in the application
@@ -41,6 +45,8 @@ CREATE TABLE items (
     description jsonb, -- Description de l'item (peut être un objet JSON)
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO items (name, category_id, description) VALUES ('iPhone 12', 1, '{"brand": "Apple", "model": "iPhone 12", "price": 799, "color": "Black"}');
 
 -- Review table
 -- The review table stores information about the reviews of items in the application
@@ -62,6 +68,8 @@ CREATE TABLE reviews (
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Date the review was created
 );
 
+INSERT INTO reviews (user_id, item_id, rating, content) VALUES (1, 1, 5, 'Great phone, love the camera quality!');
+
 -- Comment table
 -- The comment table stores information about the comments on reviews in the application
 -- It includes fields for the user ID, review ID, content, likes and creation date
@@ -79,3 +87,5 @@ CREATE TABLE comments (
     dislikes INT DEFAULT 0, -- Number of dislikes, default to 0
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO comments (user_id, review_id, content) VALUES (1, 1, 'I agree, the camera is amazing!');

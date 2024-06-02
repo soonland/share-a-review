@@ -1,27 +1,20 @@
 import CreateIcon from "@mui/icons-material/Create";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import ReviewsIcon from "@mui/icons-material/Reviews";
-import { Button, CircularProgress, Menu, MenuItem } from "@mui/material";
+import { Button, CircularProgress, Menu, MenuItem, useTheme } from "@mui/material";
+import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import { useState, ReactElement, FC } from "react";
 import useSWR from "swr";
 
-interface MainMenuItemProps {
-  id: string;
-  title: string;
-  icon?: string | ReactElement;
-  subMenus?: { id: string; title: string }[];
-}
+import { MainMenuItemProps } from "@/helpers/constants";
 
 const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus }): ReactElement => {
   const { t } = useTranslation("common");
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleClick = () => {
-    console.log("clicked");
-  };
-
-  const handleMouseOver = (event) => {
+  const handleClick = (event) => {
     if (anchorEl !== event.currentTarget) {
       setAnchorEl(event.currentTarget);
     }
@@ -52,10 +45,10 @@ const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus }): Rea
       <Button
         key={id}
         onClick={handleClick}
-        onMouseOver={handleMouseOver}
-        sx={{ my: 2, color: "white" }}
+        sx={{ my: 2 }}
         endIcon={iconElement}
         data-testid={`testid.mainMenu.${id}`}
+        variant="outlined"
       >
         {t(title) + (icon === "reviews" ? ` (${data?.data?.length ?? 0})` : "")}
       </Button>
@@ -70,9 +63,24 @@ const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus }): Rea
           }}
         >
           {subMenus.map((subPage) => (
-            <MenuItem key={subPage.id} onClick={handleClose} data-testid={`testid.reviewsMenu.${subPage.id}`}>
-              {t(subPage.title)}
-            </MenuItem>
+            <Link
+              key={subPage.url}
+              href={{
+                pathname: subPage.url,
+              }}
+              passHref
+              style={{ textDecoration: "none" }}
+            >
+              <MenuItem
+                data-testid={`testid.${subPage.id}`}
+                sx={{
+                  fontWeight: 500,
+                  color: theme.palette.text.secondary,
+                }}
+              >
+                {t(subPage.title)}
+              </MenuItem>
+            </Link>
           ))}
         </Menu>
       )}

@@ -1,21 +1,5 @@
 {
     "appName": "S-A-R Community",
-    "menu": {
-        "home": "Accueil",
-        "top5": "Top 5",
-        "myPlaylists": "Mes listes de lecture",
-        "applicationName": "Share-A-Review Home page",
-        "changelog": "Change log",
-        "changeThemeMode": "Changer le thème"
-    },
-    "queue": {
-        "queue": "File d'attente ({{count}})",
-        "artistName": "Artiste",
-        "albumName": "Album",
-        "trackName": "Chanson",
-        "listen": "Ecouter",
-        "remove": "Supprimer"
-    },
     "common": {
         "loading": "Chargement ...",
         "error": "Erreur",
@@ -26,41 +10,52 @@
         "signIn": "Connexion",
         "search": "Rechercher",
         "switchLanguage": "{{lang}}",
-        "account": "Mon compte Share-A-Review",
-        "profile": "Mon profil Share-A-Review"
+        "changeThemeMode": "Changer le mode de thème"
     },
-    "dataGrid": {
-        "search": {
-            "type": "Type",
-            "artistName": "Artiste",
-            "albumName": "Album",
-            "trackName": "Chanson",
-            "imgCover": "Couverture",
-            "spotifyLink": "Spotify",
-            "recommandationLink": "Recommandation",
-            "addToPlaylist": "Ajouter à la file d'attente"
-        },
-        "rows": {
-            "type": {
-                "artist": "Artiste",
-                "album": "Album",
-                "track": "Chanson",
-                "playlist": "Liste de lecture"
-            },
-            "track": {
-                "trackName": "Chanson",
-                "trackDuration": "Durée",
-                "trackPreview": "Prévisualisation"
-            }
+    "mainMenu": {
+        "home": "Accueil",
+        "reviews": "Avis",
+        "writeReview": "Écrire un avis",
+        "myReviews": "Mes avis",
+        "reviewsMenu": {
+            "allReviews": "Tous les avis",
+            "movies": "Films",
+            "books": "Livres",
+            "music": "Musique",
+            "games": "Jeux",
+            "products": "Produits",
+            "places": "Lieux",
+            "restaurants": "Restaurants",
+            "recipes": "Recettes",
+            "videos": "Vidéos",
+            "apps": "Applications",
+            "services": "Services",
+            "events": "Événements",
+            "other": "Autre"
         }
     },
-    "search": {
-        "search": "Rechercher",
-        "searchArtist": "Rechercher un artiste",
-        "searchAlbum": "Rechercher un album",
-        "searchTrack": "Rechercher une chanson",
-        "searchPlaylist": "Rechercher une liste de lecture",
-        "searchButton": "Rechercher",
-        "searchPlaceholder": "Rechercher ..."
+    "userMenu": {
+        "home": "Accueil",
+        "switchLanguage": "{{lang}}",
+        "account": "Mon compte",
+        "profile": "Profil",
+        "signIn": "Connexion",
+        "signOut": "Déconnexion"
+    },
+    "home": {
+        "title": "Bienvenue sur Share-A-Review",
+        "subtitle": "Partagez vos avis et expériences avec le monde",
+        "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
+        "getStarted": "Commencer"
+    },
+    "footer": {
+        "title": "Share-A-Review",
+        "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
+        "contactUs": "Contactez-nous",
+        "privacyPolicy": "Politique de confidentialité",
+        "termsOfService": "Conditions d'utilisation",
+        "aboutUs": "À propos de nous",
+        "changelog": "Journal des modifications",
+        "changeThemeMode": "Changer le mode de thème"
     }
 }
