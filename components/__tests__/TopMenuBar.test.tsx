@@ -30,7 +30,7 @@ describe("Topmenubar", () => {
 
     expect(screen.getByTestId("testid.appBar")).toBeInTheDocument();
     expect(screen.getByTestId("testid.menuButton")).toBeInTheDocument();
-    expect(screen.getByTestId("Brightness7Icon")).toBeInTheDocument();
+    expect(screen.getByTestId("Brightness4Icon")).toBeInTheDocument();
     expect(screen.getByTestId("testid.menu.accountButton")).toBeInTheDocument();
   });
 
@@ -48,7 +48,7 @@ describe("Topmenubar", () => {
 
     expect(screen.getByTestId("testid.appBar")).toBeInTheDocument();
     expect(screen.getByTestId("testid.menuButton")).toBeInTheDocument();
-    expect(screen.getByTestId("Brightness7Icon")).toBeInTheDocument();
+    expect(screen.getByTestId("Brightness4Icon")).toBeInTheDocument();
     expect(screen.queryByTestId("testid.menu.accountButton")).toBeInTheDocument();
   });
 });

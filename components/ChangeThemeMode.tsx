@@ -23,7 +23,7 @@ const ChangeThemeMode: FC<ChangeThemeModeProps> = ({ sx }): ReactElement => {
       sx={{ ...sx, ml: 1 }}
       title={t("common.changeThemeMode")}
     >
-      {isDark === "light" ? <Brightness7Icon /> : <Brightness4Icon />}
+      {isDark === "light" ? <Brightness4Icon /> : <Brightness7Icon />}
     </IconButton>
   );
 };

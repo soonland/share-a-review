@@ -49,7 +49,7 @@ Cypress.Commands.add("openUserMenu", () => {
 Cypress.Commands.add("openReviewsMenu", (menu: string) => {
   cy.get("[data-testid='testid.mainMenu.reviews']").should("exist").click();
   if (menu) {
-    cy.get(`[data-testid='testid.reviewsMenu.${menu}']`).should("exist").click();
+    cy.get(`[data-testid='testid.reviews.${menu}']`).should("exist").click();
   }
 });
 
