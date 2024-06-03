@@ -72,7 +72,7 @@ const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus }): Rea
               style={{ textDecoration: "none" }}
             >
               <MenuItem
-                data-testid={`testid.${subPage.id}`}
+                data-testid={`testid.${id}.${subPage.id}`}
                 sx={{
                   fontWeight: 500,
                   color: theme.palette.text.secondary,

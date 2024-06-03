@@ -39,7 +39,7 @@ const StyledChangeLogItem = styled("div")(({ theme }) => ({
 
 const ChangeLogItem: FC<{ change: Change }> = ({ change }) => {
   return (
-    <StyledChangeLogItem>
+    <StyledChangeLogItem data-testid={`testid.changeLog.${change.date}`}>
       <h3>
         {change.version} ({change.date})
       </h3>

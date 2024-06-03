@@ -57,7 +57,7 @@ GROUP BY
       res.status(200).json({ data: result.rows, success: true });
     } catch (error) {
       console.error("Error fetching reviews:", error);
-      res.status(500).json({ error: "Error fetching reviews" });
+      res.status(500).json({ success: false, message: "Error fetching reviews" });
     }
   } else {
     res.status(405).json({ error: "Method not allowed" });

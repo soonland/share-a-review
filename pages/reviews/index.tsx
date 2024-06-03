@@ -21,11 +21,11 @@ const Reviews = () => {
 
   const { data: reviews, success } = data;
   if (!success) {
-    return <Typography color="error">Failed to load reviews</Typography>;
+    return <Alert severity="error" message={data.message} />;
   }
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading reviews</div>;
   if (data?.message) return <Alert severity="error" message={data.message} />;
+  if (error) return <Alert severity="error" message={error.message || "An error occurred"} />;
   if (reviews?.length == 0) return <div>No reviews found</div>;
 
   return (
