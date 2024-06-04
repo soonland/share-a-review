@@ -48,6 +48,9 @@
         "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
         "getStarted": "Commencer"
     },
+    "reviews": {
+        "helpful": "{{value}} personnes ont trouvé cela utile"
+    },
     "footer": {
         "title": "Share-A-Review",
         "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
