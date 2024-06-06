@@ -9,16 +9,8 @@ import CommentItem from "./CommentItem";
 
 const CommentsSection = ({ comments }) => {
   return (
-    <Accordion
-      sx={{
-        marginTop: 2,
-        borderRadius: 2,
-        border: "none",
-        boxShadow: "none",
-        backgroundColor: "#f9f9f9",
-      }}
-    >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="comments-content" id="comments-header">
+    <Accordion disableGutters sx={{}}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="body2">Comments ({comments.length})</Typography>
       </AccordionSummary>
       <AccordionDetails>

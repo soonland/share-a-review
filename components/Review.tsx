@@ -1,13 +1,23 @@
 // Review.jsx
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import { Stack, Typography, IconButton, Divider } from "@mui/material";
+import { Stack, Typography, IconButton, useTheme, darken } from "@mui/material";
 import Rating from "@mui/material/Rating";
+import Link from "next/link";
 
 import CommentsSection from "./CommentsSection";
 
 const Review = ({ review }) => {
+  const theme = useTheme();
   return (
-    <Stack direction="column" spacing={1}>
+    <Stack
+      direction="column"
+      spacing={1}
+      sx={{
+        padding: theme.spacing(1),
+        borderRadius: theme.spacing(1),
+        backgroundColor: darken(theme.palette.background.paper, 0.05),
+      }}
+    >
       <Stack
         sx={{
           display: "flex",
@@ -17,12 +27,19 @@ const Review = ({ review }) => {
         }}
       >
         <Typography variant="body1">
-          {review.item_name} - <Typography variant="overline">{review.item_category_name}</Typography>
+          {review.item_name} -{" "}
+          <Link
+            href={{
+              pathname: `/reviews/${review.item_category_name}`,
+            }}
+          >
+            <Typography variant="overline">{review.item_category_name}</Typography>
+          </Link>
         </Typography>
         <Rating name="read-only" value={review.review_rating} readOnly />
       </Stack>
       <Typography variant="caption" sx={{ fontStyle: "italic" }}>
-        Reviewed by {review.review_user_name} on {new Date(review.review_date_created).toLocaleDateString()}
+        On {new Date(review.review_date_created).toLocaleString()}
       </Typography>
       <Typography variant="body2">{review.review_content}</Typography>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -34,7 +51,6 @@ const Review = ({ review }) => {
         </Stack>
       </Stack>
       <CommentsSection comments={review.comments} />
-      <Divider />
     </Stack>
   );
 };

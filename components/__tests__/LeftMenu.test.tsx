@@ -16,7 +16,7 @@ describe("LeftMenu", () => {
     render(<LeftMenu />);
     await userEvent.click(screen.getByRole("button"));
     const menuItems = screen.getAllByRole("menuitem");
-    expect(menuItems).toHaveLength(17);
+    expect(menuItems).toHaveLength(9);
   });
 
   it("displays correct menu item text", async () => {
@@ -29,17 +29,18 @@ describe("LeftMenu", () => {
     const expectedMenuItemTexts = [
       "mainMenu.reviewsMenu.allReviews",
       "mainMenu.reviewsMenu.movies",
+      "mainMenu.reviewsMenu.electronics",
       "mainMenu.reviewsMenu.books",
-      "mainMenu.reviewsMenu.music",
+      // "mainMenu.reviewsMenu.music",
       "mainMenu.reviewsMenu.games",
-      "mainMenu.reviewsMenu.products",
-      "mainMenu.reviewsMenu.places",
-      "mainMenu.reviewsMenu.restaurants",
-      "mainMenu.reviewsMenu.recipes",
-      "mainMenu.reviewsMenu.videos",
-      "mainMenu.reviewsMenu.apps",
-      "mainMenu.reviewsMenu.services",
-      "mainMenu.reviewsMenu.events",
+      // "mainMenu.reviewsMenu.products",
+      // "mainMenu.reviewsMenu.places",
+      // "mainMenu.reviewsMenu.restaurants",
+      // "mainMenu.reviewsMenu.recipes",
+      // "mainMenu.reviewsMenu.videos",
+      // "mainMenu.reviewsMenu.apps",
+      // "mainMenu.reviewsMenu.services",
+      // "mainMenu.reviewsMenu.events",
       "mainMenu.reviewsMenu.other",
       "mainMenu.myReviews",
       "mainMenu.writeReview",
