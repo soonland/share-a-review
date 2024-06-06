@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import { FC, ReactElement } from "react";
 
@@ -42,9 +43,18 @@ const TopMenuBar: FC = (): ReactElement => {
         <Toolbar sx={{ display: "flex", width: "100%" }}>
           {isExtraSmallSize && <LeftMenu sx={{ display: "flex" }} />}
           {!isExtraSmallSize && <ReviewsIcon data-testid="testid.menuButton" sx={{ marginRight: 1 }} />}
-          <Typography variant="h6" component="div">
-            {t("appName")}
-          </Typography>
+          <Link href="/" passHref style={{ textDecoration: "none" }}>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                fontWeight: 500,
+                color: theme.palette.text.secondary,
+              }}
+            >
+              {t("appName")}
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1 }}>{!isExtraSmallSize && <MainMenu />}</Box>
           <ChangeThemeMode sx={{ display: { xs: "none", md: "flex" } }} />
           <UserMenu />

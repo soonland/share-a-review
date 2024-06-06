@@ -9,5 +9,6 @@ export default defineConfig({
     videosFolder: "cypress/videos",
     video: true,
     trashAssetsBeforeRuns: true,
+    experimentalRunAllSpecs: true,
   },
 });

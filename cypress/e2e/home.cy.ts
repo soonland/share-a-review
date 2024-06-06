@@ -6,6 +6,7 @@ describe("Home page", () => {
         cy.mockApiAuthSession(true);
 
         cy.visit("/");
+
         cy.wait("@maintenanceMode");
         cy.wait("@session");
       });

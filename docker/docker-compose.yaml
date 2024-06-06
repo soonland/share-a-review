@@ -5,9 +5,10 @@ services:
       # Host:Container
       # 5432 is the default port for PostgreSQL
       # Left side is the host machine port, right side is the container port
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - ~/DockerData/pg:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       # Syntax for environment variables: VARIABLE_NAME=VALUE
       # ${VARIABLE_NAME:-DEFAULT_VALUE} is used to set a default value
@@ -31,8 +32,8 @@ services:
       /bin/sh -c "
       cp -f /pgadmin4/pgpass /var/lib/pgadmin/;
       chmod 600 /var/lib/pgadmin/pgpass;
-      chown pgadmin:pgadmin /var/lib/pgadmin/pgpass;
-      /entrypoint.sh
+      chown pgadmin:root /var/lib/pgadmin/pgpass;
+      /entrypoint.sh;
       "
     environment:
       # Syntax for environment variables: VARIABLE_NAME=VALUE
@@ -50,17 +51,16 @@ services:
       # Host:Container
       # 8080 is the default port for pgAdmin4
       # Left side is the host machine port, right side is the container port
-      - 8080:8080
+      - "8080:8080"
     volumes:
-      # Mount the servers.json file to the container
-      # This file contains the list of servers that pgAdmin4 will connect to
-      - ./pgpass:/pgadmin4/pgpass
       # Mount the pgpass file to the container
       # This file contains the password for the PostgreSQL server
+      - ./pgpass:/pgadmin4/pgpass
+      # Mount the servers.json file to the container
+      # This file contains the list of servers that pgAdmin4 will connect to
       - ./servers.json:/pgadmin4/servers.json
     networks:
         - postgres-db-network
 
 networks:
     postgres-db-network:
-        driver: bridge

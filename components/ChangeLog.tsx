@@ -39,7 +39,7 @@ const StyledChangeLogItem = styled("div")(({ theme }) => ({
 
 const ChangeLogItem: FC<{ change: Change }> = ({ change }) => {
   return (
-    <StyledChangeLogItem>
+    <StyledChangeLogItem data-testid={`testid.changeLog.${change.date}`}>
       <h3>
         {change.version} ({change.date})
       </h3>
@@ -92,8 +92,9 @@ const ChangeLog: FC = () => {
     <div>
       <StyledH2>Change Log</StyledH2>
       {changes
-        .toSorted((a, b) => a.version.localeCompare(b.version))
-        .toReversed()
+        .slice()
+        .sort((a, b) => a.version.localeCompare(b.version))
+        .reverse()
         .map((change, index) => {
           const k = `change-${index}`;
           return <ChangeLogItem key={k} change={change} />;

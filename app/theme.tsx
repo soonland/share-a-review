@@ -1,5 +1,5 @@
 "use client";
-import { PaletteMode, colors, darken, lighten } from "@mui/material";
+import { PaletteMode, darken, lighten } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { Roboto } from "next/font/google";
 
@@ -15,10 +15,15 @@ const getDesignTokens = (mode: PaletteMode) => {
       mode,
       ...(mode === "light"
         ? {
-            primary: colors.blueGrey,
+            primary: { main: "#ffffff" },
+            secondary: { main: "#000000" },
+            background: {
+              default: "#f8f7f5",
+              paper: "#e4e4e4",
+            },
             text: {
-              primary: colors.blueGrey[800],
-              secondary: colors.blueGrey[50],
+              primary: "#202126",
+              secondary: "#909090",
             },
             // palette values for light mode
             // primary: { main: "#0089b3", contrastText: "#000000", light: "#A3BAC3", dark: "#000000" },
@@ -54,15 +59,19 @@ const theme = createTheme({
         color: "inherit",
       },
     },
-    MuiIconButton: {
-      defaultProps: {
-        color: "inherit",
-      },
-    },
     MuiButtonBase: {
-      defaultProps: {
-        // The props to change the default for.
-        disableRipple: true, // No more ripple, on the whole application 💣!
+      styleOverrides: {
+        root: {
+          "&.MuiButton-outlined": {
+            color: "inherit",
+            border: "1px solid #e4e4e4",
+            padding: "6px 18px",
+            fontWeight: 900,
+          },
+          "&.MuiButton-outlined:hover": {
+            backgroundColor: "rgba(0, 0, 0, 0.04)",
+          },
+        },
       },
     },
   },

@@ -34,7 +34,7 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
   return (
     <Box sx={sx}>
       <IconButton edge="end" onClick={handleClick} data-testid="testid.menu.accountButton" sx={{ ml: 1 }}>
-        <AccountCircle htmlColor="white" />
+        <AccountCircle />
       </IconButton>
       <Menu
         id="user-menu"

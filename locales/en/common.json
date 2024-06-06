@@ -9,6 +9,7 @@
         "signOut": "Sign out",
         "signIn": "Sign in",
         "search": "Search",
+        "switchLanguage": "{{lang}}",
         "changeThemeMode": "Change Theme Mode"
     },
     "mainMenu": {
@@ -30,14 +31,15 @@
             "apps": "Apps",
             "services": "Services",
             "events": "Events",
+            "electronics": "Electronics",
             "other": "Other"
         }
     },
     "userMenu": {
         "home": "Home",
         "switchLanguage": "{{lang}}",
-        "account": "My Share-A-Review Account",
-        "profile": "My Share-A-Review Profile",
+        "account": "My Account",
+        "profile": "My Profile",
         "signIn": "Sign in",
         "signOut": "Sign out"
     },
@@ -46,6 +48,9 @@
         "subtitle": "Share your reviews and experiences with the world",
         "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
         "getStarted": "Get Started"
+    },
+    "reviews": {
+        "helpful": "{{value}} people found this helpful"
     },
     "footer": {
         "title": "Share-A-Review Community",
