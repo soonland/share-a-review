@@ -26,7 +26,7 @@ const Reviews = () => {
   };
 
   const router = useRouter();
-  const { category } = router.query;
+  const { category = "" } = router.query;
   const { data, isLoading, error } = useSWR(`/api/reviews/${category}`, fetcher);
 
   if (!data) {
