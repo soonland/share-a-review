@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS accounts;
-DROP TABLE IF EXISTS welcome_messages;
+DROP TABLE IF EXISTS notifications;
 
 -- User table
 -- The user table stores information about the users of the application
