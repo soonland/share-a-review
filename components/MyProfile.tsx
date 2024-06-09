@@ -36,7 +36,7 @@ const MyProfile: FC = (): ReactElement => {
       }}
     >
       <Typography>{t("common.notSignedIn")}</Typography>
-      <Button variant="text" onClick={() => signIn()} data-testid="testid.button">
+      <Button variant="outlined" onClick={() => signIn()} data-testid="testid.button">
         {t("common.signIn")}
       </Button>
     </Box>
