@@ -2,6 +2,14 @@
 -- It is executed by the Dockerfile when the container is built
 -- It creates the tables for the users, categories, items, reviews and comments
 
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS reviews;
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS welcome_messages;
+
 -- User table
 -- The user table stores information about the users of the application
 -- It includes fields for the user's name, email, password, active status, last login time and creation date
@@ -9,21 +17,41 @@
 -- The active field is a boolean that indicates whether the user is active or not
 -- The last login field stores the timestamp of the user's last login
 -- The date created field stores the timestamp of when the user account was created
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     email VARCHAR(100) UNIQUE,
     password VARCHAR(255),
     active BOOLEAN DEFAULT TRUE,
     last_login TIMESTAMP,
-    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "emailVerified" BOOLEAN DEFAULT FALSE,
+    "image" TEXT
+);
+
+-- Account table
+-- The account table stores information about the user's external accounts (e.g. Google, Facebook, etc.)
+CREATE TABLE IF NOT EXISTS accounts
+(
+    id SERIAL PRIMARY KEY,
+    "userId" integer NOT NULL,
+    type character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    provider character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "providerAccountId" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    refresh_token text COLLATE pg_catalog."default",
+    access_token text COLLATE pg_catalog."default",
+    expires_at bigint,
+    id_token text COLLATE pg_catalog."default",
+    scope text COLLATE pg_catalog."default",
+    session_state text COLLATE pg_catalog."default",
+    token_type text COLLATE pg_catalog."default"
 );
 
 -- Category table
 -- The category table stores information about the categories of items in the application
 -- It includes fields for the category name and a description template
 -- The description template field is a JSON object that will store form fields for the item description
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     description_template jsonb -- Description de l'item (peut être un objet JSON)
@@ -34,7 +62,7 @@ CREATE TABLE categories (
 -- It includes fields for the item name, category ID, description and creation date
 -- The category ID field is a reference to the category of the item
 -- The description field is a JSON object that will store the item description
-CREATE TABLE items (
+CREATE TABLE IF NOT EXISTS items (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     category_id INT, -- Référence vers la catégorie de l'item
@@ -51,7 +79,7 @@ CREATE TABLE items (
 -- The content field stores the text content of the review
 -- The likes field stores the number of likes the review has received
 -- The date created field stores the timestamp of when the review was created
-CREATE TABLE reviews (
+CREATE TABLE IF NOT EXISTS reviews (
     id SERIAL PRIMARY KEY,
     user_id INT, -- User who wrote the review
     item_id INT, -- Item being reviewed
@@ -70,7 +98,7 @@ CREATE TABLE reviews (
 -- The content field stores the text content of the comment
 -- The likes field stores the number of likes the comment has received
 -- The date created field stores the timestamp of when the comment was created
-CREATE TABLE comments (
+CREATE TABLE IF NOT EXISTS comments (
     id SERIAL PRIMARY KEY,
     user_id INT, -- User who wrote the comment
     review_id INT, -- Review being commented
@@ -80,12 +108,28 @@ CREATE TABLE comments (
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Notifications table
+-- The notifications table stores information about notifications sent to users
+-- It includes fields for the user ID, message, sent date and hidden status
+-- The user ID field is a reference to the user who received the notification
+-- The message field stores the text content of the notification
+-- The sent date field stores the timestamp of when the notification was sent
+CREATE TABLE IF NOT EXISTS notifications (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  title VARCHAR(100) NOT NULL,
+  message TEXT NOT NULL,
+  status VARCHAR(10) NOT NULL DEFAULT 'unread', -- 'read', 'unread', 'trashed'
+  type VARCHAR(20) NOT NULL DEFAULT 'system', -- 'system', 'user'
+  sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Truncate tables and reset identities
-TRUNCATE TABLE users RESTART IDENTITY CASCADE;
-TRUNCATE TABLE categories RESTART IDENTITY CASCADE;
-TRUNCATE TABLE items RESTART IDENTITY CASCADE;
-TRUNCATE TABLE reviews RESTART IDENTITY CASCADE;
-TRUNCATE TABLE comments RESTART IDENTITY CASCADE;
+-- TRUNCATE TABLE users RESTART IDENTITY CASCADE;
+-- TRUNCATE TABLE categories RESTART IDENTITY CASCADE;
+-- TRUNCATE TABLE items RESTART IDENTITY CASCADE;
+-- TRUNCATE TABLE reviews RESTART IDENTITY CASCADE;
+-- TRUNCATE TABLE comments RESTART IDENTITY CASCADE;
 
 -- Inserting users
 INSERT INTO users (name, email, password) VALUES 

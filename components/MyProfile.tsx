@@ -19,7 +19,7 @@ const MyProfile: FC = (): ReactElement => {
   if (session.status === "authenticated") {
     return (
       <Grid item container flexDirection={"row"} alignItems={"center"} data-testid="testid.grid" mb={2}>
-        <Image src={session.data?.user?.image as string} alt="profile" width={64} height={64} />
+        <Image src={session?.data?.user?.image as string} alt="profile" width={64} height={64} />
         <Typography ml={1} fontWeight={400}>
           {t("common.signedInAs", { name: session.data?.user?.name })}
         </Typography>
