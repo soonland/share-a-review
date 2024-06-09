@@ -1,99 +1,80 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-import NextAuth from "next-auth";
-import Spotify from "next-auth/providers/spotify";
+import NextAuth, { NextAuthOptions } from "next-auth";
+import { Adapter } from "next-auth/adapters";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import { Provider } from "next-auth/providers/index";
+import SpotifyProvider from "next-auth/providers/spotify";
 
-const clientId = process.env.SPOTIFY_CLIENT_ID ?? "";
-const clientSecret = process.env.SPOTIFY_CLIENT_SECRET ?? "";
-/**
- * Takes a token, and returns a new token with updated
- * `accessToken` and `accessTokenExpires`. If an error occurs,
- * returns the old token and an error property
- */
-const refreshAccessToken = async (token: { refreshToken: any }) => {
-  try {
-    const url =
-      "https://accounts.spotify.com/api/token?" +
-      new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: "refresh_token",
-        refresh_token: token.refreshToken,
-      });
+import pool from "@/db";
+import SarAdapter from "@/lib/sarAdapter";
 
-    const response = await fetch(url, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization:
-          "Basic " +
-          Buffer.from(clientId + ":" + clientSecret)
-            .toString("base64")
-            .toString(),
-      },
-      method: "POST",
-    });
+export async function verifyPassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+  // return await bcrypt.compare(plainPassword, hashedPassword);
+  return plainPassword === hashedPassword;
+}
 
-    const refreshedTokens = await response.json();
+export async function findUserByUsername(email: string) {
+  const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]).then((res) => res.rows[0]);
 
-    if (!response.ok) {
-      throw refreshedTokens;
+  return user;
+}
+const credentialsProvider = CredentialsProvider({
+  name: "Credentials",
+  credentials: {
+    username: { label: "Username", type: "text" },
+    password: { label: "Password", type: "password" },
+  },
+  authorize: async (credentials) => {
+    if (!credentials) {
+      return null;
     }
 
-    return {
-      ...token,
-      accessToken: refreshedTokens.access_token,
-      accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
-    };
-  } catch (error) {
-    console.log(error);
+    const user = await findUserByUsername(credentials.username);
 
-    return {
-      ...token,
-      error: "RefreshAccessTokenError",
-    };
+    if (!user) {
+      return null;
+    }
+
+    const isValid = await verifyPassword(credentials.password, user.password);
+
+    if (!isValid) {
+      return null;
+    }
+
+    return { id: user.id, name: user.name, email: user.email };
+  },
+});
+
+const providersList = (): Provider[] => {
+  const providers: Provider[] = [
+    SpotifyProvider({
+      clientId: process.env.SPOTIFY_CLIENT_ID!,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+  ];
+
+  if (process.env.NODE_ENV === "development") {
+    providers.push(credentialsProvider);
   }
+
+  return providers;
 };
 
-const scopes = "user-read-email user-top-read playlist-read-private";
-
-export const authOptions = {
-  // Configure one or more authentication providers
-  // session: {
-  //   maxAge: 30
-  // },
-  providers: [
-    Spotify({
-      clientId: process.env.SPOTIFY_CLIENT_ID ?? "",
-      clientSecret: process.env.SPOTIFY_CLIENT_SECRET ?? "",
-      authorization: `https://accounts.spotify.com/authorize?scope=${scopes}`,
-    }),
-  ],
+export const authOptions: NextAuthOptions = {
+  adapter: SarAdapter() as Adapter,
+  providers: providersList(),
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
-    async jwt({ token, user, account }) {
-      // Initial sign in
-      if (account && user) {
-        return {
-          accessToken: account.access_token,
-          accessTokenExpires: Date.now() + account.expires_in * 1000,
-          refreshToken: account.refresh_token,
-          user,
-        };
-      }
-
-      // Return previous token if the access token has not expired yet
-      if (Date.now() < token.accessTokenExpires) {
-        return token;
-      }
-
-      // Access token has expired, try to update it
-      return refreshAccessToken(token);
-    },
     async session({ session, token }) {
-      session.user = token.user;
-      session.accessToken = token.accessToken;
-      session.user.id = token.user.id;
-      session.error = token.error;
-
+      if (token && token.id) {
+        session.user.id = token.id as string;
+      }
       return session;
     },
   },
