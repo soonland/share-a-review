@@ -1,0 +1,225 @@
+{
+  "success": true,
+  "data": [
+    {
+      "review_id": 6,
+      "review_user_id": 6,
+      "review_user_name": "Leif Erikson",
+      "review_user_email": "leif@example.com",
+      "item_name": "Sony WH-1000XM4",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Sony",
+        "color": "Silver",
+        "model": "WH-1000XM4",
+        "price": 349
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 0,
+      "review_content": "Did not enjoy this movie at all.",
+      "review_likes": 8,
+      "review_dislikes": 25,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 17,
+      "review_user_id": 17,
+      "review_user_name": "Alan Shepard",
+      "review_user_email": "alan@example.com",
+      "item_name": "The Dark Knight",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 2008,
+        "genre": "Action",
+        "title": "The Dark Knight",
+        "director": "Christopher Nolan"
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 2,
+      "review_content": "Not my cup of tea.",
+      "review_likes": 10,
+      "review_dislikes": 30,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 15,
+      "review_user_id": 15,
+      "review_user_name": "Sally Ride",
+      "review_user_email": "sally@example.com",
+      "item_name": "Pulp Fiction",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 1994,
+        "genre": "Crime",
+        "title": "Pulp Fiction",
+        "director": "Quentin Tarantino"
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 3,
+      "review_content": "Interesting plot but slow pacing.",
+      "review_likes": 15,
+      "review_dislikes": 12,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 19,
+      "review_user_id": 19,
+      "review_user_name": "Gherman Titov",
+      "review_user_email": "gher@example.com",
+      "item_name": "Joe's Pizza",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Joe's Pizza",
+        "rating": 4.5,
+        "cuisine": "Italian",
+        "location": "New York, NY"
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 4,
+      "review_content": "Great atmosphere and storytelling.",
+      "review_likes": 35,
+      "review_dislikes": 5,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 14,
+      "review_user_id": 14,
+      "review_user_name": "Buzz Aldrin",
+      "review_user_email": "buzz@example.com",
+      "item_name": "Parasite",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 2019,
+        "genre": "Thriller",
+        "title": "Parasite",
+        "director": "Bong Joon Ho"
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 5,
+      "review_content": "An emotional journey.",
+      "review_likes": 35,
+      "review_dislikes": 7,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 7,
+      "review_user_id": 7,
+      "review_user_name": "Zheng He",
+      "review_user_email": "zheng@example.com",
+      "item_name": "Sony WH-1000XM4",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Sony",
+        "color": "Silver",
+        "model": "WH-1000XM4",
+        "price": 349
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 4,
+      "review_content": "Complex plot, but worth the watch.",
+      "review_likes": 12,
+      "review_dislikes": 9,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 5,
+      "review_user_id": 5,
+      "review_user_name": "Ferdinand Magellan",
+      "review_user_email": "magellan@example.com",
+      "item_name": "OnePlus 8T",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "OnePlus",
+        "color": "Aquamarine Green",
+        "model": "8T",
+        "price": 749
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 4,
+      "review_content": "Fast and responsive, great value for money.",
+      "review_likes": 18,
+      "review_dislikes": 3,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 25,
+      "review_user_id": 5,
+      "review_user_name": "Ferdinand Magellan",
+      "review_user_email": "magellan@example.com",
+      "item_name": "Mugaritz",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Mugaritz",
+        "rating": 4.7,
+        "cuisine": "Spanish",
+        "location": "Errenteria, Spain"
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 4,
+      "review_content": "Amazing dishes and atmosphere.",
+      "review_likes": 25,
+      "review_dislikes": 4,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 22,
+      "review_user_id": 2,
+      "review_user_name": "Christopher Columbus",
+      "review_user_email": "columbus@example.com",
+      "item_name": "Noma",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Noma",
+        "rating": 4.7,
+        "cuisine": "Nordic",
+        "location": "Copenhagen, Denmark"
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 5,
+      "review_content": "Outstanding sushi, highly recommend.",
+      "review_likes": 30,
+      "review_dislikes": 1,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    },
+    {
+      "review_id": 18,
+      "review_user_id": 18,
+      "review_user_name": "John Glenn",
+      "review_user_email": "john@example.com",
+      "item_name": "Forrest Gump",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 1994,
+        "genre": "Drama",
+        "title": "Forrest Gump",
+        "director": "Robert Zemeckis"
+      },
+      "item_date_created": "2024-06-09T03:05:48.369Z",
+      "review_rating": 5,
+      "review_content": "A pioneer in the genre.",
+      "review_likes": 50,
+      "review_dislikes": 2,
+      "review_date_created": "2024-06-09T03:05:48.369Z",
+      "comments": []
+    }
+  ]
+}
