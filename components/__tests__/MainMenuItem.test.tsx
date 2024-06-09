@@ -14,6 +14,12 @@ jest.mock("swr", () => ({
   }),
 }));
 
+jest.mock("next/router", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+}));
+
 describe("MainMenu", () => {
   beforeEach(() => {
     jest.clearAllMocks();

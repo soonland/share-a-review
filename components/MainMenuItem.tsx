@@ -3,18 +3,23 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import { Button, CircularProgress, Menu, MenuItem, useTheme } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { useState, ReactElement, FC } from "react";
 import useSWR from "swr";
 
 import { MainMenuItemProps } from "@/helpers/constants";
 
-const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus }): ReactElement => {
+const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus, url }): ReactElement => {
   const { t } = useTranslation("common");
+  const router = useRouter();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event) => {
+    if (id === "writeReview") {
+      router.push(new URL(url as string, window.location.origin).pathname);
+    }
     if (anchorEl !== event.currentTarget) {
       setAnchorEl(event.currentTarget);
     }

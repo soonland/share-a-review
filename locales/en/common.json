@@ -52,6 +52,13 @@
     "reviews": {
         "helpful": "{{value}} people found this helpful"
     },
+    "writeReview": {
+        "loginRequired": "You need to be logged in to write a review. Please log in or sign up.",
+        "isLoggedIn": "You are logged in as {{name}}. You can now write a review.",
+        "title": "Write a Review",
+        "description": "Write a review about a movie, book, music, game, product, place, restaurant, recipe, video, app, service, event, electronics, or anything else.",
+        "submit": "Submit"
+    },
     "footer": {
         "title": "Share-A-Review Community",
         "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",

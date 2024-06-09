@@ -52,6 +52,13 @@
     "reviews": {
         "helpful": "{{value}} personnes ont trouvé cela utile"
     },
+    "writeReview": {
+        "loginRequired": "Vous devez être connecté pour écrire un avis. Veuillez vous connecter ou vous inscrire.",
+        "isLoggedIn": "Vous êtes connecté en tant que {{name}}. Vous pouvez maintenant écrire un avis.",
+        "title": "Écrire un avis",
+        "description": "Écrivez un avis sur un film, un livre, de la musique, un jeu, un produit, un lieu, un restaurant, une recette, une vidéo, une application, un service, un événement, de l'électronique ou tout autre chose.",
+        "submit": "Soumettre"
+    },
     "footer": {
         "title": "Share-A-Review",
         "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",

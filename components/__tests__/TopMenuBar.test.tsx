@@ -11,6 +11,12 @@ jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
+jest.mock("next/router", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+}));
+
 describe("Topmenubar", () => {
   beforeEach(() => {
     jest.clearAllMocks();

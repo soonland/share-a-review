@@ -18,6 +18,12 @@ jest.mock("next/navigation", () => ({
   usePathname: jest.fn(() => "/"),
 }));
 
+jest.mock("next/router", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+}));
+
 jest.mock("swr", () => ({
   __esModule: true,
   default: jest.fn().mockReturnValue({
