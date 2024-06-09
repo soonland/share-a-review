@@ -42,7 +42,6 @@ const Reviews = () => {
   if (error) return <Alert severity="error" message={error.message || "An error occurred"} />;
   if (reviews?.length == 0) return <div>No reviews found</div>;
 
-  console.log(reviews);
   return (
     <Grid container spacing={2}>
       {reviews.map((review) => (

@@ -15,7 +15,9 @@
     "cy:open": "cypress open -C cypress/config/cypress.config.local.ts",
     "cy:run": "cypress run -C cypress/config/cypress.config.local.ts",
     "cy:open:dev": "cypress open -C cypress/config/cypress.config.dev.ts",
-    "cy:run:dev": "cypress run -C cypress/config/cypress.config.dev.ts"
+    "cy:run:dev": "cypress run -C cypress/config/cypress.config.dev.ts",
+    "cy:open:st": "cypress open -C cypress/config/cypress.config.staging.ts",
+    "cy:run:st": "cypress run -C cypress/config/cypress.config.staging.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

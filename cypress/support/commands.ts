@@ -28,27 +28,19 @@
 
 Cypress.Commands.overwrite("visit", (originalFn, url: string, options?: Partial<Cypress.VisitOptions>) => {
   // Ajoute des en-têtes personnalisés à l'option de visite
-  const vercelShare = Cypress.env("VERCEL_SHARE");
-  console.log(`CYPRESS_VERCEL_SHARE: ${vercelShare}`);
-  console.log(`CYPRESS_VERCEL_SHARE: ${Cypress.env("CYPRESS_VERCEL_SHARE")}`);
-  console.log(`options: ${JSON.stringify(options)}`);
-  const qs = { _vercel_share: vercelShare ?? null };
-
-  const filterQs = (qs?: { [key: string]: unknown }) => {
-    if (!qs) return {};
-    return Object.fromEntries(Object.entries(qs).filter(([, value]) => value !== null && value !== undefined));
-  };
-
-  const newOptions = {
-    qs: { ...filterQs(qs) },
-    ...options,
-  };
+  const vercelProtectionBypass = Cypress.env("X_VERCEL_PROTECTION_BYPASS");
+  cy.log(`Vercel protection bypass: ${vercelProtectionBypass}`);
+  // Fusionne les options de visite avec les en-têtes personnalisés
+  options = options || {};
+  options.headers = options.headers || {};
+  options.headers["x-vercel-protection-bypass"] = vercelProtectionBypass ?? "";
+  options.headers["x-vercel-set-bypass-cookie"] = vercelProtectionBypass ? "true" : "";
 
   // Log une information avant de visiter l'URL
-  cy.log(`Visiting URL: ${url} with options: ${JSON.stringify(newOptions)}`);
+  cy.log(`Visiting URL: ${url} with options: ${JSON.stringify(options)}`);
 
   // Appelle la commande visit originale avec les nouvelles options
-  originalFn({ url, ...newOptions });
+  originalFn({ url, ...options });
 });
 
 Cypress.Commands.add("openUserMenu", () => {
