@@ -52,7 +52,7 @@ Cypress.Commands.add("openUserMenu", () => {
   cy.get("@session")
     .its("response.body")
     .then((body) => {
-      if (body.status === "authenticated") {
+      if (body.status === "authenticated" || !!body.user) {
         cy.get("[data-testid='testid.menu.signIn']").should("not.exist");
         cy.get("[data-testid='testid.menu.signOut']").should("exist");
       } else {
