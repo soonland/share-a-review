@@ -1,5 +1,4 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-import { Adapter } from "next-auth/adapters";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { Provider } from "next-auth/providers/index";
@@ -65,7 +64,7 @@ const providersList = (): Provider[] => {
 };
 
 export const authOptions: NextAuthOptions = {
-  adapter: SarAdapter() as Adapter,
+  adapter: SarAdapter(),
   providers: providersList(),
   session: {
     strategy: "jwt",
