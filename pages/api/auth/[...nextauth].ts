@@ -64,7 +64,7 @@ const providersList = (): Provider[] => {
     }),
   ];
 
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.VERCEL_ENV !== "production") {
     providers.push(credentialsProvider);
   }
 
