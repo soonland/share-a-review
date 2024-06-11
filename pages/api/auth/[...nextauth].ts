@@ -40,7 +40,7 @@ const credentialsProvider = CredentialsProvider({
       return null;
     }
 
-    return { id: user.id, name: user.name, email: user.email };
+    return { id: user.id, name: user.name, email: user.email, image: user.image };
   },
 });
 
@@ -49,6 +49,14 @@ const providersList = (): Provider[] => {
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID!,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
+      profile: (profile) => {
+        return {
+          id: profile.id,
+          name: profile.display_name,
+          email: profile.email,
+          image: profile.images?.[0]?.url,
+        };
+      },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -71,8 +79,8 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      if (token && token.id) {
-        session.user.id = token.id as string;
+      if (token && token.sub) {
+        session.user.id = token.sub as string;
       }
       return session;
     },

@@ -59,6 +59,20 @@
         "description": "Écrivez un avis sur un film, un livre, de la musique, un jeu, un produit, un lieu, un restaurant, une recette, une vidéo, une application, un service, un événement, de l'électronique ou tout autre chose.",
         "submit": "Soumettre"
     },
+    "form": {
+        "writeReview": {
+            "item": "Item",
+            "title": "Titre",
+            "content": "Contenu",
+            "rating": "Évaluation",
+            "submit": "Soumettre",
+            "cancel": "Annuler"
+        },
+        "characters": "{{value}} caractères",
+        "fieldRequired": "Ce champ est requis",
+        "maxLengthExceeded": "Maximum {{value}} caractères autorisés",
+        "minLengthRequired": "Minimum {{value}} caractères requis"
+    },
     "footer": {
         "title": "Share-A-Review",
         "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",

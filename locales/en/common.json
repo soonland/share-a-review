@@ -59,6 +59,20 @@
         "description": "Write a review about a movie, book, music, game, product, place, restaurant, recipe, video, app, service, event, electronics, or anything else.",
         "submit": "Submit"
     },
+    "form": {
+        "writeReview": {
+            "item": "Item",
+            "title": "Title",
+            "content": "Content",
+            "rating": "Rating",
+            "submit": "Submit",
+            "cancel": "Cancel"
+        },
+        "characters": "{{value}} characters",
+        "fieldRequired": "This field is required",
+        "maxLengthExceeded": "Maximum {{value}} characters allowed",
+        "minLengthRequired": "Minimum {{value}} characters required"
+    },
     "footer": {
         "title": "Share-A-Review Community",
         "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
