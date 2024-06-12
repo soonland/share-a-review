@@ -3,19 +3,11 @@ import { Box, Rating } from "@mui/material";
 import { FC, useState } from "react";
 import { Controller } from "react-hook-form";
 
-interface RatingFieldRules {
-  required?: string;
-}
-
 interface RatingFieldProps {
   name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: any;
-  label: string;
   size?: "small" | "medium";
-  error?: string;
-  rules?: RatingFieldRules;
-  multiline?: boolean;
   disabled?: boolean;
 }
 
@@ -58,9 +50,7 @@ const RatingField: FC<RatingFieldProps> = ({ name, control, size, disabled = fal
               }}
               emptyIcon={<Star style={{ opacity: 0.55 }} fontSize="inherit" />}
             />
-            {Number(field.value) !== null && (
-              <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : Number(field.value)]}</Box>
-            )}
+            {!!Number(field.value) && <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : Number(field.value)]}</Box>}
           </Box>
         );
       }}
