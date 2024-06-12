@@ -74,6 +74,26 @@ const theme = createTheme({
         },
       },
     },
+    // MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          "&.Mui-focused": {
+            color: "#000000",
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#000000",
+            color: "#000000",
+          },
+        },
+      },
+    },
   },
   typography: {
     fontFamily: roboto.style.fontFamily,

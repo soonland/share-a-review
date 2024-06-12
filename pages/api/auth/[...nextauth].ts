@@ -1,5 +1,4 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-import { Adapter } from "next-auth/adapters";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { Provider } from "next-auth/providers/index";
@@ -41,7 +40,7 @@ const credentialsProvider = CredentialsProvider({
       return null;
     }
 
-    return { id: user.id, name: user.name, email: user.email };
+    return { id: user.id, name: user.name, email: user.email, image: user.image };
   },
 });
 
@@ -50,6 +49,14 @@ const providersList = (): Provider[] => {
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID!,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,
+      profile: (profile) => {
+        return {
+          id: profile.id,
+          name: profile.display_name,
+          email: profile.email,
+          image: profile.images?.[0]?.url,
+        };
+      },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -57,7 +64,7 @@ const providersList = (): Provider[] => {
     }),
   ];
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.VERCEL_ENV !== "production") {
     providers.push(credentialsProvider);
   }
 
@@ -65,15 +72,15 @@ const providersList = (): Provider[] => {
 };
 
 export const authOptions: NextAuthOptions = {
-  adapter: SarAdapter() as Adapter,
+  adapter: SarAdapter(),
   providers: providersList(),
   session: {
     strategy: "jwt",
   },
   callbacks: {
     async session({ session, token }) {
-      if (token && token.id) {
-        session.user.id = token.id as string;
+      if (token && token.sub) {
+        session.user.id = token.sub as string;
       }
       return session;
     },

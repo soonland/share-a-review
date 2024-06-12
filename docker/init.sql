@@ -6,9 +6,9 @@ DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS notifications;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS accounts;
-DROP TABLE IF EXISTS notifications;
 
 -- User table
 -- The user table stores information about the users of the application
@@ -83,8 +83,9 @@ CREATE TABLE IF NOT EXISTS reviews (
     id SERIAL PRIMARY KEY,
     user_id INT, -- User who wrote the review
     item_id INT, -- Item being reviewed
-    rating INT, -- Rating of the review
+    title VARCHAR(100), -- Title of the review
     content TEXT, -- Content of the review
+    rating INT, -- Rating of the review
     likes INT DEFAULT 0, -- Number of likes, default to 0
     dislikes INT DEFAULT 0, -- Number of dislikes, default to 0
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Date the review was created

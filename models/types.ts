@@ -98,3 +98,12 @@ export interface IQueueItem {
 }
 
 export interface IQueue {}
+
+export interface Change {
+  version: string;
+  date: string;
+  description?: string;
+  features?: string[];
+  fixes?: string[];
+  projectConfiguration?: string[];
+}

@@ -33,5 +33,5 @@ export interface MainMenuItemProps {
 export const sarMenus: MainMenuItemProps[] = [
   { id: "reviews", title: "mainMenu.reviews", subMenus: reviewMenus, icon: "reviews", url: "/reviews" },
   { id: "myReviews", title: "mainMenu.myReviews", icon: "myReviews", url: "/my-reviews" },
-  { id: "writeReview", title: "mainMenu.writeReview", icon: "create", url: "/write-review" },
+  { id: "writeReview", title: "mainMenu.writeReview", icon: "create", url: "/reviews/write-review" },
 ];

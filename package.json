@@ -34,7 +34,9 @@
     "pg": "^8.11.5",
     "react": "^18.2.0",
     "react-dom": "^18",
-    "swr": "^2.2.5"
+    "react-hook-form": "^7.51.5",
+    "swr": "^2.2.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
