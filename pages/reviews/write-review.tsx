@@ -167,15 +167,7 @@ const WriteReviews = () => {
           size="small"
           error={errors.content?.message}
         />
-        <RatingField
-          name="rating"
-          control={control}
-          label={t("form.writeReview.rating")}
-          rules={{ required: t("form.fieldRequired") }}
-          disabled={session.status !== "authenticated"}
-          size="small"
-          error={errors.rating?.message}
-        />
+        <RatingField name="rating" control={control} disabled={session.status !== "authenticated"} size="small" />
       </Box>
       <br />
       <Button type="submit" variant="contained" color="primary" disabled={session.status !== "authenticated"}>
