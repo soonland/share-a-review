@@ -44,32 +44,14 @@ const validateReviewMenu = async (expected: boolean = true) => {
     expect(screen.getByTestId("testid.reviews.allReviews")).toBeInTheDocument();
     expect(screen.getByTestId("testid.reviews.movies")).toBeInTheDocument();
     expect(screen.getByTestId("testid.reviews.books")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.music")).toBeInTheDocument();
     expect(screen.getByTestId("testid.reviews.games")).toBeInTheDocument();
     expect(screen.getByTestId("testid.reviews.electronics")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.products")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.places")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.restaurants")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.recipes")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.videos")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.apps")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.services")).toBeInTheDocument();
-    // expect(screen.getByTestId("testid.reviews.events")).toBeInTheDocument();
     expect(screen.getByTestId("testid.reviews.other")).toBeInTheDocument();
   } else {
     expect(screen.queryByTestId("testid.reviews.allReviews")).not.toBeInTheDocument();
     expect(screen.queryByTestId("testid.reviews.movies")).not.toBeInTheDocument();
     expect(screen.queryByTestId("testid.reviews.books")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.music")).not.toBeInTheDocument();
     expect(screen.queryByTestId("testid.reviews.games")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.products")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.places")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.restaurants")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.recipes")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.videos")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.apps")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.services")).not.toBeInTheDocument();
-    // expect(screen.queryByTestId("testid.reviews.events")).not.toBeInTheDocument();
     expect(screen.queryByTestId("testid.reviews.electronics")).not.toBeInTheDocument();
     expect(screen.queryByTestId("testid.reviews.other")).not.toBeInTheDocument();
   }
