@@ -29,7 +29,17 @@ describe("Home page", () => {
       beforeEach(() => {
         cy.mockApiMaintenance("false");
         cy.mockApiAuthSession(false);
-        cy.intercept("GET", "/api/reviews/movies", { fixture: "reviews.json" }).as("reviews");
+        cy.intercept("GET", "/api/reviews/movies", { fixture: "reviews.json" }).as("movieReviews");
+        cy.intercept("GET", "/api/categories", {
+          body: {
+            success: true,
+            data: [
+              { value: "movies", label: "Movies" },
+              { value: "series", label: "Series" },
+              { value: "books", label: "Books" },
+            ],
+          },
+        }).as("categories");
 
         cy.visit("/");
         cy.wait("@maintenanceMode");
@@ -39,7 +49,7 @@ describe("Home page", () => {
       it("Then the UI should display elements for a guest user", () => {
         cy.openUserMenu();
         cy.openReviewsMenu("movies");
-        cy.wait("@reviews");
+        cy.wait("@movieReviews");
       });
     });
   });
