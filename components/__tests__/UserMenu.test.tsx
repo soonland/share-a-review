@@ -14,8 +14,9 @@ jest.mock("next-auth/react", () => ({
   useSession: jest.fn(),
 }));
 jest.mock("next/router", () => ({
-  useRouter: jest.fn(),
-  usePathname: jest.fn(() => "/"),
+  useRouter: jest.fn().mockReturnValue({
+    asPath: "/",
+  }),
 }));
 
 const openAccountMenu = async () => {

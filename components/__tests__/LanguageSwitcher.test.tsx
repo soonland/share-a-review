@@ -7,12 +7,14 @@ import LanguageSwitcher from "../LanguageSwitcher";
 
 jest.mock("next-translate/useTranslation");
 
+jest.mock("next/router", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    asPath: "/",
+  }),
+}));
 describe("LanguageSwitcher", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mock("next/router", () => ({
-      usePathname: jest.fn(() => "/"),
-    }));
     Object.defineProperty(window, "location", {
       value: new URL("http://example.com"),
       configurable: true,
