@@ -2,7 +2,7 @@ import { Search as SearchIcon } from "@mui/icons-material";
 import { Button, InputBase, Stack, alpha, styled } from "@mui/material";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 
@@ -77,7 +77,7 @@ const SearchForm: FC = () => {
     // clearErrors,
     // reset,
     getValues,
-    // setValue,
+    setValue,
     // formState: { errors },
   } = useForm<IFormInputs>({
     defaultValues: {
@@ -85,6 +85,15 @@ const SearchForm: FC = () => {
       item: "",
     },
   });
+
+  // recupéer les valeurs query et category pour les afficher dans le formulaire
+  const query = (router.query?.q as string) || "";
+  const category = (router.query?.category as string) || "";
+
+  useEffect(() => {
+    setValue("category", category, { shouldValidate: true });
+    setValue("item", query, { shouldValidate: true });
+  }, [category, query, setValue]);
 
   return (
     <form
