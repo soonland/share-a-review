@@ -1,4 +1,4 @@
-import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select, SxProps } from "@mui/material";
 import { FC } from "react";
 import { Controller } from "react-hook-form";
 
@@ -10,13 +10,15 @@ interface SelectFieldProps {
   name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: any;
-  label: string;
+  label?: string;
   size?: "small" | "medium";
   error?: string;
   rules?: SelectFieldRules;
   options: { value: string; label: string }[];
   disabled?: boolean;
+  withLabel?: boolean;
   isLoading?: boolean;
+  sx?: SxProps;
 }
 
 const SelectField: FC<SelectFieldProps> = ({
@@ -29,6 +31,9 @@ const SelectField: FC<SelectFieldProps> = ({
   options,
   isLoading = false,
   disabled = false,
+  withLabel = true,
+  onChange,
+  sx,
 }) => {
   const { required = "" } = rules;
   return (
@@ -36,19 +41,28 @@ const SelectField: FC<SelectFieldProps> = ({
       name={name}
       control={control}
       render={({ field }) => {
+        const labelProps = withLabel ? { label: label, labelId: "a-label-id" } : {};
         return (
-          <Box mb={2}>
+          <Box sx={sx}>
             <FormControl fullWidth variant="outlined" error={!!error} size={size}>
-              <InputLabel id="a-label-id">{label}</InputLabel>
+              {withLabel && <InputLabel id="a-label-id">{label}</InputLabel>}
               <Select
                 {...field}
-                label={label}
-                labelId="a-label-id"
+                {...labelProps}
                 disabled={disabled}
                 required={!!required}
+                displayEmpty={!withLabel}
                 fullWidth
                 variant="outlined"
                 error={!!error}
+                placeholder="Select an option"
+                onChange={field.onChange}
+                // onChange={(e) => {
+                //   field.onChange(e);
+                //   if (onChange) {
+                //     onChange(field.value);
+                //   }
+                // }}
               >
                 <MenuItem value="" disabled>
                   {isLoading ? "Loading..." : "Select an option"}
@@ -59,7 +73,7 @@ const SelectField: FC<SelectFieldProps> = ({
                   </MenuItem>
                 ))}
               </Select>
-              <FormHelperText>{error}</FormHelperText>
+              {withLabel && <FormHelperText>{error}</FormHelperText>}
             </FormControl>
           </Box>
         );

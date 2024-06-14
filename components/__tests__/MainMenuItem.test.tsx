@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import useSWR from "swr";
 
 import MainMenuItem from "../MainMenuItem";
@@ -11,12 +11,12 @@ jest.mock("swr", () => ({
   __esModule: true,
   default: jest.fn().mockReturnValue({
     data: {
-      data: [],
+      data: [{ id: "1", title: "a review", content: "a review content", rating: 5 }],
     },
   }),
 }));
 
-jest.mock("next/navigation", () => ({
+jest.mock("next/router", () => ({
   useRouter: jest.fn(),
 }));
 
@@ -38,7 +38,7 @@ describe("MainMenu", () => {
       />,
     );
     expect(screen.getByTestId("testid.mainMenu.reviewsMenu")).toBeInTheDocument();
-    expect(screen.getByTestId("testid.mainMenu.reviewsMenu")).toHaveTextContent("mainMenu.reviews.title (0)");
+    expect(screen.getByTestId("testid.mainMenu.reviewsMenu")).toHaveTextContent("mainMenu.reviews.title (1)");
   });
 
   [[], null, undefined].forEach((data) => {

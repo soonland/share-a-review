@@ -68,6 +68,10 @@
             "submit": "Soumettre",
             "cancel": "Annuler"
         },
+        "search": {
+            "placeholder": "Rechercher un avis",
+            "noResults": "Aucun résultat trouvé pour {{value}}"
+        },
         "characters": "{{value}} caractères",
         "fieldRequired": "Ce champ est requis",
         "maxLengthExceeded": "Maximum {{value}} caractères autorisés",

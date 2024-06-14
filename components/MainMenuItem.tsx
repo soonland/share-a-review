@@ -3,7 +3,7 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import { Button, CircularProgress, Menu, MenuItem, useTheme } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { useState, ReactElement, FC } from "react";
 import useSWR from "swr";

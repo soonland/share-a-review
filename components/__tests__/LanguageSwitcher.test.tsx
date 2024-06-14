@@ -10,7 +10,7 @@ jest.mock("next-translate/useTranslation");
 describe("LanguageSwitcher", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.mock("next/navigation", () => ({
+    jest.mock("next/router", () => ({
       usePathname: jest.fn(() => "/"),
     }));
     Object.defineProperty(window, "location", {

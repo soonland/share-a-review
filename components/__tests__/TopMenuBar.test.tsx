@@ -7,7 +7,7 @@ import { mockSessionAuth, mockSessionUnAuth } from "../mockData";
 import TopMenuBar from "../TopMenuBar";
 
 jest.mock("next-auth/react");
-jest.mock("next/navigation", () => ({
+jest.mock("next/router", () => ({
   useRouter: jest.fn(),
 }));
 

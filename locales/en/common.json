@@ -68,6 +68,10 @@
             "submit": "Submit",
             "cancel": "Cancel"
         },
+        "search": {
+            "placeholder": "Search for a review",
+            "noResults": "No results found for {{value}}"
+        },
         "characters": "{{value}} characters",
         "fieldRequired": "This field is required",
         "maxLengthExceeded": "Maximum {{value}} characters allowed",

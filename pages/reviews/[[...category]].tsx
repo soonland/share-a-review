@@ -1,11 +1,13 @@
 import { Grid, Typography } from "@mui/material";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
 import Alert from "@/components/Alert";
 import ReviewItem from "@/components/ReviewItem";
+import SearchForm from "@/components/SearchForm";
 
-const Reviews = () => {
+const Reviews: NextPage = () => {
   const fetcher = async (url: string) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -26,8 +28,9 @@ const Reviews = () => {
   };
 
   const router = useRouter();
-  const { category = "" } = router.query;
-  const { data, isLoading, error } = useSWR(`/api/reviews/${category}`, fetcher);
+  const { category = "", q = "" } = router.query;
+  const url = `/api/reviews/${category}?q=${q}`;
+  const { data, isLoading, error } = useSWR(url, fetcher);
 
   if (!data) {
     return <Typography>Loading...</Typography>;
@@ -43,11 +46,15 @@ const Reviews = () => {
   if (reviews?.length == 0) return <div>No reviews found</div>;
 
   return (
-    <Grid container spacing={2}>
-      {reviews.map((review) => (
-        <ReviewItem key={review.review_id} review={review} />
-      ))}
-    </Grid>
+    <>
+      <SearchForm />
+      <br />
+      <Grid container spacing={2}>
+        {reviews.map((review) => (
+          <ReviewItem key={review.review_id} review={review} />
+        ))}
+      </Grid>
+    </>
   );
 };
 
