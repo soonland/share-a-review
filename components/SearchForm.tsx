@@ -111,11 +111,11 @@ const SearchForm: FC = () => {
     >
       <StyledSearch>
         <SelectField
-          label="Category"
           withLabel={false}
           name="category"
           control={control}
           options={dataCategories?.data}
+          placeholder={t("form.select.placeholder.category")}
           sx={{
             flex: "1 1 20%",
             border: 0,
@@ -134,9 +134,9 @@ const SearchForm: FC = () => {
           }}
         />
         <StyledInputBase
-          sx={{ flex: "1 1 70%" }}
+          sx={{ flex: "1 1 65%" }}
           placeholder={t("form.search.placeholder")}
-          data-testid="testid.search"
+          data-testid="testid.form.inputField.item"
           inputProps={{ "aria-label": "search" }}
           {...register("item", { required: t("form.fieldRequired") })}
         />
@@ -144,10 +144,11 @@ const SearchForm: FC = () => {
           type="submit"
           variant="text"
           color="secondary"
+          data-testid="testid.form.button.search"
           endIcon={<SearchIcon />}
           sx={{ borderTopRightRadius: 32, borderBottomRightRadius: 32, flex: "1 1 10%" }}
         >
-          Submit
+          {t("form.search.submit")}
         </Button>
       </StyledSearch>
     </form>

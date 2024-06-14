@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import useSWR from "swr";
@@ -29,21 +29,17 @@ const Reviews: NextPage = () => {
 
   const router = useRouter();
   const { category = "", q = "" } = router.query;
-  const url = `/api/reviews/${category}?q=${q}`;
+  let url = `/api/reviews/${category}`;
+  if (q) {
+    url += `?q=${q}`;
+  }
   const { data, isLoading, error } = useSWR(url, fetcher);
 
-  if (!data) {
-    return <Typography>Loading...</Typography>;
-  }
-
-  const { data: reviews, success } = data;
-  if (!success) {
-    return <Alert severity="error" message={data.message} />;
-  }
   if (isLoading) return <div>Loading...</div>;
-  if (data?.message) return <Alert severity="error" message={data.message} />;
   if (error) return <Alert severity="error" message={error.message || "An error occurred"} />;
-  if (reviews?.length == 0) return <div>No reviews found</div>;
+  const { data: reviews, success, message } = data || {};
+  if (!success) return <Alert severity="error" message={message} />;
+  if (reviews?.length === 0) return <div>No reviews found</div>;
 
   return (
     <>

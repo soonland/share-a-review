@@ -69,8 +69,14 @@
             "cancel": "Annuler"
         },
         "search": {
-            "placeholder": "Rechercher un avis",
+            "placeholder": "Rechercher des avis par item, par catégorie ...",
+            "submit": "Rechercher",
             "noResults": "Aucun résultat trouvé pour {{value}}"
+        },
+        "select": {
+            "placeholder": {
+                "category": "Filtrer par catégorie"
+            }
         },
         "characters": "{{value}} caractères",
         "fieldRequired": "Ce champ est requis",

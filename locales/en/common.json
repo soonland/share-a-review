@@ -69,8 +69,14 @@
             "cancel": "Cancel"
         },
         "search": {
-            "placeholder": "Search for a review",
+            "placeholder": "Search for an item by name, by category ...",
+            "submit": "Search",
             "noResults": "No results found for {{value}}"
+        },
+        "select": {
+            "placeholder": {
+                "category": "Filter by category"
+            }
         },
         "characters": "{{value}} characters",
         "fieldRequired": "This field is required",

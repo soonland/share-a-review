@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 import MainMenuItem from "../MainMenuItem";
@@ -16,7 +16,7 @@ jest.mock("swr", () => ({
   }),
 }));
 
-jest.mock("next/router", () => ({
+jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 

@@ -12,12 +12,13 @@ interface SelectFieldProps {
   control: any;
   label?: string;
   size?: "small" | "medium";
-  error?: string;
   rules?: SelectFieldRules;
+  error?: string;
   options: { value: string; label: string }[];
+  placeholder?: string;
+  isLoading?: boolean;
   disabled?: boolean;
   withLabel?: boolean;
-  isLoading?: boolean;
   sx?: SxProps;
 }
 
@@ -29,7 +30,8 @@ const SelectField: FC<SelectFieldProps> = ({
   rules = {},
   error,
   options,
-  isLoading = false,
+  placeholder = label,
+  // isLoading = false,
   disabled = false,
   withLabel = true,
   sx,
@@ -48,13 +50,14 @@ const SelectField: FC<SelectFieldProps> = ({
               <Select
                 {...field}
                 {...labelProps}
+                data-testid={`testid.form.selectField.${name}`}
                 disabled={disabled}
                 required={!!required}
                 displayEmpty={!withLabel}
                 fullWidth
                 variant="outlined"
                 error={!!error}
-                placeholder="Select an option"
+                placeholder={placeholder}
                 onChange={field.onChange}
                 // onChange={(e) => {
                 //   field.onChange(e);
@@ -64,7 +67,7 @@ const SelectField: FC<SelectFieldProps> = ({
                 // }}
               >
                 <MenuItem value="" disabled>
-                  {isLoading ? "Loading..." : "Select an option"}
+                  {placeholder}
                 </MenuItem>
                 {options?.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
