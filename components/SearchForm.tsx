@@ -65,8 +65,8 @@ const SearchForm: FC = () => {
 
   const {
     data: dataCategories,
-    isLoading: isLoadingCategories,
-    error: errorCategories,
+    // isLoading: isLoadingCategories,
+    // error: errorCategories,
   } = useSWR(`/api/categories`, fetcher);
 
   const {
@@ -74,11 +74,11 @@ const SearchForm: FC = () => {
     control,
     handleSubmit,
     setError,
-    clearErrors,
-    reset,
+    // clearErrors,
+    // reset,
     getValues,
-    setValue,
-    formState: { errors },
+    // setValue,
+    // formState: { errors },
   } = useForm<IFormInputs>({
     defaultValues: {
       category: "",

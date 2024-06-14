@@ -32,7 +32,6 @@ const SelectField: FC<SelectFieldProps> = ({
   isLoading = false,
   disabled = false,
   withLabel = true,
-  onChange,
   sx,
 }) => {
   const { required = "" } = rules;
