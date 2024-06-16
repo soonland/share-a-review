@@ -9,7 +9,7 @@ interface SelectFieldRules {
 interface SelectFieldProps {
   name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: any;
+  control?: any;
   label?: string;
   size?: "small" | "medium";
   rules?: SelectFieldRules;
@@ -50,7 +50,7 @@ const SelectField: FC<SelectFieldProps> = ({
               <Select
                 {...field}
                 {...labelProps}
-                data-testid={`testid.form.selectField.${name}`}
+                data-testid={`testid.form.selectField.${field.name}`}
                 disabled={disabled}
                 required={!!required}
                 displayEmpty={!withLabel}

@@ -97,14 +97,17 @@ const SearchForm: FC = () => {
 
   return (
     <form
+      data-testid="testid.form.searchForm"
       onSubmit={handleSubmit(() => {
+        console.log("url", `/reviews/${getValues("category")}?q=${getValues("item")}`);
         const category = `/${getValues("category")}`;
         const item = getValues("item");
-        if (!category && !item) {
+        if (!item) {
           setError("item", { type: "manual", message: t("form.fieldRequired") });
           return;
         }
         const url = `/reviews${category}?q=${item}`;
+        console.log("url", url);
         router.push(url);
       })}
       noValidate

@@ -1,4 +1,3 @@
-// ReviewItem.jsx
 import { Grid } from "@mui/material";
 
 import ProfileCard from "./ProfileCard";
