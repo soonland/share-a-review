@@ -1,4 +1,3 @@
-// Review.jsx
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { Stack, Typography, IconButton, useTheme, darken } from "@mui/material";
 import Rating from "@mui/material/Rating";
@@ -17,6 +16,7 @@ const Review = ({ review }) => {
         borderRadius: theme.spacing(1),
         backgroundColor: darken(theme.palette.background.paper, 0.05),
       }}
+      data-testid={`testid.reviews.reviewItem.${review.id}.review`}
     >
       <Stack
         sx={{

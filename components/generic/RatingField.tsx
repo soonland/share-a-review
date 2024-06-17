@@ -42,6 +42,8 @@ const RatingField: FC<RatingFieldProps> = ({ name, control, size, disabled = fal
               name={name}
               value={Number(field.value)}
               disabled={disabled}
+              max={5}
+              defaultValue={3}
               size={size}
               getLabelText={getLabelText}
               onChange={field.onChange}

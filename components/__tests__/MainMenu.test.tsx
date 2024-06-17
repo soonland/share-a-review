@@ -13,12 +13,12 @@ jest.mock("next-auth/react", () => ({
   signOut: jest.fn(),
   useSession: jest.fn(),
 }));
-jest.mock("next/navigation", () => ({
+jest.mock("next/router", () => ({
   useRouter: jest.fn(),
   usePathname: jest.fn(() => "/"),
 }));
 
-jest.mock("next/router", () => ({
+jest.mock("next/navigation", () => ({
   useRouter: jest.fn().mockReturnValue({
     push: jest.fn(),
   }),

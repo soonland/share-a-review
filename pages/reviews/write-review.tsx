@@ -41,7 +41,7 @@ const WriteReviews = () => {
       title: "",
       content: "",
       item: "",
-      rating: "5",
+      rating: "3",
     },
   });
 
@@ -143,6 +143,7 @@ const WriteReviews = () => {
           size="small"
           isLoading={isLoading}
           error={errors.item?.message}
+          sx={{ mb: 2 }}
           options={data?.data.map((item) => ({
             value: item.id.toString(),
             label: `${item.category_name} - ${item.name}`,

@@ -5,7 +5,7 @@ import Footer from "../Footer";
 
 jest.mock("next-auth/react");
 
-jest.mock("next/navigation", () => ({
+jest.mock("next/router", () => ({
   useRouter: jest.fn(),
   usePathname: jest.fn(),
 }));

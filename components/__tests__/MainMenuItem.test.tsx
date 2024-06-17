@@ -11,7 +11,7 @@ jest.mock("swr", () => ({
   __esModule: true,
   default: jest.fn().mockReturnValue({
     data: {
-      data: [],
+      data: [{ id: "1", title: "a review", content: "a review content", rating: 5 }],
     },
   }),
 }));
@@ -38,7 +38,7 @@ describe("MainMenu", () => {
       />,
     );
     expect(screen.getByTestId("testid.mainMenu.reviewsMenu")).toBeInTheDocument();
-    expect(screen.getByTestId("testid.mainMenu.reviewsMenu")).toHaveTextContent("mainMenu.reviews.title (0)");
+    expect(screen.getByTestId("testid.mainMenu.reviewsMenu")).toHaveTextContent("mainMenu.reviews.title (1)");
   });
 
   [[], null, undefined].forEach((data) => {

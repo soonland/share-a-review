@@ -1,11 +1,12 @@
 import { Language } from "@mui/icons-material";
 import MenuItem from "@mui/material/MenuItem";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import React, { FC } from "react";
 
 const LanguageSwitcher: FC = () => {
-  const location = usePathname() ?? "";
+  const router = useRouter();
+  const location = router.asPath;
   const { lang } = useTranslation();
 
   const switchTo = lang === "en" ? "fr" : "en";

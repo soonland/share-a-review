@@ -1,11 +1,14 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { JSX } from "react";
 import useSWR from "swr";
 
 import Alert from "@/components/Alert";
 import ReviewItem from "@/components/ReviewItem";
+import SearchForm from "@/components/SearchForm";
 
-const Reviews = () => {
+const Reviews: NextPage = () => {
   const fetcher = async (url: string) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -26,28 +29,29 @@ const Reviews = () => {
   };
 
   const router = useRouter();
-  const { category = "" } = router.query;
-  const { data, isLoading, error } = useSWR(`/api/reviews/${category}`, fetcher);
-
-  if (!data) {
-    return <Typography>Loading...</Typography>;
+  const { category = "", q = "" } = router.query;
+  let url = `/api/reviews/${category}`;
+  if (q) {
+    url += `?q=${q}`;
   }
+  const { data, isLoading, error } = useSWR(url, fetcher);
 
-  const { data: reviews, success } = data;
-  if (!success) {
-    return <Alert severity="error" message={data.message} />;
-  }
-  if (isLoading) return <div>Loading...</div>;
-  if (data?.message) return <Alert severity="error" message={data.message} />;
-  if (error) return <Alert severity="error" message={error.message || "An error occurred"} />;
-  if (reviews?.length == 0) return <div>No reviews found</div>;
+  let banner: JSX.Element = <></>;
+  if (isLoading) banner = <div>Loading...</div>;
+  if (error) banner = <Alert severity="error" message={error.message || "An error occurred"} />;
+  const { data: reviews, success, message } = data || {};
+  if (!isLoading && !success) banner = <Alert severity="error" message={message} />;
+  if (!isLoading && reviews?.length === 0) banner = <Alert severity="info" message="No reviews found" />;
 
   return (
-    <Grid container spacing={2}>
-      {reviews.map((review) => (
-        <ReviewItem key={review.review_id} review={review} />
-      ))}
-    </Grid>
+    <>
+      <SearchForm />
+      <br />
+      {banner}
+      <Grid container spacing={2}>
+        {reviews?.map((review) => <ReviewItem key={review.review_id} review={review} />)}
+      </Grid>
+    </>
   );
 };
 

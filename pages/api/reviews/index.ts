@@ -6,7 +6,10 @@ export default async function handler(req, res) {
     try {
       const client = await pool.connect();
 
-      const result = await client.query(selectReviews());
+      const query = req.query.q ? req.query.q.toLowerCase() : null;
+      const values: string[] = [];
+      if (query) values.push(`%${query}%`);
+      const result = await client.query(selectReviews("", query), values);
 
       client.release();
 

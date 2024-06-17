@@ -62,6 +62,11 @@ const theme = createTheme({
     MuiButtonBase: {
       styleOverrides: {
         root: {
+          "&.MuiButton-root": {
+            color: "inherit",
+            padding: "6px 18px",
+            fontWeight: 900,
+          },
           "&.MuiButton-outlined": {
             color: "inherit",
             border: "1px solid #e4e4e4",
