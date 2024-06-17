@@ -8,7 +8,7 @@ describe("Reviews page", () => {
       cy.intercept("GET", "/api/reviews", (req) => {
         req.reply({ body: { ...this.reviews } });
       }).as("allReviews");
-      cy.intercept("GET", "/api/reviews/movies*", (req) => {
+      cy.intercept("GET", "/api/reviews/electronics*", (req) => {
         req.reply({
           body: {
             ...this.reviews,
@@ -22,6 +22,7 @@ describe("Reviews page", () => {
           data: [
             { value: "movies", label: "movies" },
             { value: "series", label: "series" },
+            { value: "electronics", label: "electronics" },
             { value: "books", label: "books" },
           ],
         },
@@ -36,12 +37,12 @@ describe("Reviews page", () => {
         cy.wait("@allReviews");
         cy.get('[data-testid="testid.mainMenu.reviews"]').should("exist").contains("Reviews (39)");
         cy.get('[data-testid="testid.form.selectField.category"]').should("exist").click();
-        cy.get('[id="menu-category"] ul').should("exist").children().should("have.length", 4);
+        cy.get('[id="menu-category"] ul').should("exist").children().should("have.length", 5);
         cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
           .should("exist")
-          .and("have.length", 3)
-          .eq(0)
-          .should("contain.text", "movies")
+          .and("have.length", 4)
+          .eq(2)
+          .should("contain.text", "electronics")
           .click();
         cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist").type("test");
         cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
@@ -70,20 +71,24 @@ describe("Reviews page", () => {
       });
     });
 
+    const selectCategory = (category) => {
+      cy.get('[data-testid="testid.form.selectField.category"]').should("exist").click();
+      cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
+        .should("exist")
+        .and("have.length", 4)
+        .eq(2) // electronics TODO: change to dynamic
+        .should("contain.text", category)
+        .click();
+    };
+
     context("When the user only selects a category", () => {
       it("Then the UI should allow form submit", () => {
         cy.wait("@allReviews");
         cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist");
-        cy.get('[data-testid="testid.form.selectField.category"]').should("exist").click();
-        cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
-          .should("exist")
-          .and("have.length", 3)
-          .eq(0)
-          .should("contain.text", "movies")
-          .click();
+        selectCategory("electronics");
         cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
-        cy.url().should("include", "/reviews/movies");
+        cy.url().should("include", "/reviews/electronics");
       });
     });
 
@@ -91,16 +96,10 @@ describe("Reviews page", () => {
       it("Then the UI should allow form submit", () => {
         cy.wait("@allReviews");
         cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist").type("test");
-        cy.get('[data-testid="testid.form.selectField.category"]').should("exist").click();
-        cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
-          .should("exist")
-          .and("have.length", 3)
-          .eq(0)
-          .should("contain.text", "movies")
-          .click();
+        selectCategory("electronics");
         cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
-        cy.url().should("include", "/reviews/movies?q=test");
+        cy.url().should("include", "/reviews/electronics?q=test");
       });
     });
 
@@ -108,13 +107,7 @@ describe("Reviews page", () => {
       it("Then the UI should display the results", () => {
         cy.wait("@allReviews");
         cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist").type("iphone");
-        cy.get('[data-testid="testid.form.selectField.category"]').should("exist").click();
-        cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
-          .should("exist")
-          .and("have.length", 3)
-          .eq(0)
-          .should("contain.text", "movies")
-          .click();
+        selectCategory("electronics");
         cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
         cy.wait("@movieReviews");
         cy.get('[data-testid$=".profileCard"]').should("exist").and("have.length", 2);
