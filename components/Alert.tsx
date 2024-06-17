@@ -1,4 +1,4 @@
-import { Alert as MuiAlert } from "@mui/material";
+import { Alert as MuiAlert, useTheme } from "@mui/material";
 import React from "react";
 
 export interface AlertProps {
@@ -7,7 +7,15 @@ export interface AlertProps {
 }
 
 const Alert: React.FC<AlertProps> = ({ severity, message }) => {
-  return <MuiAlert severity={severity}>{message}</MuiAlert>;
+  const theme = useTheme();
+  return (
+    <MuiAlert
+      severity={severity}
+      sx={{ marginBottom: theme.spacing(1), borderRadius: theme.spacing(4), marginX: theme.spacing(4) }}
+    >
+      {message}
+    </MuiAlert>
+  );
 };
 
 export default Alert;

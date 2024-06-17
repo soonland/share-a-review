@@ -19,7 +19,7 @@ describe("Home page", () => {
       });
 
       it("Then the user should see 3 main menu items", () => {
-        cy.get('[data-testid="testid.mainMenu.reviews"]').should("exist").contains("Reviews (10)");
+        cy.get('[data-testid="testid.mainMenu.reviews"]').should("exist").contains("Reviews (39)");
         cy.get('[data-testid="testid.mainMenu.myReviews"]').should("exist");
         cy.get('[data-testid="testid.mainMenu.writeReview"]').should("exist");
       });
