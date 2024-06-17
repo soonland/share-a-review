@@ -1,4 +1,6 @@
-export const selectReviews = (category: string = "", query: string = "") => `SELECT
+export const selectReviews = (category: string = "", query: string = "") => {
+  let i = 1;
+  return `SELECT
   r.id AS review_id,
   r.user_id AS review_user_id,
   u.name AS review_user_name,
@@ -39,8 +41,10 @@ LEFT JOIN
   comments c ON r.id = c.review_id
 LEFT JOIN
   users cu ON c.user_id = cu.id
-  ${category ? `WHERE LOWER(cat.name) = $1` : ""}
-  ${query ? `AND (LOWER(i.name) LIKE $2)` : ""}
+WHERE TRUE
+  ${category ? `AND LOWER(cat.name) = $${i++}` : ""}
+  ${query ? `AND LOWER(i.name) LIKE $${i++}` : ""}
 GROUP BY
   r.id, u.name, u.email, i.name, i.category_id, cat.name, i.description, i.date_created;
 `;
+};

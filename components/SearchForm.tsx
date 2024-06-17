@@ -1,5 +1,5 @@
-import { Search as SearchIcon } from "@mui/icons-material";
-import { Button, InputBase, Stack, alpha, styled } from "@mui/material";
+import { Clear, Search as SearchIcon } from "@mui/icons-material";
+import { Button, IconButton, InputAdornment, InputBase, Stack, alpha, styled } from "@mui/material";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { FC, PropsWithChildren, useEffect } from "react";
@@ -30,8 +30,20 @@ const StyledSearch: FC<PropsWithChildren> = ({ children }) => {
 };
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1),
+  border: 0,
+  borderBottomLeftRadius: 0,
+  borderTopLeftRadius: 0,
+  borderTopRightRadius: 0,
+  borderBottomRightRadius: 0,
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(2),
+  borderRight: `1px solid ${alpha(theme.palette.common.black, 0.9)}`,
+  "&.Mui-error": {
+    border: `1px solid #ff0000`,
+    "& .MuiInputBase-input::placeholder": {
+      color: "red",
+      opacity: 1,
+    },
   },
 }));
 
@@ -75,10 +87,10 @@ const SearchForm: FC = () => {
     handleSubmit,
     setError,
     // clearErrors,
-    // reset,
+    reset,
     getValues,
     setValue,
-    // formState: { errors },
+    formState: { errors },
   } = useForm<IFormInputs>({
     defaultValues: {
       category: "",
@@ -91,23 +103,21 @@ const SearchForm: FC = () => {
   const category = (router.query?.category as string) || "";
 
   useEffect(() => {
-    setValue("category", category, { shouldValidate: true });
-    setValue("item", query, { shouldValidate: true });
+    setValue("category", category, { shouldValidate: false });
+    setValue("item", query, { shouldValidate: false });
   }, [category, query, setValue]);
 
   return (
     <form
       data-testid="testid.form.searchForm"
       onSubmit={handleSubmit(() => {
-        console.log("url", `/reviews/${getValues("category")}?q=${getValues("item")}`);
-        const category = `/${getValues("category")}`;
+        const category = getValues("category");
         const item = getValues("item");
-        if (!item) {
+        const url = `/reviews/${category}?q=${item}`;
+        if (!item && !category) {
           setError("item", { type: "manual", message: t("form.fieldRequired") });
           return;
         }
-        const url = `/reviews${category}?q=${item}`;
-        console.log("url", url);
         router.push(url);
       })}
       noValidate
@@ -137,11 +147,27 @@ const SearchForm: FC = () => {
           }}
         />
         <StyledInputBase
-          sx={{ flex: "1 1 65%" }}
+          sx={{
+            flex: "1 1 65%",
+          }}
           placeholder={t("form.search.placeholder")}
           data-testid="testid.form.inputField.item"
           inputProps={{ "aria-label": "search" }}
-          {...register("item", { required: t("form.fieldRequired") })}
+          error={!!errors.item}
+          {...register("item")}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label=""
+                onClick={() => reset({ item: "", category: "" })}
+                onMouseDown={() => reset({ item: "", category: "" })}
+                // disabled={!getValues("item") || !getValues("category")}
+                edge="end"
+              >
+                <Clear />
+              </IconButton>
+            </InputAdornment>
+          }
         />
         <Button
           type="submit"

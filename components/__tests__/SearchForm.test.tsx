@@ -58,6 +58,9 @@ describe("SearchForm", () => {
         }
         return "item1";
       }),
+      formState: {
+        errors: {},
+      },
     });
 
     mockController.mockImplementation(({ render }) =>
@@ -87,8 +90,8 @@ describe("SearchForm", () => {
       },
     });
     render(<SearchForm />);
-    expect(mockUseForm().setValue).toHaveBeenCalledWith("category", "category1", { shouldValidate: true });
-    expect(mockUseForm().setValue).toHaveBeenCalledWith("item", "item1", { shouldValidate: true });
+    expect(mockUseForm().setValue).toHaveBeenCalledWith("category", "category1", { shouldValidate: false });
+    expect(mockUseForm().setValue).toHaveBeenCalledWith("item", "item1", { shouldValidate: false });
   });
 
   it("sets an error if both category and item are empty on form submission", () => {
@@ -100,12 +103,12 @@ describe("SearchForm", () => {
       }),
       setError: jest.fn(),
       setValue: jest.fn(),
-      getValues: jest.fn().mockImplementation((name) => {
-        if (name === "category") {
-          return "category1";
-        }
+      getValues: jest.fn().mockImplementation(() => {
         return "";
       }),
+      formState: {
+        errors: {},
+      },
     });
 
     render(<SearchForm />);

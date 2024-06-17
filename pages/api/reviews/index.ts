@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       const query = req.query.q ? req.query.q.toLowerCase() : null;
       const values: string[] = [];
       if (query) values.push(`%${query}%`);
-      const result = await client.query(selectReviews(query), values);
+      const result = await client.query(selectReviews("", query), values);
 
       client.release();
 
