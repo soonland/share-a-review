@@ -1,3 +1,11 @@
+---
+name: Bug report
+about: Create a report to help us improve
+title: 'Bug: <brief description of the bug>'
+labels: 'bug'
+assignees: 'soonland'
+---
+
 # 🐞 Bug Report: [Brief description of the bug] 🐞
 
 ## Description

@@ -1,3 +1,10 @@
+---
+name: Feature request
+about: Suggest an idea for this project
+title: 'Feature: <brief description of the feature>'
+labels: 'enhancement'
+assignees: 'soonland'
+---
 # 🌟 Feature Request: [Brief description of the feature] 🌟
 
 ## Description
