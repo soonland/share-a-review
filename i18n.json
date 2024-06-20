@@ -3,6 +3,7 @@
         "en",
         "fr"
     ],
+    "defaultNS": "common",
     "defaultLocale": "en",
     "pages": {
         "*": [

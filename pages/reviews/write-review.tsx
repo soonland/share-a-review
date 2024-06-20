@@ -26,7 +26,7 @@ interface IFormInputs {
 }
 
 const WriteReviews = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const session = useSession();
   const [feedbackMessage, setFeedbackMessage] = useState<AlertProps>();
   const {
@@ -109,7 +109,7 @@ const WriteReviews = () => {
       });
   };
 
-  const { data, isLoading } = useSWR(`/api/items`, fetcher);
+  const { data, isLoading } = useSWR(`/api/items?type=list`, fetcher);
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>

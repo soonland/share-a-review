@@ -12,7 +12,7 @@ interface ChangeThemeModeProps {
 }
 
 const ChangeThemeMode: FC<ChangeThemeModeProps> = ({ sx }): ReactElement => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const { dark, isDark } = useContext<IThemeContext>(ThemeContext);
 
   return (

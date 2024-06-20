@@ -1,22 +1,13 @@
 import pool from "../../../db"; // Importez la configuration de connexion à la base de données
-import { selectItemsForHomePage } from "../constants";
+import { selectItem } from "../constants";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
+      const slug = req.query.slug;
       const client = await pool.connect();
 
-      let result;
-      if (req.query.type === "home") {
-        result = await client.query(selectItemsForHomePage());
-      } else if (req.query.type === "list") {
-        result = await client.query(
-          `SELECT items.*, categories.name AS category_name
-        FROM items JOIN categories ON items.category_id = categories.id
-        ORDER BY category_name, items.name
-        ;`,
-        );
-      }
+      const result = await client.query(selectItem(), [slug]);
 
       client.release();
 

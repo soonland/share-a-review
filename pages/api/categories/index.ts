@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     try {
       const client = await pool.connect();
 
-      const result = await client.query("SELECT LOWER(name) as value, LOWER(name) as label FROM categories");
+      const result = await client.query("SELECT LOWER(slug) as value, LOWER(slug) as label FROM categories");
 
       client.release();
 

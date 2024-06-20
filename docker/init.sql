@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS accounts
 CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
+    slug VARCHAR(100) UNIQUE,
     description_template jsonb -- Description de l'item (peut être un objet JSON)
 );
 
@@ -65,6 +66,7 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS items (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
+    slug VARCHAR(100) UNIQUE,
     category_id INT, -- Référence vers la catégorie de l'item
     description jsonb, -- Description de l'item (peut être un objet JSON)
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -126,11 +128,11 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 -- Truncate tables and reset identities
--- TRUNCATE TABLE users RESTART IDENTITY CASCADE;
--- TRUNCATE TABLE categories RESTART IDENTITY CASCADE;
--- TRUNCATE TABLE items RESTART IDENTITY CASCADE;
--- TRUNCATE TABLE reviews RESTART IDENTITY CASCADE;
--- TRUNCATE TABLE comments RESTART IDENTITY CASCADE;
+TRUNCATE TABLE users RESTART IDENTITY CASCADE;
+TRUNCATE TABLE categories RESTART IDENTITY CASCADE;
+TRUNCATE TABLE items RESTART IDENTITY CASCADE;
+TRUNCATE TABLE reviews RESTART IDENTITY CASCADE;
+TRUNCATE TABLE comments RESTART IDENTITY CASCADE;
 
 -- Inserting users
 INSERT INTO users (name, email, password) VALUES 
@@ -156,43 +158,43 @@ INSERT INTO users (name, email, password) VALUES
 ('Alexei Leonov', 'alexei@example.com', 'password19');
 
 -- Inserting categories
-INSERT INTO categories (name, description_template) VALUES 
-('Electronics', '{"brand": "text", "model": "text", "price": "number", "color": "text"}'),
-('Movies', '{"title": "text", "director": "text", "year": "number", "genre": "text"}'),
-('Restaurants', '{"name": "text", "cuisine": "text", "location": "text", "rating": "number"}');
+INSERT INTO categories (name, slug, description_template) VALUES 
+('Electronics', 'electronics', '{"brand": "text", "model": "text", "price": "number", "color": "text"}'),
+('Movies', 'movies', '{"title": "text", "director": "text", "year": "number", "genre": "text"}'),
+('Restaurants', 'restaurants', '{"name": "text", "cuisine": "text", "location": "text", "rating": "number"}');
 
 -- Inserting items into Electronics category
-INSERT INTO items (name, category_id, description) VALUES 
-('iPhone 12', 1, '{"brand": "Apple", "model": "iPhone 12", "price": 799, "color": "Black"}'),
-('Galaxy S21', 1, '{"brand": "Samsung", "model": "Galaxy S21", "price": 799, "color": "Phantom Gray"}'),
-('Pixel 5', 1, '{"brand": "Google", "model": "Pixel 5", "price": 699, "color": "Just Black"}'),
-('OnePlus 8T', 1, '{"brand": "OnePlus", "model": "8T", "price": 749, "color": "Aquamarine Green"}'),
-('Sony WH-1000XM4', 1, '{"brand": "Sony", "model": "WH-1000XM4", "price": 349, "color": "Silver"}'),
-('Dell XPS 13', 1, '{"brand": "Dell", "model": "XPS 13", "price": 999, "color": "White"}'),
-('MacBook Pro', 1, '{"brand": "Apple", "model": "MacBook Pro", "price": 1299, "color": "Space Gray"}'),
-('Surface Pro 7', 1, '{"brand": "Microsoft", "model": "Surface Pro 7", "price": 749, "color": "Black"}');
+INSERT INTO items (name, slug, category_id, description) VALUES 
+('iPhone 12', 'iphone-12', 1, '{"brand": "Apple", "model": "iPhone 12", "price": 799, "color": "Black"}'),
+('Galaxy S21', 'galaxy-s21', 1, '{"brand": "Samsung", "model": "Galaxy S21", "price": 799, "color": "Phantom Gray"}'),
+('Pixel 5', 'pixel-5', 1, '{"brand": "Google", "model": "Pixel 5", "price": 699, "color": "Just Black"}'),
+('OnePlus 8T', 'oneplus-8t', 1, '{"brand": "OnePlus", "model": "8T", "price": 749, "color": "Aquamarine Green"}'),
+('Sony WH-1000XM4', 'sony-wh-1000xm4', 1, '{"brand": "Sony", "model": "WH-1000XM4", "price": 349, "color": "Silver"}'),
+('Dell XPS 13', 'dell-xps-13', 1, '{"brand": "Dell", "model": "XPS 13", "price": 999, "color": "White"}'),
+('MacBook Pro', 'macbook-pro', 1, '{"brand": "Apple", "model": "MacBook Pro", "price": 1299, "color": "Space Gray"}'),
+('Surface Pro 7', 'surface-pro-7', 1, '{"brand": "Microsoft", "model": "Surface Pro 7", "price": 749, "color": "Black"}');
 
 -- Inserting items into Movies category
-INSERT INTO items (name, category_id, description) VALUES 
-('Inception', 2, '{"title": "Inception", "director": "Christopher Nolan", "year": 2010, "genre": "Sci-Fi"}'),
-('The Matrix', 2, '{"title": "The Matrix", "director": "Lana Wachowski, Lilly Wachowski", "year": 1999, "genre": "Action"}'),
-('Interstellar', 2, '{"title": "Interstellar", "director": "Christopher Nolan", "year": 2014, "genre": "Sci-Fi"}'),
-('Parasite', 2, '{"title": "Parasite", "director": "Bong Joon Ho", "year": 2019, "genre": "Thriller"}'),
-('Pulp Fiction', 2, '{"title": "Pulp Fiction", "director": "Quentin Tarantino", "year": 1994, "genre": "Crime"}'),
-('The Godfather', 2, '{"title": "The Godfather", "director": "Francis Ford Coppola", "year": 1972, "genre": "Crime"}'),
-('The Dark Knight', 2, '{"title": "The Dark Knight", "director": "Christopher Nolan", "year": 2008, "genre": "Action"}'),
-('Forrest Gump', 2, '{"title": "Forrest Gump", "director": "Robert Zemeckis", "year": 1994, "genre": "Drama"}');
+INSERT INTO items (name, slug, category_id, description) VALUES
+('Inception', 'inception', 2, '{"title": "Inception", "director": "Christopher Nolan", "year": 2010, "genre": "Sci-Fi"}'),
+('The Matrix', 'the-matrix', 2, '{"title": "The Matrix", "director": "Lana Wachowski, Lilly Wachowski", "year": 1999, "genre": "Action"}'),
+('Interstellar', 'interstellar', 2, '{"title": "Interstellar", "director": "Christopher Nolan", "year": 2014, "genre": "Sci-Fi"}'),
+('Parasite', 'parasite' ,2, '{"title": "Parasite", "director": "Bong Joon Ho", "year": 2019, "genre": "Thriller"}'),
+('Pulp Fiction', 'pulp-fiction', 2, '{"title": "Pulp Fiction", "director": "Quentin Tarantino", "year": 1994, "genre": "Crime"}'),
+('The Godfather', 'the-godfather', 2, '{"title": "The Godfather", "director": "Francis Ford Coppola", "year": 1972, "genre": "Crime"}'),
+('The Dark Knight', 'the-dark-knight', 2, '{"title": "The Dark Knight", "director": "Christopher Nolan", "year": 2008, "genre": "Action"}'),
+('Forrest Gump', 'forrest-gump', 2, '{"title": "Forrest Gump", "director": "Robert Zemeckis", "year": 1994, "genre": "Drama"}');
 
 -- Inserting items into Restaurants category
-INSERT INTO items (name, category_id, description) VALUES 
-('Joe''s Pizza', 3, '{"name": "Joe''s Pizza", "cuisine": "Italian", "location": "New York, NY", "rating": 4.5}'),
-('Sushi Nakazawa', 3, '{"name": "Sushi Nakazawa", "cuisine": "Japanese", "location": "New York, NY", "rating": 4.8}'),
-('The French Laundry', 3, '{"name": "The French Laundry", "cuisine": "French", "location": "Yountville, CA", "rating": 4.9}'),
-('Noma', 3, '{"name": "Noma", "cuisine": "Nordic", "location": "Copenhagen, Denmark", "rating": 4.7}'),
-('Osteria Francescana', 3, '{"name": "Osteria Francescana", "cuisine": "Italian", "location": "Modena, Italy", "rating": 4.8}'),
-('El Celler de Can Roca', 3, '{"name": "El Celler de Can Roca", "cuisine": "Spanish", "location": "Girona, Spain", "rating": 4.9}'),
-('Mugaritz', 3, '{"name": "Mugaritz", "cuisine": "Spanish", "location": "Errenteria, Spain", "rating": 4.7}'),
-('Steirereck', 3, '{"name": "Steirereck", "cuisine": "Austrian", "location": "Vienna, Austria", "rating": 4.6}');
+INSERT INTO items (name, slug, category_id, description) VALUES 
+('Joe''s Pizza', 'joes-pizza', 3, '{"name": "Joe''s Pizza", "cuisine": "Italian", "location": "New York, NY", "rating": 4.5}'),
+('Sushi Nakazawa', 'sushi-nakazawa', 3, '{"name": "Sushi Nakazawa", "cuisine": "Japanese", "location": "New York, NY", "rating": 4.8}'),
+('The French Laundry', 'the-french-laundry', 3, '{"name": "The French Laundry", "cuisine": "French", "location": "Yountville, CA", "rating": 4.9}'),
+('Noma', 'noma', 3, '{"name": "Noma", "cuisine": "Nordic", "location": "Copenhagen, Denmark", "rating": 4.7}'),
+('Osteria Francescana', 'osteria-francescana', 3, '{"name": "Osteria Francescana", "cuisine": "Italian", "location": "Modena, Italy", "rating": 4.8}'),
+('El Celler de Can Roca', 'el-celler-de-can-roca', 3, '{"name": "El Celler de Can Roca", "cuisine": "Spanish", "location": "Girona, Spain", "rating": 4.9}'),
+('Mugaritz', 'mugaritz', 3, '{"name": "Mugaritz", "cuisine": "Spanish", "location": "Errenteria, Spain", "rating": 4.7}'),
+('Steirereck', 'steirereck', 3, '{"name": "Steirereck", "cuisine": "Austrian", "location": "Vienna, Austria", "rating": 4.6}');
 
 -- Inserting reviews
 INSERT INTO reviews (user_id, item_id, rating, content, likes, dislikes) VALUES 

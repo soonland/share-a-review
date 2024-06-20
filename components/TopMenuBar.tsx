@@ -15,7 +15,7 @@ import MainMenu from "./MainMenu";
 import UserMenu from "./UserMenu";
 
 const TopMenuBar: FC = (): ReactElement => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
 
   const theme = useTheme();
   const isExtraSmallSize = useMediaQuery(theme.breakpoints.down("md"));

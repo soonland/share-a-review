@@ -12,7 +12,7 @@ interface UserMenuProps {
 
 const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
   const session = useSession();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);

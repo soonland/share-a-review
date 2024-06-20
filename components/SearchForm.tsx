@@ -54,7 +54,7 @@ interface IFormInputs {
 
 const SearchForm: FC = () => {
   const router = useRouter();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
 
   const fetcher = async (url: string) => {
     const controller = new AbortController();

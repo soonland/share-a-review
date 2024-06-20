@@ -1,0 +1,485 @@
+{
+  "data": [
+    {
+      "item_id": 2,
+      "item_name": "Galaxy S21",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Samsung",
+        "color": "Phantom Gray",
+        "model": "Galaxy S21",
+        "price": 799
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 116,
+      "recent_review_user_id": 21,
+      "recent_review_rating": 5,
+      "recent_review_content": "as dasd fas",
+      "recent_review_likes": 0,
+      "recent_review_dislikes": 0,
+      "recent_review_date_created": "2024-06-11T04:27:45.525Z"
+    },
+    {
+      "item_id": 4,
+      "item_name": "OnePlus 8T",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "OnePlus",
+        "color": "Aquamarine Green",
+        "model": "8T",
+        "price": 749
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 115,
+      "recent_review_user_id": 21,
+      "recent_review_rating": 1,
+      "recent_review_content": "as daft dfsa",
+      "recent_review_likes": 0,
+      "recent_review_dislikes": 0,
+      "recent_review_date_created": "2024-06-11T04:20:11.567Z"
+    },
+    {
+      "item_id": 5,
+      "item_name": "Sony WH-1000XM4",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Sony",
+        "color": "Silver",
+        "model": "WH-1000XM4",
+        "price": 349
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 114,
+      "recent_review_user_id": 21,
+      "recent_review_rating": 4,
+      "recent_review_content": "as dfa fasd fas df",
+      "recent_review_likes": 0,
+      "recent_review_dislikes": 0,
+      "recent_review_date_created": "2024-06-11T04:19:14.424Z"
+    },
+    {
+      "item_id": 3,
+      "item_name": "Pixel 5",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Google",
+        "color": "Just Black",
+        "model": "Pixel 5",
+        "price": 699
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 113,
+      "recent_review_user_id": 21,
+      "recent_review_rating": 5,
+      "recent_review_content": "as da fast",
+      "recent_review_likes": 0,
+      "recent_review_dislikes": 0,
+      "recent_review_date_created": "2024-06-11T04:18:10.027Z"
+    },
+    {
+      "item_id": 6,
+      "item_name": "Dell XPS 13",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Dell",
+        "color": "White",
+        "model": "XPS 13",
+        "price": 999
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 99,
+      "recent_review_user_id": 21,
+      "recent_review_rating": 1,
+      "recent_review_content": "ad fads asd",
+      "recent_review_likes": 0,
+      "recent_review_dislikes": 0,
+      "recent_review_date_created": "2024-06-11T03:23:36.506Z"
+    },
+    {
+      "item_id": 1,
+      "item_name": "iPhone 12",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Apple",
+        "color": "Black",
+        "model": "iPhone 12",
+        "price": 799
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 96,
+      "recent_review_user_id": 21,
+      "recent_review_rating": 1,
+      "recent_review_content": "ad fads asd",
+      "recent_review_likes": 0,
+      "recent_review_dislikes": 0,
+      "recent_review_date_created": "2024-06-11T03:18:57.745Z"
+    },
+    {
+      "item_id": 12,
+      "item_name": "Parasite",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 2019,
+        "genre": "Thriller",
+        "title": "Parasite",
+        "director": "Bong Joon Ho"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 14,
+      "recent_review_user_id": 14,
+      "recent_review_rating": 5,
+      "recent_review_content": "An emotional journey.",
+      "recent_review_likes": 35,
+      "recent_review_dislikes": 7,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 13,
+      "item_name": "Pulp Fiction",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 1994,
+        "genre": "Crime",
+        "title": "Pulp Fiction",
+        "director": "Quentin Tarantino"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 15,
+      "recent_review_user_id": 15,
+      "recent_review_rating": 3,
+      "recent_review_content": "Interesting plot but slow pacing.",
+      "recent_review_likes": 15,
+      "recent_review_dislikes": 12,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 14,
+      "item_name": "The Godfather",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 1972,
+        "genre": "Crime",
+        "title": "The Godfather",
+        "director": "Francis Ford Coppola"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 16,
+      "recent_review_user_id": 16,
+      "recent_review_rating": 4,
+      "recent_review_content": "Well-made movie with great visuals.",
+      "recent_review_likes": 20,
+      "recent_review_dislikes": 5,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 15,
+      "item_name": "The Dark Knight",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 2008,
+        "genre": "Action",
+        "title": "The Dark Knight",
+        "director": "Christopher Nolan"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 17,
+      "recent_review_user_id": 17,
+      "recent_review_rating": 2,
+      "recent_review_content": "Not my cup of tea.",
+      "recent_review_likes": 10,
+      "recent_review_dislikes": 30,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 16,
+      "item_name": "Forrest Gump",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 1994,
+        "genre": "Drama",
+        "title": "Forrest Gump",
+        "director": "Robert Zemeckis"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 18,
+      "recent_review_user_id": 18,
+      "recent_review_rating": 5,
+      "recent_review_content": "A pioneer in the genre.",
+      "recent_review_likes": 50,
+      "recent_review_dislikes": 2,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 17,
+      "item_name": "Joe's Pizza",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Joe's Pizza",
+        "rating": 4.5,
+        "cuisine": "Italian",
+        "location": "New York, NY"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 19,
+      "recent_review_user_id": 19,
+      "recent_review_rating": 4,
+      "recent_review_content": "Great atmosphere and storytelling.",
+      "recent_review_likes": 35,
+      "recent_review_dislikes": 5,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 18,
+      "item_name": "Sushi Nakazawa",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Sushi Nakazawa",
+        "rating": 4.8,
+        "cuisine": "Japanese",
+        "location": "New York, NY"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 20,
+      "recent_review_user_id": 20,
+      "recent_review_rating": 5,
+      "recent_review_content": "An all-time favorite.",
+      "recent_review_likes": 60,
+      "recent_review_dislikes": 3,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 19,
+      "item_name": "The French Laundry",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "The French Laundry",
+        "rating": 4.9,
+        "cuisine": "French",
+        "location": "Yountville, CA"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 21,
+      "recent_review_user_id": 1,
+      "recent_review_rating": 4,
+      "recent_review_content": "Delicious pizza, will visit again.",
+      "recent_review_likes": 22,
+      "recent_review_dislikes": 3,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 20,
+      "item_name": "Noma",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Noma",
+        "rating": 4.7,
+        "cuisine": "Nordic",
+        "location": "Copenhagen, Denmark"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 22,
+      "recent_review_user_id": 2,
+      "recent_review_rating": 5,
+      "recent_review_content": "Outstanding sushi, highly recommend.",
+      "recent_review_likes": 30,
+      "recent_review_dislikes": 1,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 21,
+      "item_name": "Osteria Francescana",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Osteria Francescana",
+        "rating": 4.8,
+        "cuisine": "Italian",
+        "location": "Modena, Italy"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 23,
+      "recent_review_user_id": 3,
+      "recent_review_rating": 5,
+      "recent_review_content": "A dining experience like no other.",
+      "recent_review_likes": 45,
+      "recent_review_dislikes": 2,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 22,
+      "item_name": "El Celler de Can Roca",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "El Celler de Can Roca",
+        "rating": 4.9,
+        "cuisine": "Spanish",
+        "location": "Girona, Spain"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 24,
+      "recent_review_user_id": 4,
+      "recent_review_rating": 3,
+      "recent_review_content": "Good food but overpriced.",
+      "recent_review_likes": 12,
+      "recent_review_dislikes": 10,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 23,
+      "item_name": "Mugaritz",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Mugaritz",
+        "rating": 4.7,
+        "cuisine": "Spanish",
+        "location": "Errenteria, Spain"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 25,
+      "recent_review_user_id": 5,
+      "recent_review_rating": 4,
+      "recent_review_content": "Amazing dishes and atmosphere.",
+      "recent_review_likes": 25,
+      "recent_review_dislikes": 4,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 24,
+      "item_name": "Steirereck",
+      "item_category_id": 3,
+      "item_category_name": "Restaurants",
+      "item_description": {
+        "name": "Steirereck",
+        "rating": 4.6,
+        "cuisine": "Austrian",
+        "location": "Vienna, Austria"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 26,
+      "recent_review_user_id": 6,
+      "recent_review_rating": 5,
+      "recent_review_content": "The best restaurant I have ever been to.",
+      "recent_review_likes": 50,
+      "recent_review_dislikes": 2,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 7,
+      "item_name": "MacBook Pro",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Apple",
+        "color": "Space Gray",
+        "model": "MacBook Pro",
+        "price": 1299
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 9,
+      "recent_review_user_id": 9,
+      "recent_review_rating": 5,
+      "recent_review_content": "Amazing storyline and visuals.",
+      "recent_review_likes": 40,
+      "recent_review_dislikes": 0,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 8,
+      "item_name": "Surface Pro 7",
+      "item_category_id": 1,
+      "item_category_name": "Electronics",
+      "item_description": {
+        "brand": "Microsoft",
+        "color": "Black",
+        "model": "Surface Pro 7",
+        "price": 749
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 10,
+      "recent_review_user_id": 10,
+      "recent_review_rating": 2,
+      "recent_review_content": "Did not live up to the hype.",
+      "recent_review_likes": 5,
+      "recent_review_dislikes": 22,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 9,
+      "item_name": "Inception",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 2010,
+        "genre": "Sci-Fi",
+        "title": "Inception",
+        "director": "Christopher Nolan"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 11,
+      "recent_review_user_id": 11,
+      "recent_review_rating": 4,
+      "recent_review_content": "Timeless classic, highly recommend.",
+      "recent_review_likes": 28,
+      "recent_review_dislikes": 4,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 10,
+      "item_name": "The Matrix",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 1999,
+        "genre": "Action",
+        "title": "The Matrix",
+        "director": "Lana Wachowski, Lilly Wachowski"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 12,
+      "recent_review_user_id": 12,
+      "recent_review_rating": 5,
+      "recent_review_content": "A masterpiece of storytelling.",
+      "recent_review_likes": 45,
+      "recent_review_dislikes": 3,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    },
+    {
+      "item_id": 11,
+      "item_name": "Interstellar",
+      "item_category_id": 2,
+      "item_category_name": "Movies",
+      "item_description": {
+        "year": 2014,
+        "genre": "Sci-Fi",
+        "title": "Interstellar",
+        "director": "Christopher Nolan"
+      },
+      "item_date_created": "2024-06-09T06:43:37.073Z",
+      "recent_review_id": 13,
+      "recent_review_user_id": 13,
+      "recent_review_rating": 4,
+      "recent_review_content": "Great acting and direction.",
+      "recent_review_likes": 25,
+      "recent_review_dislikes": 5,
+      "recent_review_date_created": "2024-06-09T06:43:37.074Z"
+    }
+  ],
+  "success": true
+}

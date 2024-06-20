@@ -11,7 +11,7 @@ import useSWR from "swr";
 import { MainMenuItemProps } from "@/helpers/constants";
 
 const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus, url }): ReactElement => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const router = useRouter();
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
