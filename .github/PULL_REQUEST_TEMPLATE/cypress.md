@@ -1,21 +1,33 @@
-# Cypress Test Suite: [Feature Name]
+# 🧪 Cypress Tests: [Description of the addition/modification] 🧪
 
-## Overview
-This Cypress test suite covers the functionality of [brief description of the feature being tested].
+## Description
+📝 Describe the tests you’ve conjured up or tweaked in detail:
 
-## Test Cases
-### Test Case 1: [Describe Test Case]
-#### Description:
-[Provide a brief description of what this test case is supposed to verify.]
+## Type of Change
+- [ ] 🚀 Adding new tests
+- [ ] 🔧 Modifying existing tests
+- [ ] 🐞 Fixing tests
+- [ ] Other (please specify): 
 
-#### Steps:
-1. [Step 1]
-2. [Step 2]
-3. [Step 3]
+## Issues Resolved
+- 🔗 Issue number: [link to issue]
 
-#### Expected Result:
-[Describe the expected outcome of the test case.]
+## Test Scenarios Added/Modified
+📚 Tell us the stories behind your test scenarios:
+- [Scenario 1]
+- [Scenario 2]
+- [Scenario 3]
+
+## How to Test
+🔍 How do we run your awesome tests? Follow these instructions:
+1. Command to run the tests
+2. Additional instructions (if any)
+
+## Checklist
+- [ ] 📚 I have read the contribution guidelines
+- [ ] ✅ Cypress tests pass successfully
+- [ ] 🌐 I have checked the tests in multiple environments (if applicable)
+- [ ] 📖 Test documentation has been updated (if applicable)
 
 ## Additional Notes
-- [Any additional information or notes about the test suite or individual test cases can be added here.]
-
+💬 Any extra magic you'd like to share about this pull request? Tell us more!
