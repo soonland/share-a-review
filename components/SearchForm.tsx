@@ -79,7 +79,7 @@ const SearchForm: FC = () => {
     data: dataCategories,
     // isLoading: isLoadingCategories,
     // error: errorCategories,
-  } = useSWR(`/api/categories`, fetcher);
+  } = useSWR(`/api/categories/list`, fetcher);
 
   const {
     register,
@@ -113,7 +113,7 @@ const SearchForm: FC = () => {
       onSubmit={handleSubmit(() => {
         const category = getValues("category");
         const item = getValues("item");
-        const url = `/reviews/${category}?q=${item}`;
+        const url = `/categories/${category}?q=${item}`;
         if (!item && !category) {
           setError("item", { type: "manual", message: t("form.fieldRequired") });
           return;

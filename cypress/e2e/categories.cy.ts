@@ -8,7 +8,7 @@ describe("Reviews page", () => {
       cy.intercept("GET", "/api/reviews", (req) => {
         req.reply({ body: { ...this.reviews } });
       }).as("allReviews");
-      cy.intercept("GET", "/api/reviews/electronics*", (req) => {
+      cy.intercept("GET", "/api/categories/electronics*", (req) => {
         req.reply({
           body: {
             ...this.reviews,
@@ -16,7 +16,7 @@ describe("Reviews page", () => {
           },
         });
       }).as("movieReviews");
-      cy.intercept("GET", "/api/categories", {
+      cy.intercept("GET", "/api/categories/list", {
         body: {
           success: true,
           data: [
@@ -28,7 +28,7 @@ describe("Reviews page", () => {
         },
       }).as("categories");
 
-      cy.visit("/reviews");
+      cy.visit("/categories");
       cy.wait("@maintenanceMode");
     });
 
@@ -67,7 +67,7 @@ describe("Reviews page", () => {
           .should("not.have.value");
         cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
-        cy.url().should("include", "/reviews?q=test");
+        cy.url().should("include", "/categories?q=test");
       });
     });
 
@@ -88,7 +88,7 @@ describe("Reviews page", () => {
         selectCategory("electronics");
         cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
-        cy.url().should("include", "/reviews/electronics");
+        cy.url().should("include", "/categories/electronics");
       });
     });
 
@@ -99,7 +99,7 @@ describe("Reviews page", () => {
         selectCategory("electronics");
         cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
-        cy.url().should("include", "/reviews/electronics?q=test");
+        cy.url().should("include", "/categories/electronics?q=test");
       });
     });
 

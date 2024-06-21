@@ -30,7 +30,7 @@ const Reviews: NextPage = () => {
 
   const router = useRouter();
   const { category = "", q = "" } = router.query;
-  let url = `/api/reviews/${category}`;
+  let url = `/api/categories/${category}`;
   if (q) {
     url += `?q=${q}`;
   }

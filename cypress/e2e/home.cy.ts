@@ -4,7 +4,8 @@ describe("Home page", () => {
       beforeEach(() => {
         cy.mockApiMaintenance("false");
         cy.mockApiAuthSession(true);
-        cy.intercept("GET", "/api/reviews*", { fixture: "reviews.json" }).as("movieReviews");
+        cy.intercept("GET", "/api/reviews", { fixture: "reviews.json" }).as("allReviews");
+        cy.intercept("GET", "/api/categories/movies", { fixture: "reviews.json" }).as("movieReviews");
         cy.intercept("GET", "/api/categories", {
           body: {
             success: true,
@@ -16,7 +17,7 @@ describe("Home page", () => {
           },
         }).as("categories");
 
-        cy.visit("/");
+        cy.visit("/categories/movies");
 
         cy.wait("@maintenanceMode");
         cy.wait("@session");
@@ -30,6 +31,7 @@ describe("Home page", () => {
 
       it("Then the user should see 3 main menu items", () => {
         cy.wait("@movieReviews");
+        cy.wait("@allReviews");
         cy.get('[data-testid="testid.mainMenu.reviews"]').should("exist").contains("Reviews (39)");
         cy.get('[data-testid="testid.mainMenu.myReviews"]').should("exist");
         cy.get('[data-testid="testid.mainMenu.writeReview"]').should("exist");
@@ -40,8 +42,8 @@ describe("Home page", () => {
       beforeEach(() => {
         cy.mockApiMaintenance("false");
         cy.mockApiAuthSession(false);
-        cy.intercept("GET", "/api/items?type=home", { fixture: "items.json" }).as("items");
-        cy.intercept("GET", "/api/reviews*", { fixture: "reviews.json" }).as("movieReviews");
+        cy.intercept("GET", "/api/items?type=latest.reviewed", { fixture: "items.json" }).as("items");
+        cy.intercept("GET", "/api/categories/movies", { fixture: "reviews.json" }).as("movieReviews");
         cy.intercept("GET", "/api/categories", {
           body: {
             success: true,

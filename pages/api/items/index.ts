@@ -1,5 +1,5 @@
 import pool from "../../../db"; // Importez la configuration de connexion à la base de données
-import { selectItemsForHomePage } from "../constants";
+import { selectItemsForHomePage as selectLatestReviewedItems } from "../constants";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -7,8 +7,8 @@ export default async function handler(req, res) {
       const client = await pool.connect();
 
       let result;
-      if (req.query.type === "home") {
-        result = await client.query(selectItemsForHomePage());
+      if (req.query.type === "latest.reviewed") {
+        result = await client.query(selectLatestReviewedItems());
       } else if (req.query.type === "list") {
         result = await client.query(
           `SELECT items.*, categories.name AS category_name

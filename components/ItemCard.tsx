@@ -1,20 +1,23 @@
-import { Box, Card, CardContent, Rating, Typography } from "@mui/material";
-import { formatDistanceToNow } from "date-fns";
+import { Card, CardContent, Typography } from "@mui/material";
 import Link from "next/link";
+import { FC } from "react";
+
+interface ItemDescriptionProps {
+  [key: string]: string;
+}
+
+const ItemDescription: FC<ItemDescriptionProps> = ({ item_description }) => {
+  const entries = Object.entries(item_description);
+  return entries.map(([key, value]) => (
+    <Typography key={key} variant="body2" component="p">
+      {key}: {String(value)}
+    </Typography>
+  ));
+};
 
 const ItemCard = ({ item }) => {
-  const {
-    item_name,
-    item_slug,
-    item_category_name,
-    item_category_slug,
-    recent_review_rating,
-    recent_review_content,
-    recent_review_likes,
-    recent_review_dislikes,
-    recent_review_date_created,
-  } = item;
-  console.log("item", item);
+  const { item_name, item_slug, item_category_name, item_category_slug, item_description } = item;
+
   return (
     <Card>
       <CardContent>
@@ -24,22 +27,13 @@ const ItemCard = ({ item }) => {
           </Link>
         </Typography>
         <Typography color="textSecondary" className="category-name">
-          <Link href={`/reviews/${item_category_slug}`} color="inherit">
+          <Link href={`/categories/${item_category_slug}`} color="inherit">
             {item_category_name}
           </Link>
         </Typography>
-        <Typography variant="caption" color="textSecondary">
-          Written {formatDistanceToNow(new Date(recent_review_date_created), { addSuffix: true })}
+        <Typography variant="body2" component="p">
+          <ItemDescription item_description={item_description} />
         </Typography>
-        <Box mt={2}>
-          <Rating value={recent_review_rating} size="small" readOnly />
-          <Typography variant="body2" className="review-content">
-            {recent_review_content}
-          </Typography>
-          <Typography variant="body2" className="review-meta">
-            Likes: {recent_review_likes} | Dislikes: {recent_review_dislikes} |
-          </Typography>
-        </Box>
       </CardContent>
     </Card>
   );

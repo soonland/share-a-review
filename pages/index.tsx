@@ -7,7 +7,7 @@ import { useFetch } from "@/helpers/utils";
 
 const Home = () => {
   const { t } = useTranslation();
-  const { data, isLoading, error } = useFetch("/api/items?type=home");
+  const { data, isLoading, error } = useFetch("/api/items?type=latest.reviewed");
 
   let banner: JSX.Element = <></>;
   if (isLoading) banner = <div>Loading...</div>;
@@ -22,7 +22,7 @@ const Home = () => {
       {banner}
       <Grid container spacing={2}>
         {items?.map((item) => (
-          <Grid item key={item.item_id} xs={12} sm={6}>
+          <Grid item key={item.item_id} xs={12} sm={6} md={3}>
             <ItemCard item={item} />
           </Grid>
         ))}

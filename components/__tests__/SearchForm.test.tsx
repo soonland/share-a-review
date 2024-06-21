@@ -148,6 +148,6 @@ describe("SearchForm", () => {
     expect(mockUseForm().getValues).toHaveBeenCalledWith("item");
     expect(mockUseForm().getValues).toHaveBeenCalledWith("category");
 
-    expect(mockRouterPush).toHaveBeenCalledWith("/reviews/category1?q=item1");
+    expect(mockRouterPush).toHaveBeenCalledWith("/categories/category1?q=item1");
   });
 });
