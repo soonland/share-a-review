@@ -1,4 +1,4 @@
-describe("Reviews page", () => {
+describe("Categories page", () => {
   context("Given the website is online", () => {
     beforeEach(() => {
       cy.mockApiMaintenance("false");
@@ -8,7 +8,7 @@ describe("Reviews page", () => {
       cy.intercept("GET", "/api/reviews", (req) => {
         req.reply({ body: { ...this.reviews } });
       }).as("allReviews");
-      cy.intercept("GET", "/api/categories/electronics*", (req) => {
+      cy.intercept("GET", "/api/categories/*", (req) => {
         req.reply({
           body: {
             ...this.reviews,

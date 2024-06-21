@@ -31,9 +31,7 @@ const ItemCard = ({ item }) => {
             {item_category_name}
           </Link>
         </Typography>
-        <Typography variant="body2" component="p">
-          <ItemDescription item_description={item_description} />
-        </Typography>
+        <ItemDescription item_description={item_description} />
       </CardContent>
     </Card>
   );

@@ -77,7 +77,7 @@ const SearchForm: FC = () => {
 
   const {
     data: dataCategories,
-    // isLoading: isLoadingCategories,
+    isLoading: isLoadingCategories,
     // error: errorCategories,
   } = useSWR(`/api/categories/list`, fetcher);
 
@@ -103,9 +103,10 @@ const SearchForm: FC = () => {
   const category = (router.query?.category as string) || "";
 
   useEffect(() => {
-    setValue("category", category, { shouldValidate: false });
-    setValue("item", query, { shouldValidate: false });
-  }, [category, query, setValue]);
+    if (isLoadingCategories) return;
+    if (category) setValue("category", category, { shouldValidate: false });
+    if (query) setValue("item", query, { shouldValidate: false });
+  }, [isLoadingCategories, category, query, setValue]);
 
   return (
     <form

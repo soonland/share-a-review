@@ -31,6 +31,7 @@ const Reviews: NextPage = () => {
   const router = useRouter();
   const { slug } = router.query;
   const url = `/api/items/${slug}`;
+
   const { data, isLoading, error } = useSWR(url, fetcher);
 
   let banner: JSX.Element = <></>;

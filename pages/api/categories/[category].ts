@@ -1,5 +1,5 @@
 import pool from "../../../db"; // Importez la configuration de connexion à la base de données
-import { selectReviews } from "../constants";
+import { selectReviewsByCategory } from "../constants";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       const values: string[] = [];
       if (category) values.push(category);
       if (query) values.push(`%${query}%`);
-      const result = await client.query(selectReviews(category, query), values);
+      const result = await client.query(selectReviewsByCategory(category, query), values);
       client.release();
 
       res.status(200).json({ data: result.rows, success: true });
