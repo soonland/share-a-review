@@ -1,5 +1,5 @@
 import pool from "../../../db"; // Importez la configuration de connexion à la base de données
-import { selectItemsForHomePage as selectLatestReviewedItems } from "../constants";
+import { selectLatestReviewedItems as selectLatestReviewedItems } from "../constants";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {

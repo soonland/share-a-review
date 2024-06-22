@@ -10,7 +10,10 @@ const ItemDescription: FC<ItemDescriptionProps> = ({ item_description }) => {
   const entries = Object.entries(item_description);
   return entries.map(([key, value]) => (
     <Typography key={key} variant="body2" component="p">
-      {key}: {String(value)}
+      <Typography component="span" variant="subtitle1" fontWeight="700">
+        {key}:{" "}
+      </Typography>
+      <Typography component="span">{value}</Typography>
     </Typography>
   ));
 };

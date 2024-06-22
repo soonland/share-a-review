@@ -44,11 +44,12 @@
         "signOut": "Sign out"
     },
     "home": {
-        "title": "Welcome to Share-A-Review Community",
+        "welcomeTitle": "Welcome to Share-A-Review - The Voice of the Community!",
         "subtitle": "Share your reviews and experiences with the world",
+        "welcomeMessage": "Discover a space where your opinions truly matter! At Share-A-Review, we believe that every review can make a difference. Whether you're a tech enthusiast, movie buff, food lover, or simply someone eager to share your experiences, our platform is made for you.",
         "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
         "getStarted": "Get Started",
-        "recentReviews": "Recent Reviews"
+        "mostRecentReviewedItems": "Most recent reviewed items"
     },
     "reviews": {
         "helpful": "{{value}} people found this helpful"

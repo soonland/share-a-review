@@ -1,4 +1,4 @@
-import { AccountCircle, Logout, ManageAccounts } from "@mui/icons-material";
+import { AccountCircle, Logout } from "@mui/icons-material";
 import { Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
@@ -21,10 +21,6 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const openMyAccount = () => {
-    return;
   };
 
   const openMyProfile = () => {
@@ -50,10 +46,6 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
           "& .MuiSvgIcon-root": { marginLeft: 1 },
         }}
       >
-        <MenuItem onClick={openMyAccount} data-testid="testid.menu.account">
-          {t("userMenu.account")}
-          <ManageAccounts fontSize="small" sx={{ mr: 1 }} />
-        </MenuItem>
         <MenuItem onClick={openMyProfile} data-testid="testid.menu.profile">
           {t("userMenu.profile")}
           <AccountCircle fontSize="small" sx={{ mr: 1 }} />

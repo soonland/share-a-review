@@ -12,6 +12,7 @@ jest.mock("next/router", () => ({
     asPath: "/",
   }),
 }));
+
 describe("LanguageSwitcher", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -30,6 +31,7 @@ describe("LanguageSwitcher", () => {
 
     await userEvent.click(langSwitcher);
     expect(window.location.href).toEqual("http://example.com/fr/");
+    expect(document.cookie).toEqual("NEXT_LOCALE=fr");
   });
 
   it("renders a LanguageSwitcher - FR -> EN", async () => {
@@ -43,5 +45,7 @@ describe("LanguageSwitcher", () => {
 
     await userEvent.click(langSwitcher);
     expect(window.location.href).toEqual("http://example.com/en/");
+
+    expect(document.cookie).toEqual("NEXT_LOCALE=en");
   });
 });

@@ -1,7 +1,8 @@
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 
 import Alert from "@/components/Alert";
+import Introduction from "@/components/Introduction";
 import ItemCard from "@/components/ItemCard";
 import { useFetch } from "@/helpers/utils";
 
@@ -17,8 +18,9 @@ const Home = () => {
   if (!isLoading && items?.length === 0) banner = <Alert severity="info" message="No reviews found" />;
 
   return (
-    <Box>
-      <h1>{t("home.recentReviews")}</h1>
+    <>
+      <Introduction />
+      <h1>{t("home.mostRecentReviewedItems")}</h1>
       {banner}
       <Grid container spacing={2}>
         {items?.map((item) => (
@@ -27,7 +29,7 @@ const Home = () => {
           </Grid>
         ))}
       </Grid>
-    </Box>
+    </>
   );
 };
 

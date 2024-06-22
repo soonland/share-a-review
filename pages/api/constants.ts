@@ -1,7 +1,8 @@
-export const selectItemsForHomePage = () => {
+export const selectLatestReviewedItems = () => {
   return `WITH LatestReview AS (
   SELECT
     r.item_id,
+    r.date_created,
     ROW_NUMBER() OVER (PARTITION BY r.item_id ORDER BY r.date_created DESC) AS rank
   FROM
     reviews r
@@ -20,11 +21,12 @@ SELECT
   i.date_created AS item_date_created
 FROM
   items i
+INNER JOIN
+  LatestReview lr ON i.id = lr.item_id AND lr.rank = 1
 LEFT JOIN
   categories cat ON i.category_id = cat.id
-LEFT JOIN
-  LatestReview lr ON i.id = lr.item_id AND lr.rank = 1
-`;
+ORDER BY
+  lr.date_created DESC;`;
 };
 
 export const selectItem = () => {

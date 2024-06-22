@@ -46,7 +46,6 @@ Cypress.Commands.overwrite("visit", (originalFn, url: string, options?: Partial<
 Cypress.Commands.add("openUserMenu", () => {
   cy.get("[data-testid='testid.menu.accountButton']").should("exist").click();
   cy.get("[role='menu']").should("exist").should("be.visible");
-  cy.get("[data-testid='testid.menu.account']").should("exist");
   cy.get("[data-testid='testid.menu.profile']").should("exist");
   cy.get("[data-testid='testid.menu.languageSwitcher']").should("exist");
   cy.get("@session")

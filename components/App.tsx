@@ -51,7 +51,7 @@ const App = ({ Component, pageProps }) => {
           flexDirection: "column",
         }}
       >
-        <Box padding={4} mb={6} mt={12} alignContent={"center"}>
+        <Box padding={4} mb={6} mt={10} alignContent={"center"}>
           {pageProps.showProfile && <MyProfile />}
           <Component {...pageProps} />
         </Box>

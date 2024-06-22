@@ -27,7 +27,6 @@ const openAccountMenu = async () => {
 
 const closeAccountMenu = async () => {
   await userEvent.type(screen.getByTestId("testid.menu.accountButton"), "{escape}");
-  expect(screen.queryByTestId("testid.menu.account")).not.toBeInTheDocument();
   expect(screen.queryByTestId("testid.menu.profile")).not.toBeInTheDocument();
   expect(screen.queryByTestId("testid.menu.signIn")).not.toBeInTheDocument();
   expect(screen.queryByTestId("testid.menu.signOut")).not.toBeInTheDocument();
@@ -35,8 +34,6 @@ const closeAccountMenu = async () => {
 
 const validateAccountMenu = async (isAuthenticated: boolean) => {
   expect(screen.getByTestId("testid.userMenu")).toBeInTheDocument();
-  expect(screen.getByTestId("testid.menu.account")).toBeInTheDocument();
-  await userEvent.click(screen.getByTestId("testid.menu.account"));
   expect(screen.getByTestId("testid.menu.profile")).toBeInTheDocument();
   await userEvent.click(screen.getByTestId("testid.menu.profile"));
   if (isAuthenticated) {
