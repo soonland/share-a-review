@@ -49,7 +49,10 @@
         "welcomeMessage": "Découvrez un espace où vos opinions comptent vraiment ! Chez Share-A-Review, nous croyons que chaque avis peut faire la différence. Que vous soyez un passionné de technologie, un cinéphile, un amateur de cuisine ou simplement quelqu'un désireux de partager vos expériences, notre plateforme est faite pour vous.",
         "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
         "getStarted": "Commencer",
-        "mostRecentReviewedItems": "Articles les plus récemment évalués"
+        "mostRecentReviewedItems": "Articles les plus récemment évalués",
+        "latestAddedItems": "Derniers articles ajoutés",
+        "mostRatedItems": "Articles les plus évalués",
+        "reviewNumber": "{{value}} avis"
     },
     "reviews": {
         "helpful": "{{value}} personnes ont trouvé cela utile"

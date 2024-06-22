@@ -29,6 +29,69 @@ ORDER BY
   lr.date_created DESC;`;
 };
 
+export const selectMostRatedItemsByCategory = () => {
+  return `WITH ItemRating AS (
+  SELECT
+    r.item_id,
+    AVG(r.rating)::int AS average_rating,
+    COUNT(r.id) AS number_of_reviews
+  FROM
+    reviews r
+  GROUP BY
+    r.item_id
+),
+MostAppreciated AS (
+  SELECT
+    ir.item_id,
+    ir.average_rating,
+    ir.number_of_reviews
+  FROM
+    ItemRating ir
+)
+SELECT
+  i.id AS item_id,
+  i.name AS item_name,
+  i.slug AS item_slug,
+  i.description AS item_description,
+  i.category_id AS item_category_id,
+  cat.name AS item_category_name,
+  cat.slug AS item_category_slug,
+  i.description AS item_description,
+  i.date_created AS item_date_created,
+  ir.average_rating AS item_average_rating,
+  ir.number_of_reviews AS item_number_of_reviews
+FROM
+  items i
+INNER JOIN
+  MostAppreciated ma ON i.id = ma.item_id
+INNER JOIN
+  ItemRating ir ON i.id = ir.item_id
+LEFT JOIN
+  categories cat ON i.category_id = cat.id
+ORDER BY
+  cat.slug ASC, ma.average_rating DESC, ma.number_of_reviews DESC;`;
+};
+
+export const selectMostRecentItems = () => {
+  return `SELECT
+  i.id AS item_id,
+  i.name AS item_name,
+  i.slug AS item_slug,
+  i.description AS item_description,
+  i.category_id AS item_category_id,
+  cat.name AS item_category_name,
+  cat.slug AS item_category_slug,
+  i.description AS item_description,
+  i.date_created AS item_date_created
+FROM
+  items i
+LEFT JOIN
+  categories cat ON i.category_id = cat.id
+WHERE i.date_created >= NOW() - INTERVAL '7 days'
+ORDER BY
+  i.date_created DESC;`;
+};
+
 export const selectItem = () => {
   return `SELECT
   r.id AS review_id,
