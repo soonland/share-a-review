@@ -51,7 +51,10 @@
         "getStarted": "Commencer",
         "mostRecentReviewedItems": "Articles les plus récemment évalués",
         "latestAddedItems": "Derniers articles ajoutés",
-        "mostRatedItems": "Articles les plus évalués",
+        "mostRatedItems": {
+            "title": "Articles les plus évalués",
+            "byCategory": "par catégorie"
+        },
         "reviewNumber": "{{value}} avis"
     },
     "reviews": {
