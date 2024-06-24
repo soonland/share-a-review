@@ -51,8 +51,8 @@
         "getStarted": "Get Started",
         "mostRecentReviewedItems": "Most recent reviewed items",
         "latestAddedItems": "Latest added items",
-        "mostRatedItems": {
-            "title": "Most rated items",
+        "mostHighlyRatedItems": {
+            "title": "Most highly rated items",
             "byCategory": "by category"
         },
         "reviewNumber": "{{value}} reviews"

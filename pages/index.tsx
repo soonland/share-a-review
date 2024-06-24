@@ -79,9 +79,9 @@ const Home = () => {
         )}
       </Grid>
       <h2>
-        {t("home.mostRatedItems.title")}
+        {t("home.mostHighlyRatedItems.title")}
         <Typography variant="body2" color="textSecondary" sx={{ display: "inline", marginLeft: 1 }}>
-          {t("home.mostRatedItems.byCategory")}{" "}
+          {t("home.mostHighlyRatedItems.byCategory")}{" "}
         </Typography>
         {categoriesSuccess &&
           !categoriesLoading &&
