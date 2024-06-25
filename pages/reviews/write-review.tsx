@@ -1,18 +1,19 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Collapse } from "@mui/material";
 import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useSWR from "swr";
 import { ZodTooBigIssue, ZodTooSmallIssue, z } from "zod";
 
 import Alert, { AlertProps } from "@/components/Alert";
+import AutoCompleteItem from "@/components/generic/AutoCompleteItem";
 import InputField from "@/components/generic/InputField";
 import RatingField from "@/components/generic/RatingField";
-import SelectField from "@/components/generic/SelectField";
 
 export const schema = z.object({
-  item: z.string().min(1, "form.fieldRequired"),
+  // item: z.string().min(1, "form.fieldRequired"),
+  item: z.object({ id: z.string().min(1, "form.fieldRequired") }),
   title: z.string().min(10, "form.minLengthRequired").max(100, "form.maxLengthExceeded"),
   content: z.string().min(1, "form.fieldRequired"),
   rating: z.string().min(1, "form.fieldRequired"),
@@ -21,7 +22,7 @@ export const schema = z.object({
 interface IFormInputs {
   title: string;
   content: string;
-  item: string;
+  item: string | null;
   rating: string;
 }
 
@@ -29,6 +30,7 @@ const WriteReviews = () => {
   const { t } = useTranslation();
   const session = useSession();
   const [feedbackMessage, setFeedbackMessage] = useState<AlertProps>();
+  const [feedbackMessageOpen, setFeedbackMessageOpen] = useState(false);
   const {
     control,
     handleSubmit,
@@ -40,7 +42,8 @@ const WriteReviews = () => {
     defaultValues: {
       title: "",
       content: "",
-      item: "",
+      // item: "",
+      item: null,
       rating: "3",
     },
   });
@@ -48,7 +51,7 @@ const WriteReviews = () => {
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
     const payload = {
       ...data,
-      itemId: parseInt(data.item),
+      itemId: parseInt(data.item as string, 10),
       userId: session?.data?.user?.id,
     };
     await fetch("/api/reviews", {
@@ -71,8 +74,14 @@ const WriteReviews = () => {
   const handleFormSubmit = (data) => {
     const validation = schema.safeParse(data);
     if (!validation.success) {
+      console.log(validation.error);
       validation.error.errors.forEach((error) => {
         switch (error.code) {
+          case "invalid_type":
+            if (error.received === "null")
+              setError(error.path[0] as keyof IFormInputs, { message: t("form.fieldRequired") });
+            else setError(error.path[0] as keyof IFormInputs, { message: t("form.invalidType") });
+            break;
           case "too_small":
             setError(error.path[0] as keyof IFormInputs, {
               message: t(error.message, { value: (error as ZodTooSmallIssue).minimum }),
@@ -109,7 +118,17 @@ const WriteReviews = () => {
       });
   };
 
-  const { data, isLoading } = useSWR(`/api/items?type=list`, fetcher);
+  useEffect(() => {
+    if (feedbackMessage) {
+      setFeedbackMessageOpen(true);
+      const timer = setTimeout(() => {
+        setFeedbackMessageOpen(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [feedbackMessage]);
+
+  const { data, isLoading } = useSWR(`/api/items/list`, fetcher);
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
@@ -131,10 +150,14 @@ const WriteReviews = () => {
         />
       )}
       {session.status === "loading" && <Alert severity="info" message="Checking your login status..." />}
-      {feedbackMessage && <Alert severity={feedbackMessage.severity} message={feedbackMessage.message} />}
+      {feedbackMessage && (
+        <Collapse in={feedbackMessageOpen}>
+          <Alert severity={feedbackMessage.severity} message={feedbackMessage.message} />
+        </Collapse>
+      )}
       <br />
       <Box>
-        <SelectField
+        <AutoCompleteItem
           name="item"
           control={control}
           label={t("form.writeReview.item")}
@@ -145,8 +168,9 @@ const WriteReviews = () => {
           error={errors.item?.message}
           sx={{ mb: 2 }}
           options={data?.data.map((item) => ({
-            value: item.id.toString(),
-            label: `${item.category_name} - ${item.name}`,
+            groupBy: item.category_name,
+            id: item.id.toString(),
+            label: item.name,
           }))}
         />
         <InputField

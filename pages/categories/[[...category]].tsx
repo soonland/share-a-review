@@ -13,19 +13,16 @@ const Reviews: NextPage = () => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
     clearTimeout(timeoutId);
-    return (
-      fetch(`${url}`, { signal: controller.signal })
-        // return fetch(`${url}`)
-        .then((res) => {
-          if (!res.ok) {
-            return { success: false, message: "An error occurred while fetching the data." };
-          }
-          return res.json();
-        })
-        .catch((error) => {
-          return { success: false, message: error.message };
-        })
-    );
+    return fetch(`${url}`, { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) {
+          return { success: false, message: "An error occurred while fetching the data." };
+        }
+        return res.json();
+      })
+      .catch((error) => {
+        return { success: false, message: error.message };
+      });
   };
 
   const router = useRouter();

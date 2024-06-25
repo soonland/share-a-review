@@ -1,5 +1,5 @@
 import { AccountCircle, Logout } from "@mui/icons-material";
-import { Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
+import { Avatar, Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useState, MouseEvent, ReactElement, FC } from "react";
@@ -30,7 +30,18 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
   return (
     <Box sx={sx}>
       <IconButton edge="end" onClick={handleClick} data-testid="testid.menu.accountButton" sx={{ ml: 1 }}>
-        <AccountCircle />
+        <Avatar
+          src={session?.data?.user?.image}
+          alt={session.data?.user?.name}
+          sx={{
+            width: 32,
+            height: 32,
+            bgcolor: "primary.main",
+            color: "primary.contrastText",
+          }}
+        >
+          {session.data?.user?.name?.charAt(0)}
+        </Avatar>
       </IconButton>
       <Menu
         id="user-menu"

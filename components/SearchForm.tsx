@@ -1,5 +1,15 @@
 import { Clear, Search as SearchIcon } from "@mui/icons-material";
-import { Button, IconButton, InputAdornment, InputBase, Stack, alpha, styled } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  InputBase,
+  Stack,
+  alpha,
+  styled,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { FC, PropsWithChildren, useEffect } from "react";
@@ -55,24 +65,23 @@ interface IFormInputs {
 const SearchForm: FC = () => {
   const router = useRouter();
   const { t } = useTranslation();
+  const theme = useTheme();
+  const isExtraSmallSize = useMediaQuery(theme.breakpoints.down("md"));
 
   const fetcher = async (url: string) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
     clearTimeout(timeoutId);
-    return (
-      fetch(`${url}`, { signal: controller.signal })
-        // return fetch(`${url}`)
-        .then((res) => {
-          if (!res.ok) {
-            return { success: false, message: "An error occurred while fetching the data." };
-          }
-          return res.json();
-        })
-        .catch((error) => {
-          return { success: false, message: error.message };
-        })
-    );
+    return fetch(`${url}`, { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) {
+          return { success: false, message: "An error occurred while fetching the data." };
+        }
+        return res.json();
+      })
+      .catch((error) => {
+        return { success: false, message: error.message };
+      });
   };
 
   const {
@@ -178,7 +187,7 @@ const SearchForm: FC = () => {
           endIcon={<SearchIcon />}
           sx={{ borderTopRightRadius: 32, borderBottomRightRadius: 32, flex: "1 1 10%" }}
         >
-          {t("form.search.submit")}
+          {!isExtraSmallSize && t("form.search.submit")}
         </Button>
       </StyledSearch>
     </form>
