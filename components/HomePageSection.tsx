@@ -44,9 +44,8 @@ const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = f
 
   return (
     <>
-      <h1>{t(`home.${type}.title`)}</h1>
       <h2>
-        {t("home.mostHighlyRatedItems.title")}
+        {t(`home.${type}.title`)}
         {withCategoryFilter && (
           <>
             <Typography variant="body2" color="textSecondary" sx={{ display: "inline", marginLeft: 1 }}>
