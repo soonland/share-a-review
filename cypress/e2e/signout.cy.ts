@@ -1,7 +1,6 @@
 describe("Given the user is logged in", () => {
   context("When the user clicks on the logout button", () => {
     it("Then the user should be redirected to the signin page and no longer have access to authenticated features", () => {
-      // Given the user is logged in
       cy.visit("/");
       cy.intercept("GET", "/api/auth/session").as("session");
       cy.openUserMenu();

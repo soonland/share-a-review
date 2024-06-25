@@ -11,8 +11,6 @@ describe("LeftMenu", () => {
   });
 
   it("renders all menu items", async () => {
-    // The menu is initially closed, so we need to click the button to open it
-    // and render all menu items
     render(<LeftMenu />);
     await userEvent.click(screen.getByRole("button"));
     const menuItems = screen.getAllByRole("menuitem");
@@ -24,7 +22,7 @@ describe("LeftMenu", () => {
     await userEvent.click(screen.getByRole("button"));
     const menuItemTexts = screen
       .getAllByRole("menuitem")
-      .splice(1) // Skip the first menu item, which is the main menu button
+      .splice(1)
       .map((menuItem) => menuItem.textContent);
     const expectedMenuItemTexts = [
       "mainMenu.reviewsMenu.allReviews",

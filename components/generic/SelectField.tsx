@@ -31,7 +31,6 @@ const SelectField: FC<SelectFieldProps> = ({
   error,
   options,
   placeholder = label,
-  // isLoading = false,
   disabled = false,
   withLabel = true,
   sx,

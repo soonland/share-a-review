@@ -1,4 +1,4 @@
-import pool from "../../../db"; // Importez la configuration de connexion à la base de données
+import pool from "../../../db";
 import { selectReviewsByCategory } from "../constants";
 
 export default async function handler(req, res) {
@@ -20,7 +20,6 @@ export default async function handler(req, res) {
   } else if (req.method === "POST") {
     const { title, content, userId, itemId, rating } = req.body;
     try {
-      // Exécutez la requête SQL pour insérer une nouvelle critique
       const newReview = await pool.query(
         "INSERT INTO reviews (user_id, item_id, title, content, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *",
         [userId, itemId, title, content, rating],

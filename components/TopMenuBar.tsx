@@ -36,7 +36,6 @@ const TopMenuBar: FC = (): ReactElement => {
           display: "flex",
           justifyContent: "space-between",
           flexDirection: "column",
-          // minHeight: { xs: 64 },
           padding: { xs: 0 },
         }}
       >

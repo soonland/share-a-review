@@ -19,13 +19,9 @@ const LanguageSwitcher: FC = () => {
 
   const handleLanguageSwitch = () => {
     const url = new URL(location, window.location.origin);
-    // split the pathname into parts
     const parts = url.pathname.split("/");
-    // insert the new language code at the second position
     parts.splice(1, 0, switchTo);
-    // join the parts back together
     url.pathname = parts.join("/");
-    // redirect to the new URL
     persistLocaleCookie();
     window.location.href = url.toString();
   };

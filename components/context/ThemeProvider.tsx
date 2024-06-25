@@ -14,7 +14,6 @@ export const ThemeContext = createContext<IThemeContext>({
 });
 
 export const ThemeProvider = ({ children }) => {
-  // Load isDark from localStorage on hook initialization
   const [isDark, setIsDark] = useState<string>("light");
 
   const theme = getCustomTheme(isDark === "dark" ? "dark" : "light");
@@ -25,13 +24,11 @@ export const ThemeProvider = ({ children }) => {
     }
   }, []);
 
-  // Save queue to sessionStorage whenever it changes
   useEffect(() => {
     sessionStorage.setItem("isDark", isDark);
   }, [isDark]);
 
   const context = useMemo(() => {
-    // Function to add an item to the queue
     const dark = (isDark: string) => {
       setIsDark(isDark);
     };

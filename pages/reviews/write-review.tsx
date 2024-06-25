@@ -12,7 +12,6 @@ import InputField from "@/components/generic/InputField";
 import RatingField from "@/components/generic/RatingField";
 
 export const schema = z.object({
-  // item: z.string().min(1, "form.fieldRequired"),
   item: z.object({ id: z.string().min(1, "form.fieldRequired") }),
   title: z.string().min(10, "form.minLengthRequired").max(100, "form.maxLengthExceeded"),
   content: z.string().min(1, "form.fieldRequired"),
@@ -42,7 +41,6 @@ const WriteReviews = () => {
     defaultValues: {
       title: "",
       content: "",
-      // item: "",
       item: null,
       rating: "3",
     },

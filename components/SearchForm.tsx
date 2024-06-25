@@ -84,18 +84,13 @@ const SearchForm: FC = () => {
       });
   };
 
-  const {
-    data: dataCategories,
-    isLoading: isLoadingCategories,
-    // error: errorCategories,
-  } = useSWR(`/api/categories/list`, fetcher);
+  const { data: dataCategories, isLoading: isLoadingCategories } = useSWR(`/api/categories/list`, fetcher);
 
   const {
     register,
     control,
     handleSubmit,
     setError,
-    // clearErrors,
     reset,
     getValues,
     setValue,
@@ -107,7 +102,6 @@ const SearchForm: FC = () => {
     },
   });
 
-  // recupéer les valeurs query et category pour les afficher dans le formulaire
   const query = (router.query?.q as string) || "";
   const category = (router.query?.category as string) || "";
 
@@ -171,7 +165,6 @@ const SearchForm: FC = () => {
                 aria-label=""
                 onClick={() => reset({ item: "", category: "" })}
                 onMouseDown={() => reset({ item: "", category: "" })}
-                // disabled={!getValues("item") || !getValues("category")}
                 edge="end"
               >
                 <Clear />

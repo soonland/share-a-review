@@ -1,4 +1,4 @@
-import pool from "../../../db"; // Importez la configuration de connexion à la base de données
+import pool from "../../../db";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {

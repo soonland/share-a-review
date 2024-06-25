@@ -67,7 +67,7 @@ describe("MainMenu", () => {
 
   it("renders a MainMenu and clicks", async () => {
     const mockRouter = {
-      push: jest.fn(), // the component uses `router.push` only
+      push: jest.fn(),
     };
 
     (useRouter as jest.Mock).mockReturnValue(mockRouter);

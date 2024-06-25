@@ -31,6 +31,9 @@ const GroupItems = styled("ul")({
   '& .MuiAutocomplete-option[aria-selected="true"].Mui-focused': {
     backgroundColor: "rgb(237, 247, 237)",
   },
+  "& .MuiAutocomplete-option.Mui-focused": {
+    backgroundColor: "rgb(237, 247, 237)",
+  },
 });
 
 interface AutoCompleteRules {

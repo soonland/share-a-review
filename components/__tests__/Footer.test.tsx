@@ -24,7 +24,7 @@ describe("Footer component", () => {
   });
 
   it("displays the version number", () => {
-    process.env.NEXT_PUBLIC_BUILD_TIMESTAMP = "2024-05-13T12:00:00Z"; // Mocking the version number
+    process.env.NEXT_PUBLIC_BUILD_TIMESTAMP = "2024-05-13T12:00:00Z";
     const { getByText } = render(<Footer />);
     expect(getByText("2024-05-13T12:00:00Z")).toBeInTheDocument();
   });
