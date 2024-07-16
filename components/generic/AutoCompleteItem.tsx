@@ -129,7 +129,7 @@ const AutoCompleteItem: FC<SelectFieldProps> = ({
                         fullWidth
                         sx={{ justifyContent: "flex-start", pl: 2 }}
                         onMouseDown={() => {
-                          router.push("/items/new");
+                          router.push("/items/create");
                         }}
                       >
                         + Add New

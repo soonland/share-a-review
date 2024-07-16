@@ -18,7 +18,13 @@ export default async function handler(req, res) {
       res.status(500).json({ success: false, message: "Error fetching reviews" });
     }
   } else if (req.method === "POST") {
-    const { title, content, userId, itemId, rating } = req.body;
+    const {
+      title,
+      content,
+      userId,
+      item: { id: itemId },
+      rating,
+    } = req.body;
     try {
       const newReview = await pool.query(
         "INSERT INTO reviews (user_id, item_id, title, content, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *",

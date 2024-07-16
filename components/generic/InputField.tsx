@@ -1,6 +1,6 @@
 import { Box, TextField } from "@mui/material";
 import { FC } from "react";
-import { Controller } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 interface InputFieldRules {
   required?: string;
@@ -10,7 +10,7 @@ interface InputFieldRules {
 interface InputFieldProps {
   name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: any;
+  control: Control<any>;
   label: string;
   size?: "small" | "medium";
   error?: string;
@@ -51,7 +51,7 @@ const InputField: FC<InputFieldProps> = ({
               fullWidth
               variant="outlined"
               error={!!error}
-              helperText={helperText ?? `${field.value.length}/${maxLength}`}
+              helperText={helperText ?? `${field?.value?.length ?? "0"}/${maxLength}`}
             />
           </Box>
         );

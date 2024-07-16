@@ -47,6 +47,7 @@ const WriteReviews = () => {
   });
 
   const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
+    console.log("data", data);
     const payload = {
       ...data,
       itemId: parseInt(data.item as string, 10),
@@ -72,7 +73,6 @@ const WriteReviews = () => {
   const handleFormSubmit = (data) => {
     const validation = schema.safeParse(data);
     if (!validation.success) {
-      console.log(validation.error);
       validation.error.errors.forEach((error) => {
         switch (error.code) {
           case "invalid_type":

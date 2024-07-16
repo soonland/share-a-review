@@ -14,7 +14,7 @@ describe("LeftMenu", () => {
     render(<LeftMenu />);
     await userEvent.click(screen.getByRole("button"));
     const menuItems = screen.getAllByRole("menuitem");
-    expect(menuItems).toHaveLength(9);
+    expect(menuItems).toHaveLength(10);
   });
 
   it("displays correct menu item text", async () => {
@@ -33,7 +33,7 @@ describe("LeftMenu", () => {
       "mainMenu.reviewsMenu.games",
       // "mainMenu.reviewsMenu.products",
       // "mainMenu.reviewsMenu.places",
-      // "mainMenu.reviewsMenu.restaurants",
+      "mainMenu.reviewsMenu.restaurants",
       // "mainMenu.reviewsMenu.recipes",
       // "mainMenu.reviewsMenu.videos",
       // "mainMenu.reviewsMenu.apps",

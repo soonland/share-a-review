@@ -13,7 +13,7 @@ const reviewMenus: ReviewsMenuItemProps[] = [
   { id: "games", title: "mainMenu.reviewsMenu.games", icon: "SportsEsports", url: "/categories/games" },
   // { id: "products", title: "mainMenu.reviewsMenu.products", icon: "ShoppingCart", url: "/categories/products" },
   // { id: "places", title: "mainMenu.reviewsMenu.places", icon: "Place", url: "/categories/places" },
-  // { id: "restaurants", title: "mainMenu.reviewsMenu.restaurants", icon: "Restaurant", url: "/categories/restaurants" },
+  { id: "restaurants", title: "mainMenu.reviewsMenu.restaurants", icon: "Restaurant", url: "/categories/restaurants" },
   // { id: "recipes", title: "mainMenu.reviewsMenu.recipes", icon: "RestaurantMenu", url: "/categories/recipes" },
   // { id: "videos", title: "mainMenu.reviewsMenu.videos", icon: "VideoLibrary", url: "/categories/videos" },
   // { id: "apps", title: "mainMenu.reviewsMenu.apps", icon: "Apps", url: "/categories/apps" },

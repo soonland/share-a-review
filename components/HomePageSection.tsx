@@ -18,10 +18,10 @@ const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = f
   let apiPath = "";
   switch (type) {
     case "latestAddedItems":
-      apiPath = "/api/items?type=latest.reviewed";
+      apiPath = "/api/items?type=most.recent";
       break;
     case "mostRecentReviewedItems":
-      apiPath = "/api/items?type=most.recent";
+      apiPath = "/api/items?type=latest.reviewed";
       break;
     case "mostHighlyRatedItems":
       apiPath = "/api/items?type=most.rated";

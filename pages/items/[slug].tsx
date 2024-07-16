@@ -8,7 +8,7 @@ import Alert from "@/components/Alert";
 import ReviewItem from "@/components/ReviewItem";
 import SearchForm from "@/components/SearchForm";
 
-const Reviews: NextPage = () => {
+const Items: NextPage = () => {
   const fetcher = async (url: string) => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -50,7 +50,7 @@ const Reviews: NextPage = () => {
   );
 };
 
-export default Reviews;
+export default Items;
 
 export const getServerSideProps = async () => {
   return {
