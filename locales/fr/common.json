@@ -59,7 +59,8 @@
             "title": "Articles les mieux évalués",
             "byCategory": "par catégorie"
         },
-        "reviewNumber": "{{value}} avis"
+        "reviewNumber": "{{value}} avis",
+        "noItemsFound": "Aucun article trouvé"
     },
     "reviews": {
         "helpful": "{{value}} personnes ont trouvé cela utile"

@@ -2,34 +2,18 @@ import { Grid } from "@mui/material";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { JSX } from "react";
-import useSWR from "swr";
 
 import Alert from "@/components/Alert";
 import ReviewItem from "@/components/ReviewItem";
 import SearchForm from "@/components/SearchForm";
+import { useFetch } from "@/helpers/utils";
 
 const Items: NextPage = () => {
-  const fetcher = async (url: string) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
-    clearTimeout(timeoutId);
-    return fetch(`${url}`, { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) {
-          return { success: false, message: "An error occurred while fetching the data." };
-        }
-        return res.json();
-      })
-      .catch((error) => {
-        return { success: false, message: error.message };
-      });
-  };
-
   const router = useRouter();
   const { slug } = router.query;
   const url = `/api/items/${slug}`;
 
-  const { data, isLoading, error } = useSWR(url, fetcher);
+  const { data, isLoading, error } = useFetch(url);
 
   let banner: JSX.Element = <></>;
   if (isLoading) banner = <div>Loading...</div>;

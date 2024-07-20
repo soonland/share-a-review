@@ -6,9 +6,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useTranslation from "next-translate/useTranslation";
 import { useState, ReactElement, FC } from "react";
-import useSWR from "swr";
 
 import { MainMenuItemProps } from "@/helpers/constants";
+import { useFetch } from "@/helpers/utils";
 
 const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus, url }): ReactElement => {
   const { t } = useTranslation();
@@ -35,13 +35,7 @@ const MainMenuItem: FC<MainMenuItemProps> = ({ id, title, icon, subMenus, url })
   if (typeof icon === "string" && icon === "myReviews")
     iconElement = <ListAltIcon data-testid="testid.icon.myReviews" />;
 
-  const fetcher = async (url: string) => {
-    const queryUrl = `${url}`;
-    const res = await fetch(`${queryUrl}`);
-    return await res.json();
-  };
-
-  const { data } = useSWR(`/api/reviews`, fetcher);
+  const { data } = useFetch(`/api/reviews`);
 
   if (!data) return <CircularProgress />;
 

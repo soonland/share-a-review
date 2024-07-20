@@ -3,13 +3,13 @@ import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import useSWR from "swr";
 import { ZodTooBigIssue, ZodTooSmallIssue, z } from "zod";
 
 import Alert, { AlertProps } from "@/components/Alert";
 import AutoCompleteItem from "@/components/generic/AutoCompleteItem";
 import InputField from "@/components/generic/InputField";
 import RatingField from "@/components/generic/RatingField";
+import { useFetch } from "@/helpers/utils";
 
 export const schema = z.object({
   item: z.object({ id: z.string().min(1, "form.fieldRequired") }),
@@ -100,22 +100,6 @@ const WriteReviews = () => {
     onSubmit(data);
   };
 
-  const fetcher = async (url: string) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
-    clearTimeout(timeoutId);
-    return fetch(`${url}`, { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) {
-          return { success: false, message: "An error occurred while fetching the data." };
-        }
-        return res.json();
-      })
-      .catch((error) => {
-        return { success: false, message: error.message };
-      });
-  };
-
   useEffect(() => {
     if (feedbackMessage) {
       setFeedbackMessageOpen(true);
@@ -126,7 +110,7 @@ const WriteReviews = () => {
     }
   }, [feedbackMessage]);
 
-  const { data, isLoading } = useSWR(`/api/items/list`, fetcher);
+  const { data, isLoading } = useFetch(`/api/items/list`);
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>

@@ -2,10 +2,10 @@
 import { Box, Card, CardActionArea, CardContent, Grid, styled, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { useState } from "react";
-import useSWR from "swr";
 
 import Alert from "@/components/Alert";
 import CreateForm from "@/components/CreateForm";
+import { useFetch } from "@/helpers/utils";
 
 interface CreateItemProps {}
 
@@ -24,15 +24,7 @@ const CreateItem: NextPage<CreateItemProps> = () => {
     description_template: unknown;
   }>({ id: 0, value: "", label: "", description_template: null });
 
-  const fetcher = async (url: string) => {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return response.json();
-  };
-
-  const { data, error } = useSWR("/api/categories/list", fetcher);
+  const { data, error } = useFetch("/api/categories/list");
   const categories = data?.data;
 
   if (error) return <Alert severity="error" message={error.message || "An error occurred"} />;

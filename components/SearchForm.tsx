@@ -14,7 +14,8 @@ import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { FC, PropsWithChildren, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import useSWR from "swr";
+
+import { useFetch } from "@/helpers/utils";
 
 import SelectField from "./generic/SelectField";
 
@@ -68,23 +69,7 @@ const SearchForm: FC = () => {
   const theme = useTheme();
   const isExtraSmallSize = useMediaQuery(theme.breakpoints.down("md"));
 
-  const fetcher = async (url: string) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
-    clearTimeout(timeoutId);
-    return fetch(`${url}`, { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) {
-          return { success: false, message: "An error occurred while fetching the data." };
-        }
-        return res.json();
-      })
-      .catch((error) => {
-        return { success: false, message: error.message };
-      });
-  };
-
-  const { data: dataCategories, isLoading: isLoadingCategories } = useSWR(`/api/categories/list`, fetcher);
+  const { data: dataCategories, isLoading: isLoadingCategories } = useFetch(`/api/categories/list`);
 
   const {
     register,

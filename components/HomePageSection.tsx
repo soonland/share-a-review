@@ -15,32 +15,32 @@ interface HomePageSectionProps {
 
 const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = false, withCategoryFilter = false }) => {
   const { t } = useTranslation();
-  let apiPath = "";
-  switch (type) {
-    case "latestAddedItems":
-      apiPath = "/api/items?type=most.recent";
-      break;
-    case "mostRecentReviewedItems":
-      apiPath = "/api/items?type=latest.reviewed";
-      break;
-    case "mostHighlyRatedItems":
-      apiPath = "/api/items?type=most.rated";
-      break;
-    default:
-      break;
-  }
-  const { data, isLoading, error } = useFetch(apiPath);
-
   const [activeCategory, setActiveCategory] = useState<string>("all");
+
+  const apiPath = {
+    latestAddedItems: "/api/items?type=most.recent",
+    mostRecentReviewedItems: "/api/items?type=latest.reviewed",
+    mostHighlyRatedItems: "/api/items?type=most.rated",
+  }[type];
+
+  const { data, isLoading, error } = useFetch(apiPath);
   const { data: dataCategories } = useFetch("/api/categories/list");
 
-  const { data: categories } = dataCategories || {};
-  let banner: JSX.Element = <></>;
-  if (isLoading) banner = <div>Loading...</div>;
-  if (error) banner = <Alert severity="error" message={error.message || "An error occurred"} />;
-  const { data: items, success, message } = data || {};
-  if (!isLoading && !success) banner = <Alert severity="error" message={message} />;
-  if (!isLoading && items?.length === 0) banner = <Alert severity="info" message="No reviews found" />;
+  const categories = dataCategories?.data || [];
+  const items = data?.data || [];
+  const success = data?.success;
+  const message = data?.message;
+
+  let banner: JSX.Element | null = null;
+  if (isLoading) {
+    banner = <div>Loading...</div>;
+  } else if (error) {
+    banner = <Alert severity="error" message={error.message || "An error occurred"} />;
+  } else if (!success) {
+    banner = <Alert severity="error" message={message || "An error occurred"} />;
+  }
+
+  const filteredItems = items.filter((item) => activeCategory === "all" || item.item_category_slug === activeCategory);
 
   return (
     <>
@@ -51,16 +51,14 @@ const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = f
             <Typography variant="body2" color="textSecondary" sx={{ display: "inline", marginLeft: 1 }}>
               {t("home.mostHighlyRatedItems.byCategory")}{" "}
             </Typography>
-            {categories?.length > 0 &&
+            {categories.length > 0 &&
               categories.map((category) => (
                 <Link
                   sx={{ marginLeft: 1, cursor: "pointer" }}
                   color={"inherit"}
                   variant="body2"
                   key={category.value}
-                  onClick={() => {
-                    setActiveCategory(category.value);
-                  }}
+                  onClick={() => setActiveCategory(category.value)}
                 >
                   {category.label}
                 </Link>
@@ -68,18 +66,17 @@ const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = f
           </>
         )}
       </h2>
-      {banner}
       <Grid container spacing={2}>
-        {items
-          ?.filter((item) => activeCategory === "all" || item.item_category_slug === activeCategory)
-          .map(
-            (item, index) =>
-              index < 4 && (
-                <Grid item key={item.item_id} xs={12} sm={6} md={3}>
-                  <ItemCard item={item} withAverageRating={withAverageRating} />
-                </Grid>
-              ),
-          )}
+        {banner}
+        {success && filteredItems.length === 0 ? (
+          <Alert severity="info" message={t("home.noItemsFound")} />
+        ) : (
+          filteredItems.slice(0, 4).map((item) => (
+            <Grid item key={item.item_id} xs={12} sm={6} md={3}>
+              <ItemCard item={item} withAverageRating={withAverageRating} />
+            </Grid>
+          ))
+        )}
       </Grid>
     </>
   );

@@ -3,19 +3,15 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Head from "next/head";
-import useSWR from "swr";
 
 import Footer from "@/components/Footer";
 import TopMenuBar from "@/components/TopMenuBar";
+import { useFetch } from "@/helpers/utils";
 
 import MyProfile from "./MyProfile";
 
 const App = ({ Component, pageProps }) => {
-  const fetcher = async (url: string) => {
-    const res = await fetch(`${url}`);
-    return await res.json();
-  };
-  const { data: { maintenanceMode } = { maintenanceMode: "false" } } = useSWR("/api/maintenance", fetcher);
+  const { data: { maintenanceMode } = { maintenanceMode: "false" } } = useFetch("/api/maintenance");
 
   return (
     <>

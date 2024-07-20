@@ -21,31 +21,16 @@ describe("LanguageSwitcher", () => {
       configurable: true,
     });
   });
-  it("renders a LanguageSwitcher - EN -> FR", async () => {
-    (useTranslation as jest.Mock).mockReturnValue({ lang: "en" });
+  it.each(["en", "fr"])("renders a LanguageSwitcher - %s", async (lang) => {
+    (useTranslation as jest.Mock).mockReturnValue({ lang });
     render(<LanguageSwitcher />);
 
     const langSwitcher = screen.getByTestId("testid.menu.languageSwitcher");
     expect(langSwitcher).toBeInTheDocument();
-    expect(langSwitcher).toHaveTextContent("FR");
+    expect(langSwitcher).toHaveTextContent(lang === "en" ? "FR" : "EN");
 
     await userEvent.click(langSwitcher);
-    expect(window.location.href).toEqual("http://example.com/fr/");
-    expect(document.cookie).toEqual("NEXT_LOCALE=fr");
-  });
-
-  it("renders a LanguageSwitcher - FR -> EN", async () => {
-    (useTranslation as jest.Mock).mockReturnValue({ lang: "fr" });
-
-    render(<LanguageSwitcher />);
-
-    const langSwitcher = screen.getByTestId("testid.menu.languageSwitcher");
-    expect(langSwitcher).toBeInTheDocument();
-    expect(langSwitcher).toHaveTextContent("EN");
-
-    await userEvent.click(langSwitcher);
-    expect(window.location.href).toEqual("http://example.com/en/");
-
-    expect(document.cookie).toEqual("NEXT_LOCALE=en");
+    expect(window.location.href).toEqual(`http://example.com/${lang === "en" ? "fr" : "en"}/`);
+    expect(document.cookie).toEqual(`NEXT_LOCALE=${lang === "en" ? "fr" : "en"}`);
   });
 });

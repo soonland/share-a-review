@@ -59,7 +59,8 @@
             "title": "Most highly rated items",
             "byCategory": "by category"
         },
-        "reviewNumber": "{{value}} reviews"
+        "reviewNumber": "{{value}} reviews",
+        "noItemsFound": "No items found"
     },
     "reviews": {
         "helpful": "{{value}} people found this helpful"
