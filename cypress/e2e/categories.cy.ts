@@ -1,5 +1,9 @@
 describe("Categories page", () => {
   context("Given the website is online", () => {
+    const filterReviews = (data, itemName) => {
+      return data.filter((el) => el.item_name.toLowerCase().includes(itemName));
+    };
+
     beforeEach(() => {
       cy.mockApiMaintenance("false");
       cy.fixture("reviews").then((reviews) => {
@@ -12,7 +16,7 @@ describe("Categories page", () => {
         req.reply({
           body: {
             ...this.reviews,
-            data: [...this.reviews.data.filter((el) => el.item_name.toLowerCase().includes("iphone"))],
+            data: filterReviews(this.reviews.data, "iphone"),
           },
         });
       }).as("movieReviews");
@@ -76,17 +80,23 @@ describe("Categories page", () => {
       cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
         .should("exist")
         .and("have.length", 4)
-        .eq(2) // electronics TODO: change to dynamic
+        .contains(category)
         .should("contain.text", category)
         .click();
     };
 
+    const searchWithCategoryAndTerm = (category, term = "") => {
+      cy.wait("@allReviews");
+      const inputField = cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input');
+      inputField.should("exist");
+      if (term) inputField.type(term);
+      selectCategory(category);
+      cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
+    };
+
     context("When the user only selects a category", () => {
       it("Then the UI should allow form submit", () => {
-        cy.wait("@allReviews");
-        cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist");
-        selectCategory("electronics");
-        cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
+        searchWithCategoryAndTerm("electronics");
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
         cy.url().should("include", "/categories/electronics");
       });
@@ -94,10 +104,7 @@ describe("Categories page", () => {
 
     context("When the user selects a category and types in a search term", () => {
       it("Then the UI should allow form submit", () => {
-        cy.wait("@allReviews");
-        cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist").type("test");
-        selectCategory("electronics");
-        cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
+        searchWithCategoryAndTerm("electronics", "test");
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
         cy.url().should("include", "/categories/electronics?q=test");
       });
@@ -105,10 +112,7 @@ describe("Categories page", () => {
 
     context("When the user selects a category and types in a search term and submits the form", () => {
       it("Then the UI should display the results", () => {
-        cy.wait("@allReviews");
-        cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist").type("iphone");
-        selectCategory("electronics");
-        cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
+        searchWithCategoryAndTerm("electronics", "iphone");
         cy.wait("@movieReviews");
         cy.get('[data-testid$=".profileCard"]').should("exist").and("have.length", 2);
       });
