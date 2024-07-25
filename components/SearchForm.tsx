@@ -1,10 +1,21 @@
 import { Clear, Search as SearchIcon } from "@mui/icons-material";
-import { Button, IconButton, InputAdornment, InputBase, Stack, alpha, styled } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  InputBase,
+  Stack,
+  alpha,
+  styled,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { FC, PropsWithChildren, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import useSWR from "swr";
+
+import { useFetch } from "@/helpers/utils";
 
 import SelectField from "./generic/SelectField";
 
@@ -54,39 +65,17 @@ interface IFormInputs {
 
 const SearchForm: FC = () => {
   const router = useRouter();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const isExtraSmallSize = useMediaQuery(theme.breakpoints.down("md"));
 
-  const fetcher = async (url: string) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
-    clearTimeout(timeoutId);
-    return (
-      fetch(`${url}`, { signal: controller.signal })
-        // return fetch(`${url}`)
-        .then((res) => {
-          if (!res.ok) {
-            return { success: false, message: "An error occurred while fetching the data." };
-          }
-          return res.json();
-        })
-        .catch((error) => {
-          return { success: false, message: error.message };
-        })
-    );
-  };
-
-  const {
-    data: dataCategories,
-    // isLoading: isLoadingCategories,
-    // error: errorCategories,
-  } = useSWR(`/api/categories`, fetcher);
+  const { data: dataCategories, isLoading: isLoadingCategories } = useFetch(`/api/categories/list`);
 
   const {
     register,
     control,
     handleSubmit,
     setError,
-    // clearErrors,
     reset,
     getValues,
     setValue,
@@ -98,14 +87,14 @@ const SearchForm: FC = () => {
     },
   });
 
-  // recupéer les valeurs query et category pour les afficher dans le formulaire
   const query = (router.query?.q as string) || "";
   const category = (router.query?.category as string) || "";
 
   useEffect(() => {
-    setValue("category", category, { shouldValidate: false });
-    setValue("item", query, { shouldValidate: false });
-  }, [category, query, setValue]);
+    if (isLoadingCategories) return;
+    if (category) setValue("category", category, { shouldValidate: false });
+    if (query) setValue("item", query, { shouldValidate: false });
+  }, [isLoadingCategories, category, query, setValue]);
 
   return (
     <form
@@ -113,7 +102,7 @@ const SearchForm: FC = () => {
       onSubmit={handleSubmit(() => {
         const category = getValues("category");
         const item = getValues("item");
-        const url = `/reviews/${category}?q=${item}`;
+        const url = `/categories/${category}?q=${item}`;
         if (!item && !category) {
           setError("item", { type: "manual", message: t("form.fieldRequired") });
           return;
@@ -161,7 +150,6 @@ const SearchForm: FC = () => {
                 aria-label=""
                 onClick={() => reset({ item: "", category: "" })}
                 onMouseDown={() => reset({ item: "", category: "" })}
-                // disabled={!getValues("item") || !getValues("category")}
                 edge="end"
               >
                 <Clear />
@@ -177,7 +165,7 @@ const SearchForm: FC = () => {
           endIcon={<SearchIcon />}
           sx={{ borderTopRightRadius: 32, borderBottomRightRadius: 32, flex: "1 1 10%" }}
         >
-          {t("form.search.submit")}
+          {!isExtraSmallSize && t("form.search.submit")}
         </Button>
       </StyledSearch>
     </form>

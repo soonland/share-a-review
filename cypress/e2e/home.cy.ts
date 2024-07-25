@@ -4,7 +4,18 @@ describe("Home page", () => {
       beforeEach(() => {
         cy.mockApiMaintenance("false");
         cy.mockApiAuthSession(true);
-        cy.intercept("GET", "/api/reviews", { fixture: "reviews.json" }).as("reviews");
+        cy.intercept("GET", "/api/reviews", { fixture: "reviews.json" }).as("allReviews");
+        cy.intercept("GET", "/api/categories/movies", { fixture: "reviews.json" }).as("movieReviews");
+        cy.intercept("GET", "/api/categories/list", {
+          body: {
+            success: true,
+            data: [
+              { value: "movies", label: "movies" },
+              { value: "series", label: "series" },
+              { value: "books", label: "books" },
+            ],
+          },
+        }).as("categories");
 
         cy.visit("/");
 
@@ -13,12 +24,10 @@ describe("Home page", () => {
       });
 
       it("Then the UI should display elements for an authenticated user", () => {
+        cy.wait("@allReviews");
         cy.openUserMenu();
         cy.openReviewsMenu("movies");
-        cy.wait("@reviews");
-      });
-
-      it("Then the user should see 3 main menu items", () => {
+        cy.wait("@movieReviews");
         cy.get('[data-testid="testid.mainMenu.reviews"]').should("exist").contains("Reviews (39)");
         cy.get('[data-testid="testid.mainMenu.myReviews"]').should("exist");
         cy.get('[data-testid="testid.mainMenu.writeReview"]').should("exist");
@@ -29,14 +38,15 @@ describe("Home page", () => {
       beforeEach(() => {
         cy.mockApiMaintenance("false");
         cy.mockApiAuthSession(false);
-        cy.intercept("GET", "/api/reviews/movies", { fixture: "reviews.json" }).as("movieReviews");
-        cy.intercept("GET", "/api/categories", {
+        cy.intercept("GET", "/api/items?type=latest.reviewed", { fixture: "items.json" }).as("items");
+        cy.intercept("GET", "/api/categories/movies", { fixture: "reviews.json" }).as("movieReviews");
+        cy.intercept("GET", "/api/categories/list", {
           body: {
             success: true,
             data: [
-              { value: "movies", label: "Movies" },
-              { value: "series", label: "Series" },
-              { value: "books", label: "Books" },
+              { value: "movies", label: "movies" },
+              { value: "series", label: "series" },
+              { value: "books", label: "books" },
             ],
           },
         }).as("categories");
@@ -49,7 +59,12 @@ describe("Home page", () => {
       it("Then the UI should display elements for a guest user", () => {
         cy.openUserMenu();
         cy.openReviewsMenu("movies");
+        cy.wait("@categories");
         cy.wait("@movieReviews");
+      });
+
+      it("Then the UI should display items reviews on the home page", () => {
+        cy.wait("@items");
       });
     });
   });

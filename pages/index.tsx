@@ -1,18 +1,14 @@
-import { Grid } from "@mui/material";
-import { useSession } from "next-auth/react";
+import HomePageSection from "@/components/HomePageSection";
+import Introduction from "@/components/Introduction";
 
 const Home = () => {
-  const session = useSession();
-
   return (
-    <Grid container flexDirection={"column"} spacing={2}>
-      {session.status === "authenticated" && (
-        <Grid item>
-          <h1>Search</h1>
-          <p>Search for your favorite artist, album or track</p>
-        </Grid>
-      )}
-    </Grid>
+    <>
+      <Introduction />
+      <HomePageSection type="latestAddedItems" />
+      <HomePageSection type="mostRecentReviewedItems" />
+      <HomePageSection type="mostHighlyRatedItems" withAverageRating withCategoryFilter />
+    </>
   );
 };
 
@@ -21,7 +17,7 @@ export default Home;
 export const getServerSideProps = async () => {
   return {
     props: {
-      showProfile: true,
+      showProfile: false,
     },
   };
 };

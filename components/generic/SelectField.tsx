@@ -31,7 +31,6 @@ const SelectField: FC<SelectFieldProps> = ({
   error,
   options,
   placeholder = label,
-  // isLoading = false,
   disabled = false,
   withLabel = true,
   sx,
@@ -59,12 +58,6 @@ const SelectField: FC<SelectFieldProps> = ({
                 error={!!error}
                 placeholder={placeholder}
                 onChange={field.onChange}
-                // onChange={(e) => {
-                //   field.onChange(e);
-                //   if (onChange) {
-                //     onChange(field.value);
-                //   }
-                // }}
               >
                 <MenuItem value="" disabled>
                   {placeholder}

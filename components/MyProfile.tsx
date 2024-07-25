@@ -10,7 +10,7 @@ import { FC, ReactElement } from "react";
 
 const MyProfile: FC = (): ReactElement => {
   const session = useSession();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
 
   if (session.status === "loading") {
     return <Skeleton variant="rectangular" width={210} height={60} data-testid="testid.loading" />;

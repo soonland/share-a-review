@@ -83,10 +83,10 @@ describe("MainMenu", () => {
     // Open the menu
     await openReviewsMenu();
 
-    // // Validate the menu
+    // Validate the menu
     await validateReviewMenu();
 
-    // // Close the menu
+    // Close the menu
     await closeReviewMenu();
   });
 });

@@ -32,8 +32,8 @@ describe("MainMenu", () => {
         title={"mainMenu.reviews.title"}
         icon={"reviews"}
         subMenus={[
-          { id: "allReviews", title: "All Reviews", url: "/reviews" },
-          { id: "movies", title: "Movies", url: "/reviews/movies" },
+          { id: "allReviews", title: "All Reviews", url: "/categories" },
+          { id: "movies", title: "Movies", url: "/categories/movies" },
         ]}
       />,
     );
@@ -53,8 +53,8 @@ describe("MainMenu", () => {
           title={"mainMenu.reviews.title"}
           icon={"reviews"}
           subMenus={[
-            { id: "allReviews", title: "All Reviews", url: "/reviews" },
-            { id: "movies", title: "Movies", url: "/reviews/movies" },
+            { id: "allReviews", title: "All Reviews", url: "/categories" },
+            { id: "movies", title: "Movies", url: "/categories/movies" },
           ]}
         />,
       );
@@ -67,7 +67,7 @@ describe("MainMenu", () => {
 
   it("renders a MainMenu and clicks", async () => {
     const mockRouter = {
-      push: jest.fn(), // the component uses `router.push` only
+      push: jest.fn(),
     };
 
     (useRouter as jest.Mock).mockReturnValue(mockRouter);

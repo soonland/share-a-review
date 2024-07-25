@@ -30,7 +30,7 @@ const Review = ({ review }) => {
           {review.item_name} -{" "}
           <Link
             href={{
-              pathname: `/reviews/${review.item_category_name}`,
+              pathname: `/categories/${review.item_category_slug}`,
             }}
           >
             <Typography variant="overline">{review.item_category_name}</Typography>

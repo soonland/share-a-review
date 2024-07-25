@@ -29,7 +29,7 @@ const LeftMenuItem = styled(MenuItem)(() => ({
   margin: "0 10px",
 }));
 const LeftMenu: FC<LeftMenuProps> = ({ sx }): ReactElement => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 

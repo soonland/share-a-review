@@ -1,5 +1,5 @@
-import { AccountCircle, Logout, ManageAccounts } from "@mui/icons-material";
-import { Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
+import { AccountCircle, Logout } from "@mui/icons-material";
+import { Avatar, Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useState, MouseEvent, ReactElement, FC } from "react";
@@ -12,7 +12,7 @@ interface UserMenuProps {
 
 const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
   const session = useSession();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -23,10 +23,6 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
     setAnchorEl(null);
   };
 
-  const openMyAccount = () => {
-    return;
-  };
-
   const openMyProfile = () => {
     return;
   };
@@ -34,7 +30,18 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
   return (
     <Box sx={sx}>
       <IconButton edge="end" onClick={handleClick} data-testid="testid.menu.accountButton" sx={{ ml: 1 }}>
-        <AccountCircle />
+        <Avatar
+          src={session?.data?.user?.image}
+          alt={session.data?.user?.name}
+          sx={{
+            width: 32,
+            height: 32,
+            bgcolor: "primary.main",
+            color: "primary.contrastText",
+          }}
+        >
+          {session.data?.user?.name?.charAt(0)}
+        </Avatar>
       </IconButton>
       <Menu
         id="user-menu"
@@ -50,10 +57,6 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
           "& .MuiSvgIcon-root": { marginLeft: 1 },
         }}
       >
-        <MenuItem onClick={openMyAccount} data-testid="testid.menu.account">
-          {t("userMenu.account")}
-          <ManageAccounts fontSize="small" sx={{ mr: 1 }} />
-        </MenuItem>
         <MenuItem onClick={openMyProfile} data-testid="testid.menu.profile">
           {t("userMenu.profile")}
           <AccountCircle fontSize="small" sx={{ mr: 1 }} />
