@@ -7,8 +7,6 @@ import Alert from "@/components/Alert";
 import CreateForm from "@/components/CreateForm";
 import { useFetch } from "@/helpers/utils";
 
-interface CreateItemProps {}
-
 const CustomCard = styled(Card)(({ theme }) => ({
   "&.MuiPaper-root.MuiPaper-elevation.MuiCard-root": {
     backgroundColor: "green",
@@ -16,7 +14,7 @@ const CustomCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const CreateItem: NextPage<CreateItemProps> = () => {
+const CreateItem: NextPage = () => {
   const [selectedCategory, setSelectedCategory] = useState<{
     id: number;
     value: string;
