@@ -12,6 +12,7 @@ export default async function handler(req, res) {
       client.release();
 
       res.status(200).json({ data: result.rows, success: true });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       res.status(500).json({ success: false, message: "Error fetching items" });
     }

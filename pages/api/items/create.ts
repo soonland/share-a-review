@@ -12,6 +12,7 @@ export default async function handler(req, res) {
         [name, slug, parseInt(categoryId, 10), JSON.stringify(description)],
       );
       res.status(201).json(newReview.rows[0]);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       res.status(500).json({ error: "Failed to create item" });
     }
