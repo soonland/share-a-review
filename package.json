@@ -35,7 +35,7 @@
     "pg": "^8.11.5",
     "react": "^18.2.0",
     "react-dom": "^18",
-    "react-hook-form": "^7.51.5",
+    "react-hook-form": "^7.53.1",
     "swr": "^2.2.5",
     "zod": "^3.23.8"
   },
