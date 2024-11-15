@@ -4,6 +4,7 @@ describe("Home page", () => {
       beforeEach(() => {
         cy.mockApiMaintenance("false");
         cy.mockApiAuthSession(true);
+        cy.mockApiNotificationsCount(3);
         cy.intercept("GET", "/api/reviews", { fixture: "reviews.json" }).as("allReviews");
         cy.intercept("GET", "/api/categories/movies", { fixture: "reviews.json" }).as("movieReviews");
         cy.intercept("GET", "/api/categories/list", {
@@ -26,6 +27,10 @@ describe("Home page", () => {
       it("Then the UI should display elements for an authenticated user", () => {
         cy.wait("@allReviews");
         cy.openUserMenu();
+        cy.get("[data-testid='testid.menu.accountButton']").should("exist").click();
+        cy.get("[data-testid='testid.menu.notifications']").should("exist");
+        cy.get("[data-testid='testid.menu.notifications']").contains("3");
+        cy.get("body").type("{esc}");
         cy.openReviewsMenu("movies");
         cy.wait("@movieReviews");
         cy.get('[data-testid="testid.mainMenu.reviews"]').should("exist").contains("Reviews (39)");

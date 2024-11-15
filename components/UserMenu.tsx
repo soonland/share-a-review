@@ -1,8 +1,12 @@
-import { AccountCircle, Logout } from "@mui/icons-material";
-import { Avatar, Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
+import { AccountCircle, Logout, Notifications } from "@mui/icons-material";
+import { Avatar, Badge, Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
+import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useState, MouseEvent, ReactElement, FC } from "react";
+import useSWR from "swr";
+
+import { fetcher } from "@/helpers/utils";
 
 import LanguageSwitcher from "./LanguageSwitcher";
 
@@ -12,20 +16,37 @@ interface UserMenuProps {
 
 const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
   const session = useSession();
+  const router = useRouter();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const openMyProfile = () => {
+    handleClose();
     return;
   };
+
+  const goToNotifications = () => {
+    handleClose();
+    router.push("/notifications");
+  };
+
+  const { data } = useSWR(
+    session ? "/api/notifications/count" : null, // URL ou null si pas connecté
+    fetcher,
+    {
+      refreshInterval: 5000, // rafraîchissement toutes les 5 secondes
+    },
+  );
 
   return (
     <Box sx={sx}>
@@ -57,16 +78,24 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
           "& .MuiSvgIcon-root": { marginLeft: 1 },
         }}
       >
-        <MenuItem onClick={openMyProfile} data-testid="testid.menu.profile">
+        <LanguageSwitcher />
+        <MenuItem onClick={() => openMyProfile()} data-testid="testid.menu.profile">
           {t("userMenu.profile")}
           <AccountCircle fontSize="small" sx={{ mr: 1 }} />
         </MenuItem>
-        <LanguageSwitcher />
         {session.status === "authenticated" ? (
-          <MenuItem onClick={() => signOut()} data-testid="testid.menu.signOut">
-            {t("userMenu.signOut")}
-            <Logout fontSize="small" sx={{ mr: 1 }} />
-          </MenuItem>
+          [
+            <MenuItem key="notifications" onClick={() => goToNotifications()} data-testid="testid.menu.notifications">
+              {t("userMenu.notifications")}
+              <Badge badgeContent={data?.count} color="primary">
+                <Notifications fontSize="small" sx={{ mr: 1 }} />
+              </Badge>
+            </MenuItem>,
+            <MenuItem key="signOut" onClick={() => signOut()} data-testid="testid.menu.signOut">
+              {t("userMenu.signOut")}
+              <Logout fontSize="small" sx={{ mr: 1 }} />
+            </MenuItem>,
+          ]
         ) : (
           <MenuItem onClick={() => signIn()} data-testid="testid.menu.signIn">
             {t("userMenu.signIn")}

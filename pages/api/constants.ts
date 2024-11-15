@@ -192,3 +192,23 @@ GROUP BY
   r.id, u.name, u.email, i.name, i.category_id, cat.name, cat.slug, i.description, i.date_created;
 `;
 };
+
+export const getNotificationsQuery = (userId: number) => {
+  return `SELECT
+  n.id,
+  n.title,
+  n.message,
+  n.status,
+  n.type,
+  n.sent_at
+FROM
+  notifications n
+WHERE
+  n.user_id = ${userId}
+ORDER BY
+  n.sent_at DESC;`;
+};
+
+export const getNotificationsCountQuery = (userId: number) => {
+  return `SELECT COUNT(*) as count FROM notifications WHERE user_id = ${userId} AND status = 'unread';`;
+};

@@ -119,6 +119,7 @@ CREATE TABLE IF NOT EXISTS comments (
 -- The sent date field stores the timestamp of when the notification was sent
 CREATE TABLE IF NOT EXISTS notifications (
   id SERIAL PRIMARY KEY,
+  sender_id INTEGER REFERENCES users(id),
   user_id INTEGER REFERENCES users(id),
   title VARCHAR(100) NOT NULL,
   message TEXT NOT NULL,

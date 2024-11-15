@@ -1,109 +1,110 @@
 {
-    "appName": "S-A-R Community",
-    "common": {
-        "loading": "Loading",
-        "error": "Error",
-        "noDataFound": "No data found",
-        "notSignedIn": "You are not signed in",
-        "signedInAs": "Signed in as {{name}}",
-        "signOut": "Sign out",
-        "signIn": "Sign in",
-        "search": "Search",
-        "switchLanguage": "{{lang}}",
-        "changeThemeMode": "Change Theme Mode"
-    },
-    "mainMenu": {
-        "home": "Home",
-        "reviews": "Reviews",
-        "writeReview": "Write Review",
-        "myReviews": "My Reviews",
-        "reviewsMenu": {
-            "allReviews": "All Reviews",
-            "movies": "Movies",
-            "books": "Books",
-            "music": "Music",
-            "games": "Games",
-            "products": "Products",
-            "places": "Places",
-            "restaurants": "Restaurants",
-            "recipes": "Recipes",
-            "videos": "Videos",
-            "apps": "Apps",
-            "services": "Services",
-            "events": "Events",
-            "electronics": "Electronics",
-            "other": "Other"
-        }
-    },
-    "userMenu": {
-        "home": "Home",
-        "switchLanguage": "{{lang}}",
-        "account": "My Account",
-        "profile": "My Profile",
-        "signIn": "Sign in",
-        "signOut": "Sign out"
-    },
-    "home": {
-        "welcomeTitle": "Welcome to Share-A-Review - The Voice of the Community!",
-        "subtitle": "Share your reviews and experiences with the world",
-        "welcomeMessage": "Discover a space where your opinions truly matter! At Share-A-Review, we believe that every review can make a difference. Whether you're a tech enthusiast, movie buff, food lover, or simply someone eager to share your experiences, our platform is made for you.",
-        "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
-        "getStarted": "Get Started",
-        "mostRecentReviewedItems": {
-            "title": "Most recent reviewed items"
-        },
-        "latestAddedItems": {
-            "title": "Latest added items"
-        },
-        "mostHighlyRatedItems": {
-            "title": "Most highly rated items",
-            "byCategory": "by category"
-        },
-        "reviewNumber": "{{value}} reviews",
-        "noItemsFound": "No items found"
-    },
-    "reviews": {
-        "helpful": "{{value}} people found this helpful"
-    },
-    "writeReview": {
-        "loginRequired": "You need to be logged in to write a review. Please log in or sign up.",
-        "isLoggedIn": "You are logged in as {{name}}. You can now write a review.",
-        "title": "Write a Review",
-        "description": "Write a review about a movie, book, music, game, product, place, restaurant, recipe, video, app, service, event, electronics, or anything else.",
-        "submit": "Submit"
-    },
-    "form": {
-        "writeReview": {
-            "item": "Item",
-            "title": "Title",
-            "content": "Content",
-            "rating": "Rating",
-            "submit": "Submit",
-            "cancel": "Cancel"
-        },
-        "search": {
-            "placeholder": "Search for an item by name, by category ...",
-            "submit": "Search",
-            "noResults": "No results found for {{value}}"
-        },
-        "select": {
-            "placeholder": {
-                "category": "Filter by category"
-            }
-        },
-        "characters": "{{value}} characters",
-        "fieldRequired": "This field is required",
-        "maxLengthExceeded": "Maximum {{value}} characters allowed",
-        "minLengthRequired": "Minimum {{value}} characters required"
-    },
-    "footer": {
-        "title": "Share-A-Review Community",
-        "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
-        "contactUs": "Contact Us",
-        "privacyPolicy": "Privacy Policy",
-        "termsOfService": "Terms of Service",
-        "aboutUs": "About Us",
-        "changelog": "Change Log",
-        "changeThemeMode": "Change Theme Mode"
+  "appName": "S-A-R Community",
+  "common": {
+    "loading": "Loading",
+    "error": "Error",
+    "noDataFound": "No data found",
+    "notSignedIn": "You are not signed in",
+    "signedInAs": "Signed in as {{name}}",
+    "signOut": "Sign out",
+    "signIn": "Sign in",
+    "search": "Search",
+    "switchLanguage": "{{lang}}",
+    "changeThemeMode": "Change Theme Mode"
+  },
+  "mainMenu": {
+    "home": "Home",
+    "reviews": "Reviews",
+    "writeReview": "Write Review",
+    "myReviews": "My Reviews",
+    "reviewsMenu": {
+      "allReviews": "All Reviews",
+      "movies": "Movies",
+      "books": "Books",
+      "music": "Music",
+      "games": "Games",
+      "products": "Products",
+      "places": "Places",
+      "restaurants": "Restaurants",
+      "recipes": "Recipes",
+      "videos": "Videos",
+      "apps": "Apps",
+      "services": "Services",
+      "events": "Events",
+      "electronics": "Electronics",
+      "other": "Other"
     }
+  },
+  "userMenu": {
+    "home": "Home",
+    "switchLanguage": "{{lang}}",
+    "account": "My Account",
+    "profile": "My Profile",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "notifications": "Notifications"
+  },
+  "home": {
+    "welcomeTitle": "Welcome to Share-A-Review - The Voice of the Community!",
+    "subtitle": "Share your reviews and experiences with the world",
+    "welcomeMessage": "Discover a space where your opinions truly matter! At Share-A-Review, we believe that every review can make a difference. Whether you're a tech enthusiast, movie buff, food lover, or simply someone eager to share your experiences, our platform is made for you.",
+    "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
+    "getStarted": "Get Started",
+    "mostRecentReviewedItems": {
+      "title": "Most recent reviewed items"
+    },
+    "latestAddedItems": {
+      "title": "Latest added items"
+    },
+    "mostHighlyRatedItems": {
+      "title": "Most highly rated items",
+      "byCategory": "by category"
+    },
+    "reviewNumber": "{{value}} reviews",
+    "noItemsFound": "No items found"
+  },
+  "reviews": {
+    "helpful": "{{value}} people found this helpful"
+  },
+  "writeReview": {
+    "loginRequired": "You need to be logged in to write a review. Please log in or sign up.",
+    "isLoggedIn": "You are logged in as {{name}}. You can now write a review.",
+    "title": "Write a Review",
+    "description": "Write a review about a movie, book, music, game, product, place, restaurant, recipe, video, app, service, event, electronics, or anything else.",
+    "submit": "Submit"
+  },
+  "form": {
+    "writeReview": {
+      "item": "Item",
+      "title": "Title",
+      "content": "Content",
+      "rating": "Rating",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    },
+    "search": {
+      "placeholder": "Search for an item by name, by category ...",
+      "submit": "Search",
+      "noResults": "No results found for {{value}}"
+    },
+    "select": {
+      "placeholder": {
+        "category": "Filter by category"
+      }
+    },
+    "characters": "{{value}} characters",
+    "fieldRequired": "This field is required",
+    "maxLengthExceeded": "Maximum {{value}} characters allowed",
+    "minLengthRequired": "Minimum {{value}} characters required"
+  },
+  "footer": {
+    "title": "Share-A-Review Community",
+    "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "aboutUs": "About Us",
+    "changelog": "Change Log",
+    "changeThemeMode": "Change Theme Mode"
+  }
 }
