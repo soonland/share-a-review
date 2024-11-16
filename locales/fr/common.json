@@ -1,109 +1,138 @@
 {
-    "appName": "S-A-R Community",
-    "common": {
-        "loading": "Chargement ...",
-        "error": "Erreur",
-        "noDataFound": "Aucune donnée trouvée",
-        "notSignedIn": "Vous n'êtes pas connecté",
-        "signedInAs": "Connecté en tant que {{name}}",
-        "signOut": "Déconnexion",
-        "signIn": "Connexion",
-        "search": "Rechercher",
-        "switchLanguage": "{{lang}}",
-        "changeThemeMode": "Changer le mode de thème"
-    },
-    "mainMenu": {
-        "home": "Accueil",
-        "reviews": "Avis",
-        "writeReview": "Écrire un avis",
-        "myReviews": "Mes avis",
-        "reviewsMenu": {
-            "allReviews": "Tous les avis",
-            "movies": "Films",
-            "books": "Livres",
-            "music": "Musique",
-            "games": "Jeux",
-            "products": "Produits",
-            "places": "Lieux",
-            "restaurants": "Restaurants",
-            "recipes": "Recettes",
-            "videos": "Vidéos",
-            "apps": "Applications",
-            "services": "Services",
-            "events": "Événements",
-            "electronics": "Électronique",
-            "other": "Autre"
-        }
-    },
-    "userMenu": {
-        "home": "Accueil",
-        "switchLanguage": "{{lang}}",
-        "account": "Mon compte",
-        "profile": "Profil",
-        "signIn": "Connexion",
-        "signOut": "Déconnexion"
-    },
-    "home": {
-        "welcomeTitle": "Bienvenue sur Share-A-Review - La Voix de la Communauté!",
-        "subtitle": "Partagez vos avis et expériences avec le monde",
-        "welcomeMessage": "Découvrez un espace où vos opinions comptent vraiment ! Chez Share-A-Review, nous croyons que chaque avis peut faire la différence. Que vous soyez un passionné de technologie, un cinéphile, un amateur de cuisine ou simplement quelqu'un désireux de partager vos expériences, notre plateforme est faite pour vous.",
-        "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
-        "getStarted": "Commencer",
-        "mostRecentReviewedItems": {
-            "title": "Articles les plus récemment évalués"
-        },
-        "latestAddedItems": {
-            "title": "Derniers articles ajoutés"
-        },
-        "mostHighlyRatedItems": {
-            "title": "Articles les mieux évalués",
-            "byCategory": "par catégorie"
-        },
-        "reviewNumber": "{{value}} avis",
-        "noItemsFound": "Aucun article trouvé"
-    },
-    "reviews": {
-        "helpful": "{{value}} personnes ont trouvé cela utile"
-    },
-    "writeReview": {
-        "loginRequired": "Vous devez être connecté pour écrire un avis. Veuillez vous connecter ou vous inscrire.",
-        "isLoggedIn": "Vous êtes connecté en tant que {{name}}. Vous pouvez maintenant écrire un avis.",
-        "title": "Écrire un avis",
-        "description": "Écrivez un avis sur un film, un livre, de la musique, un jeu, un produit, un lieu, un restaurant, une recette, une vidéo, une application, un service, un événement, de l'électronique ou tout autre chose.",
-        "submit": "Soumettre"
-    },
-    "form": {
-        "writeReview": {
-            "item": "Item",
-            "title": "Titre",
-            "content": "Contenu",
-            "rating": "Évaluation",
-            "submit": "Soumettre",
-            "cancel": "Annuler"
-        },
-        "search": {
-            "placeholder": "Rechercher des avis par item, par catégorie ...",
-            "submit": "Rechercher",
-            "noResults": "Aucun résultat trouvé pour {{value}}"
-        },
-        "select": {
-            "placeholder": {
-                "category": "Filtrer par catégorie"
-            }
-        },
-        "characters": "{{value}} caractères",
-        "fieldRequired": "Ce champ est requis",
-        "maxLengthExceeded": "Maximum {{value}} caractères autorisés",
-        "minLengthRequired": "Minimum {{value}} caractères requis"
-    },
-    "footer": {
-        "title": "Share-A-Review",
-        "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
-        "contactUs": "Contactez-nous",
-        "privacyPolicy": "Politique de confidentialité",
-        "termsOfService": "Conditions d'utilisation",
-        "aboutUs": "À propos de nous",
-        "changelog": "Journal des modifications",
-        "changeThemeMode": "Changer le mode de thème"
+  "appName": "S-A-R Community",
+  "common": {
+    "loading": "Chargement ...",
+    "error": "Erreur",
+    "noDataFound": "Aucune donnée trouvée",
+    "notSignedIn": "Vous n'êtes pas connecté",
+    "signedInAs": "Connecté en tant que {{name}}",
+    "signOut": "Déconnexion",
+    "signIn": "Connexion",
+    "search": "Rechercher",
+    "switchLanguage": "{{lang}}",
+    "changeThemeMode": "Changer le mode de thème"
+  },
+  "mainMenu": {
+    "home": "Accueil",
+    "reviews": "Avis",
+    "writeReview": "Écrire un avis",
+    "myReviews": "Mes avis",
+    "reviewsMenu": {
+      "allReviews": "Tous les avis",
+      "movies": "Films",
+      "books": "Livres",
+      "music": "Musique",
+      "games": "Jeux",
+      "products": "Produits",
+      "places": "Lieux",
+      "restaurants": "Restaurants",
+      "recipes": "Recettes",
+      "videos": "Vidéos",
+      "apps": "Applications",
+      "services": "Services",
+      "events": "Événements",
+      "electronics": "Électronique",
+      "other": "Autre"
     }
+  },
+  "userMenu": {
+    "home": "Accueil",
+    "switchLanguage": "{{lang}}",
+    "account": "Mon compte",
+    "profile": "Profil",
+    "signIn": "Connexion",
+    "signOut": "Déconnexion",
+    "notifications": "Notifications"
+  },
+  "home": {
+    "welcomeTitle": "Bienvenue sur Share-A-Review - La Voix de la Communauté!",
+    "subtitle": "Partagez vos avis et expériences avec le monde",
+    "welcomeMessage": "Découvrez un espace où vos opinions comptent vraiment ! Chez Share-A-Review, nous croyons que chaque avis peut faire la différence. Que vous soyez un passionné de technologie, un cinéphile, un amateur de cuisine ou simplement quelqu'un désireux de partager vos expériences, notre plateforme est faite pour vous.",
+    "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
+    "getStarted": "Commencer",
+    "mostRecentReviewedItems": {
+      "title": "Articles les plus récemment évalués"
+    },
+    "latestAddedItems": {
+      "title": "Derniers articles ajoutés"
+    },
+    "mostHighlyRatedItems": {
+      "title": "Articles les mieux évalués",
+      "byCategory": "par catégorie"
+    },
+    "reviewNumber": "{{value}} avis",
+    "noItemsFound": "Aucun article trouvé"
+  },
+  "reviews": {
+    "helpful": "{{value}} personnes ont trouvé cela utile"
+  },
+  "writeReview": {
+    "loginRequired": "Vous devez être connecté pour écrire un avis. Veuillez vous connecter ou vous inscrire.",
+    "isLoggedIn": "Vous êtes connecté en tant que {{name}}. Vous pouvez maintenant écrire un avis.",
+    "title": "Écrire un avis",
+    "description": "Écrivez un avis sur un film, un livre, de la musique, un jeu, un produit, un lieu, un restaurant, une recette, une vidéo, une application, un service, un événement, de l'électronique ou tout autre chose.",
+    "submit": "Soumettre"
+  },
+  "form": {
+    "writeReview": {
+      "item": "Item",
+      "title": "Titre",
+      "content": "Contenu",
+      "rating": "Évaluation",
+      "submit": "Soumettre",
+      "cancel": "Annuler"
+    },
+    "search": {
+      "placeholder": "Rechercher des avis par item, par catégorie ...",
+      "submit": "Rechercher",
+      "noResults": "Aucun résultat trouvé pour {{value}}"
+    },
+    "select": {
+      "placeholder": {
+        "category": "Filtrer par catégorie"
+      }
+    },
+    "characters": "{{value}} caractères",
+    "fieldRequired": "Ce champ est requis",
+    "maxLengthExceeded": "Maximum {{value}} caractères autorisés",
+    "minLengthRequired": "Minimum {{value}} caractères requis"
+  },
+  "notifications": {
+    "title": "Boîte de réception",
+    "noNotifications": "Aucune notification trouvée",
+    "unread": "Notifications non lues",
+    "read": "Notifications lues",
+    "selectAll": "Sélectionner tout",
+    "deselectAll": "Désélectionner tout",
+    "error": "Erreur lors du chargement des notifications",
+    "loading": "Chargement ...",
+    "actions": {
+      "markAsRead": "Marquer comme lu",
+      "markAsUnread": "Marquer comme non lu",
+      "delete": "Supprimer",
+      "moveToInbox": "Déplacer vers la boîte de réception",
+      "restore": "Restaurer",
+      "reply": "Répondre"
+    },
+    "modal": {
+      "from": "De {{value}}",
+      "sentAt": "Envoyé le {{value}}"
+    },
+    "sidebar": {
+      "all": "Tout",
+      "user": "Communauté",
+      "system": "Application",
+      "trash": "Corbeille"
+    }
+  },
+  "footer": {
+    "title": "Share-A-Review",
+    "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",
+    "contactUs": "Contactez-nous",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation",
+    "aboutUs": "À propos de nous",
+    "changelog": "Journal des modifications",
+    "changeThemeMode": "Changer le mode de thème"
+  }
 }

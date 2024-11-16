@@ -110,7 +110,7 @@ const WriteReviews = () => {
     }
   }, [feedbackMessage]);
 
-  const { data, isLoading } = useFetch(`/api/items/list`);
+  const { data, isLoading } = useFetch(`/api/items?type=list`);
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>

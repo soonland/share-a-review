@@ -10,6 +10,7 @@ const StyledFooter = styled(Box)(({ theme }) => ({
   position: "fixed",
   bottom: 0,
   width: "100%",
+  zIndex: 100,
 }));
 
 const Footer: FC = (): ReactElement => {

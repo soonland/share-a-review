@@ -119,11 +119,13 @@ CREATE TABLE IF NOT EXISTS comments (
 -- The sent date field stores the timestamp of when the notification was sent
 CREATE TABLE IF NOT EXISTS notifications (
   id SERIAL PRIMARY KEY,
+  sender_id INTEGER REFERENCES users(id),
   user_id INTEGER REFERENCES users(id),
   title VARCHAR(100) NOT NULL,
   message TEXT NOT NULL,
-  status VARCHAR(10) NOT NULL DEFAULT 'unread', -- 'read', 'unread', 'trashed'
+  status VARCHAR(10) NOT NULL DEFAULT 'unread', -- 'read', 'unread'
   type VARCHAR(20) NOT NULL DEFAULT 'system', -- 'system', 'user'
+  folder VARCHAR(20) NOT NULL DEFAULT 'inbox', -- 'inbox', 'sent', 'trash'
   sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -22,9 +22,11 @@ Cypress.Commands.add("openUserMenu", () => {
     .then((body) => {
       if (body.status === "authenticated" || !!body.user) {
         cy.get("[data-testid='testid.menu.signIn']").should("not.exist");
+        cy.get("[data-testid='testid.menu.notifications']").should("exist");
         cy.get("[data-testid='testid.menu.signOut']").should("exist");
       } else {
         cy.get("[data-testid='testid.menu.signOut']").should("not.exist");
+        cy.get("[data-testid='testid.menu.notifications']").should("not.exist");
         cy.get("[data-testid='testid.menu.signIn']").should("exist");
       }
       cy.get("body").type("{esc}");
@@ -45,6 +47,15 @@ Cypress.Commands.add("mockApiMaintenance", (maintenanceMode: string) => {
       maintenanceMode,
     },
   }).as("maintenanceMode");
+});
+
+Cypress.Commands.add("mockApiNotificationsCount", (count: number) => {
+  cy.intercept("GET", "/api/notifications/count", {
+    statusCode: 200,
+    body: {
+      count,
+    },
+  }).as("notificationsCount");
 });
 
 Cypress.Commands.add("mockApiAuthSession", (isAuthenticated: boolean) => {

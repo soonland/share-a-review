@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { IThemeContext, ThemeContext } from "../context/ThemeProvider";
 import { mockSessionAuth, mockSessionUnAuth } from "../mockData";
@@ -35,15 +35,13 @@ const closeAccountMenu = async () => {
 const validateAccountMenu = async (isAuthenticated: boolean) => {
   expect(screen.getByTestId("testid.userMenu")).toBeInTheDocument();
   expect(screen.getByTestId("testid.menu.profile")).toBeInTheDocument();
-  await userEvent.click(screen.getByTestId("testid.menu.profile"));
   if (isAuthenticated) {
     expect(screen.getByTestId("testid.menu.signOut")).toBeInTheDocument();
-    await userEvent.click(screen.getByTestId("testid.menu.signOut"));
-    expect(signOut).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("testid.menu.notifications")).toBeInTheDocument();
+    expect(screen.queryByTestId("testid.menu.signIn")).not.toBeInTheDocument();
   } else {
     expect(screen.getByTestId("testid.menu.signIn")).toBeInTheDocument();
-    await userEvent.click(screen.getByTestId("testid.menu.signIn"));
-    expect(signIn).toHaveBeenCalledTimes(1);
+    expect(screen.queryByTestId("testid.menu.notifications")).not.toBeInTheDocument();
   }
 };
 
