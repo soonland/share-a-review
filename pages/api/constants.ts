@@ -200,6 +200,7 @@ export const getNotificationsQuery = (userId: number) => {
   n.message,
   n.status,
   n.type,
+  n.folder,
   n.sent_at
 FROM
   notifications n
@@ -210,5 +211,5 @@ ORDER BY
 };
 
 export const getNotificationsCountQuery = (userId: number) => {
-  return `SELECT COUNT(*) as count FROM notifications WHERE user_id = ${userId} AND status = 'unread';`;
+  return `SELECT COUNT(*) as count FROM notifications WHERE user_id = ${userId} AND status = 'unread' and folder != 'trash';`;
 };

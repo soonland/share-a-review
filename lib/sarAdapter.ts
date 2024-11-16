@@ -6,12 +6,10 @@ const createUserNotification = async (userId: number, title: string, type: "syst
   const client = await pool.connect();
   try {
     const notificationMessage = "Bienvenue sur notre plateforme !";
-    await client.query("INSERT INTO notifications (user_id, title, message, type) VALUES ($1, $2, $3, $4)", [
-      userId,
-      title,
-      notificationMessage,
-      type,
-    ]);
+    await client.query(
+      "INSERT INTO notifications (sender_id, user_id, title, message, type) VALUES ($1, $2, $3, $4, $5)",
+      [0, userId, title, notificationMessage, type],
+    );
   } finally {
     client.release();
   }

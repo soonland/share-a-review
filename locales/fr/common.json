@@ -97,6 +97,34 @@
     "maxLengthExceeded": "Maximum {{value}} caractères autorisés",
     "minLengthRequired": "Minimum {{value}} caractères requis"
   },
+  "notifications": {
+    "title": "Boîte de réception",
+    "noNotifications": "Aucune notification trouvée",
+    "unread": "Notifications non lues",
+    "read": "Notifications lues",
+    "selectAll": "Sélectionner tout",
+    "deselectAll": "Désélectionner tout",
+    "error": "Erreur lors du chargement des notifications",
+    "loading": "Chargement ...",
+    "actions": {
+      "markAsRead": "Marquer comme lu",
+      "markAsUnread": "Marquer comme non lu",
+      "delete": "Supprimer",
+      "moveToInbox": "Déplacer vers la boîte de réception",
+      "restore": "Restaurer",
+      "reply": "Répondre"
+    },
+    "modal": {
+      "from": "De {{value}}",
+      "sentAt": "Envoyé le {{value}}"
+    },
+    "sidebar": {
+      "all": "Tout",
+      "user": "Communauté",
+      "system": "Application",
+      "trash": "Corbeille"
+    }
+  },
   "footer": {
     "title": "Share-A-Review",
     "description": "Share-A-Review est une communauté où vous pouvez partager vos avis et expériences avec le monde. Vous pouvez également lire les avis et expériences partagés par les autres. Vous pouvez également noter et commenter les avis partagés par les autres.",

@@ -97,6 +97,35 @@
     "maxLengthExceeded": "Maximum {{value}} characters allowed",
     "minLengthRequired": "Minimum {{value}} characters required"
   },
+  "notifications": {
+    "title": "Inbox",
+    "noNotifications": "No notifications found",
+    "unread": "Unread notifications",
+    "read": "Read notifications",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "error": "Error loading notifications",
+    "loading": "Loading ...",
+    "actions": {
+      "markAsRead": "Mark as read",
+      "markAsUnread": "Mark as unread",
+      "delete": "Delete",
+      "close": "Close",
+      "moveToInbox": "Move to Inbox",
+      "restore": "Restore",
+      "reply": "Reply"
+    },
+    "modal": {
+      "from": "From {{value}}",
+      "sentAt": "Sent at {{value}}"
+    },
+    "sidebar": {
+      "all": "All",
+      "user": "Community",
+      "system": "App",
+      "trash": "Trash"
+    }
+  },
   "footer": {
     "title": "Share-A-Review Community",
     "description": "Share-A-Review is a community where you can share your reviews and experiences with the world. You can also read reviews and experiences shared by others. You can also rate and comment on reviews shared by others.",
