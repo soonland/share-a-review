@@ -17,13 +17,22 @@ const Notifications = () => {
     },
   );
 
+  const {
+    data: dataFolder,
+    error: errorFolder,
+    isLoading: isLoadingFolder,
+  } = useSWR(
+    session ? "/api/notificationsfolders" : null, // URL ou null si pas connecté
+    fetcher,
+  );
+
   return (
     <div>
       <h1>Notifications</h1>
 
-      {error ? <p>{t("notifications.error")}</p> : null}
-      {isLoading ? <p>{t("notifications.loading")}</p> : null}
-      {data && <NotificationsPanel notifications={data.data} />}
+      {error || errorFolder ? <p>{t("notifications.error")}</p> : null}
+      {isLoading || isLoadingFolder ? <p>{t("notifications.loading")}</p> : null}
+      {data && dataFolder && <NotificationsPanel notifications={data.data} folders={dataFolder.data} />}
     </div>
   );
 };

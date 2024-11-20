@@ -10,7 +10,8 @@
     "signIn": "Connexion",
     "search": "Rechercher",
     "switchLanguage": "{{lang}}",
-    "changeThemeMode": "Changer le mode de thème"
+    "changeThemeMode": "Changer le mode de thème",
+    "cancel": "Annuler"
   },
   "mainMenu": {
     "home": "Accueil",
@@ -122,7 +123,14 @@
       "all": "Tout",
       "user": "Communauté",
       "system": "Application",
-      "trash": "Corbeille"
+      "trash": "Corbeille",
+      "folders": "Dossiers"
+    },
+    "createFolder": {
+      "title": "Créer un dossier",
+      "description": "Créez un nouveau dossier pour organiser vos notifications",
+      "name": "Nom du dossier",
+      "create": "Créer"
     }
   },
   "footer": {

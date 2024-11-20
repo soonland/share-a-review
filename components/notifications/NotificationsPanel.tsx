@@ -1,20 +1,31 @@
-import { SelectAll, ClearAll } from "@mui/icons-material";
-import { Grid, Typography, Button, Box, Divider, Badge } from "@mui/material";
+import {
+  SelectAll as SelectAllIcon,
+  ClearAll as ClearAllIcon,
+  Add as AddIcon,
+  Delete as DeleteIcon,
+} from "@mui/icons-material";
+import { Grid, Typography, Button, Box, Divider, Badge, IconButton } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import { FC, ReactElement, useState } from "react";
 
-import { CurrentNotificationView, Notification } from "@/models/types";
+import { CurrentNotificationView, Notification, NotificationFolder } from "@/models/types";
 
 import NotificationDialog from "./NotificationDialog";
+import NotificationFolderDialog from "./NotificationFolderDialog";
 import NotificationItem from "./NotificationItem";
 
-const NotificationsPanel: FC<{ notifications: Notification[] }> = ({ notifications }): ReactElement => {
+const NotificationsPanel: FC<{ notifications: Notification[]; folders: NotificationFolder[] }> = ({
+  notifications,
+  folders,
+}): ReactElement => {
   const { t } = useTranslation();
   const [currentView, setCurrentView] = useState<CurrentNotificationView>({ folder: "inbox", type: "all" });
   const [selectedNotification, setSelectedNotification] = useState<Partial<Notification | null>>(null);
   const [selectedNotifications, setSelectedNotifications] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openNotificationDialog, setOpenNotificationDialog] = useState(false);
+  const [openFolderDialog, setOpenFolderDialog] = useState(false);
+  const [hoveredFolder, setHoveredFolder] = useState<number | null>(null);
 
   const filteredNotifications = notifications.filter(
     (notification) =>
@@ -47,11 +58,10 @@ const NotificationsPanel: FC<{ notifications: Notification[] }> = ({ notificatio
   // Fonction pour ouvrir le popup de notification
   const handleOpenDialog = async (notification: Notification) => {
     setSelectedNotification(notification);
-    setOpenDialog(true);
+    setOpenNotificationDialog(true);
 
     // Marquer la notification comme lue après un délai de 1 seconde
     setTimeout(async () => {
-      // Mettre à jour la notification dans la base de données
       // Mettre à jour la notification dans la base de données
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -66,9 +76,19 @@ const NotificationsPanel: FC<{ notifications: Notification[] }> = ({ notificatio
   };
 
   // Fonction pour fermer le popup de notification
-  const onCloseDialog = () => {
+  const onCloseNotificationDialog = () => {
     setSelectedNotification(null);
-    setOpenDialog(false);
+    setOpenNotificationDialog(false);
+  };
+
+  const deleteFolder = async (folderId: number) => {
+    // Supprimer le dossier de notification dans la base de données
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    await fetch(`/api/notificationsfolders/${folderId}`, {
+      method: "DELETE",
+      headers: myHeaders,
+    });
   };
 
   return (
@@ -130,6 +150,44 @@ const NotificationsPanel: FC<{ notifications: Notification[] }> = ({ notificatio
             badgeContent={notifications.filter((n) => n.status === "unread" && n.folder === "trash").length}
           />
         </Button>
+        <Divider sx={{ my: 2 }} />
+        <Typography variant="h6" gutterBottom>
+          {t("notifications.sidebar.folders")}
+          <IconButton size="small" sx={{ ml: 1 }} onClick={() => setOpenFolderDialog(true)}>
+            <AddIcon />
+          </IconButton>
+        </Typography>
+        {folders.map((folder) => (
+          <Button
+            key={folder.id}
+            variant={currentView.folder === folder.name.toLowerCase() ? "contained" : "text"}
+            fullWidth
+            sx={{ justifyContent: "space-between" }}
+            onClick={() => setCurrentView({ folder: folder.name.toLowerCase(), type: "all" })}
+            onMouseEnter={() => setHoveredFolder(folder.id)}
+            onMouseLeave={() => setHoveredFolder(null)}
+          >
+            {folder.name}
+            <Badge
+              color="error"
+              badgeContent={
+                notifications.filter((n) => n.status === "unread" && n.folder === folder.name.toLowerCase()).length
+              }
+            />
+            {hoveredFolder === folder.id && (
+              <IconButton
+                size="small"
+                sx={{ position: "absolute", right: 8 }}
+                onClick={(e) => {
+                  e.stopPropagation(); // Empêche le clic d'affecter le bouton parent
+                  deleteFolder(folder.id);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
+          </Button>
+        ))}
       </Grid>
 
       <Grid item xs={9} sx={{ display: "flex", flexDirection: "column" }}>
@@ -145,7 +203,7 @@ const NotificationsPanel: FC<{ notifications: Notification[] }> = ({ notificatio
             onClick={handleSelectAll}
           >
             {selectAll ? t("notifications.deselectAll") : t("notifications.selectAll")}
-            <Box sx={{ display: "flex", alignItems: "center" }}>{selectAll ? <ClearAll /> : <SelectAll />}</Box>
+            <Box sx={{ display: "flex", alignItems: "center" }}>{selectAll ? <ClearAllIcon /> : <SelectAllIcon />}</Box>
           </Button>
 
           {unreadNotifications.map((notification) => (
@@ -178,11 +236,12 @@ const NotificationsPanel: FC<{ notifications: Notification[] }> = ({ notificatio
         </Box>
 
         <NotificationDialog
-          openDialog={openDialog}
-          onClose={onCloseDialog}
+          openDialog={openNotificationDialog}
+          onClose={onCloseNotificationDialog}
           notification={selectedNotification}
           setSelectedNotification={setSelectedNotification}
         />
+        <NotificationFolderDialog openDialog={openFolderDialog} onClose={() => setOpenFolderDialog(false)} />
       </Grid>
     </Grid>
   );

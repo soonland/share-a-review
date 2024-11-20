@@ -10,7 +10,8 @@
     "signIn": "Sign in",
     "search": "Search",
     "switchLanguage": "{{lang}}",
-    "changeThemeMode": "Change Theme Mode"
+    "changeThemeMode": "Change Theme Mode",
+    "cancel": "Cancel"
   },
   "mainMenu": {
     "home": "Home",
@@ -123,7 +124,14 @@
       "all": "All",
       "user": "Community",
       "system": "App",
-      "trash": "Trash"
+      "trash": "Trash",
+      "folders": "Folders"
+    },
+    "createFolder": {
+      "title": "Create Folder",
+      "description": "Create a new folder to organize your notifications",
+      "name": "Folder Name",
+      "create": "Create"
     }
   },
   "footer": {

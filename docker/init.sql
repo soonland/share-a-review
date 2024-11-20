@@ -129,6 +129,21 @@ CREATE TABLE IF NOT EXISTS notifications (
   sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Notifications folders table
+-- The notifications_folders table stores information about user-specific notification folders
+-- It includes fields for the user ID, folder name, type and creation date
+-- The user ID field is a reference to the user who owns the folder
+-- The folder name field stores the name of the folder
+-- The type field stores the type of the folder (e.g. system, user)
+-- The creation date field stores the timestamp of when the folder was created
+CREATE TABLE IF NOT EXISTS notifications_folders (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  name VARCHAR(20) NOT NULL,
+  type VARCHAR(20) NOT NULL DEFAULT 'system', -- 'system', 'user'
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Truncate tables and reset identities
 TRUNCATE TABLE users RESTART IDENTITY CASCADE;
 TRUNCATE TABLE categories RESTART IDENTITY CASCADE;
