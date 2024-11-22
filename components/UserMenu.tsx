@@ -43,9 +43,6 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
   const { data } = useSWR(
     session ? "/api/notifications/count" : null, // URL ou null si pas connecté
     fetcher,
-    {
-      refreshInterval: 5000, // rafraîchissement toutes les 5 secondes
-    },
   );
 
   return (

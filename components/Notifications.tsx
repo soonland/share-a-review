@@ -12,9 +12,6 @@ const Notifications = () => {
   const { data, error, isLoading } = useSWR(
     session ? "/api/notifications" : null, // URL ou null si pas connecté
     fetcher,
-    {
-      refreshInterval: 5000, // rafraîchissement toutes les minutes
-    },
   );
 
   const {
