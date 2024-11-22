@@ -11,6 +11,8 @@ import {
   KeyboardDoubleArrowRight,
   AccessTime,
   Person,
+  Drafts,
+  DriveFileMove,
 } from "@mui/icons-material";
 import {
   Dialog,
@@ -28,7 +30,7 @@ import {
 import useTranslation from "next-translate/useTranslation";
 import { useState, MouseEvent } from "react";
 
-const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNotification }) => {
+const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNotification, folders }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
@@ -54,17 +56,17 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
     setSelectedNotification((prevNotification) => ({ ...prevNotification, folder }));
   };
 
-  const unreadNotification = async (id) => {
+  const updateNotification = async (id, payload) => {
     // Mettre à jour la notification dans la base de données
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     await fetch(`/api/notifications/${id}`, {
       method: "PATCH",
-      body: JSON.stringify({ status: "unread" }),
+      body: JSON.stringify(payload),
       headers: myHeaders,
     });
     // Mettre à jour l'état de la notification localement
-    setSelectedNotification((prevNotification) => ({ ...prevNotification, status: "unread" }));
+    setSelectedNotification((prevNotification) => ({ ...prevNotification, ...payload }));
   };
 
   return (
@@ -104,11 +106,33 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
             {notification?.folder === "trash" ? t("notifications.actions.restore") : t("notifications.actions.delete")}
           </MenuItem>
           {notification?.status === "read" && (
-            <MenuItem onClick={() => unreadNotification(notification?.id)} color="primary">
+            <MenuItem
+              onClick={() =>
+                updateNotification(notification?.id, {
+                  status: "unread",
+                })
+              }
+              color="primary"
+            >
               <ListItemIcon>
                 <Markunread color="secondary" />
               </ListItemIcon>
               {t("notifications.actions.markAsUnread")}
+            </MenuItem>
+          )}
+          {notification?.status === "unread" && (
+            <MenuItem
+              onClick={() =>
+                updateNotification(notification?.id, {
+                  status: "read",
+                })
+              }
+              color="primary"
+            >
+              <ListItemIcon>
+                <Drafts color="secondary" />
+              </ListItemIcon>
+              {t("notifications.actions.markAsRead")}
             </MenuItem>
           )}
           {notification?.folder === "inbox" && (
@@ -122,11 +146,23 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
           {notification?.folder !== "inbox" && (
             <MenuItem onClick={() => moveNotification(notification?.id, "inbox")} color="primary">
               <ListItemIcon>
-                <MoveToInbox color="secondary" />
+                <DriveFileMove color="secondary" />
               </ListItemIcon>
               {t("notifications.actions.moveToInbox")}
             </MenuItem>
           )}
+          {folders
+            .filter(
+              (folder) => folder.name !== "inbox" && folder.name !== "trash" && folder.name !== notification?.folder,
+            )
+            .map((folder) => (
+              <MenuItem key={folder.id} onClick={() => moveNotification(notification?.id, folder.name)} color="primary">
+                <ListItemIcon>
+                  <DriveFileMove color="secondary" />
+                </ListItemIcon>
+                {t("notifications.actions.moveTo", { value: folder.name })}
+              </MenuItem>
+            ))}
         </Menu>
       </DialogTitle>
       <DialogContent>
@@ -151,7 +187,7 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Person sx={{ mr: 1, color: "text.secondary" }} />
             <Typography variant="caption" color="text.secondary">
-              {t("notifications.modal.from", { value: notification?.sender })}
+              {t("notifications.modal.from", { value: notification?.sender_name })}
             </Typography>
           </Box>
 

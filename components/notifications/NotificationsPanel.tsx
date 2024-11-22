@@ -29,8 +29,10 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
 
   const filteredNotifications = notifications.filter(
     (notification) =>
-      (notification.folder === currentView.folder.toLowerCase() && currentView.type.toLowerCase() === "all") ||
-      (notification.folder === currentView.folder.toLowerCase() && notification.type === currentView.type),
+      (notification.folder.toLowerCase() === currentView.folder.toLowerCase() &&
+        currentView.type.toLowerCase() === "all") ||
+      (notification.folder.toLowerCase() === currentView.folder.toLowerCase() &&
+        notification.type === currentView.type),
   );
 
   const unreadNotifications = filteredNotifications.filter((notification) => notification.status === "unread");
@@ -171,7 +173,9 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
             <Badge
               color="error"
               badgeContent={
-                notifications.filter((n) => n.status === "unread" && n.folder === folder.name.toLowerCase()).length
+                notifications.filter(
+                  (n) => n.status === "unread" && n.folder.toLowerCase() === folder.name.toLowerCase(),
+                ).length
               }
             />
             {hoveredFolder === folder.id && (
@@ -240,6 +244,7 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
           onClose={onCloseNotificationDialog}
           notification={selectedNotification}
           setSelectedNotification={setSelectedNotification}
+          folders={folders}
         />
         <NotificationFolderDialog openDialog={openFolderDialog} onClose={() => setOpenFolderDialog(false)} />
       </Grid>

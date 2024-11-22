@@ -201,9 +201,13 @@ export const getNotificationsQuery = (userId: number) => {
   n.status,
   n.type,
   n.folder,
-  n.sent_at
+  n.sent_at,
+  u.name AS user_name,
+  u2.name AS sender_name
 FROM
   notifications n
+LEFT JOIN users u ON n.user_id = u.id
+LEFT JOIN users u2 ON n.sender_id = u2.id
 WHERE
   n.user_id = ${userId}
 ORDER BY

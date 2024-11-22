@@ -113,6 +113,7 @@
       "delete": "Delete",
       "close": "Close",
       "moveToInbox": "Move to Inbox",
+      "moveTo": "Move to {{value}}",
       "restore": "Restore",
       "reply": "Reply"
     },

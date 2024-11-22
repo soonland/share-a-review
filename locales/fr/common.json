@@ -112,6 +112,7 @@
       "markAsUnread": "Marquer comme non lu",
       "delete": "Supprimer",
       "moveToInbox": "Déplacer vers la boîte de réception",
+      "moveTo": "Déplacer vers {{value}}",
       "restore": "Restaurer",
       "reply": "Répondre"
     },
