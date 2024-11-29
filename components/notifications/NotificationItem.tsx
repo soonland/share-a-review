@@ -29,7 +29,7 @@ const NotificationItem = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        p: 2,
+        px: 2,
         bgcolor: notification.status === "unread" ? "primary.light" : "background.paper",
         borderRadius: 1,
         cursor: "pointer",

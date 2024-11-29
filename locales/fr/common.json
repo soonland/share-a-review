@@ -10,7 +10,8 @@
     "signIn": "Connexion",
     "search": "Rechercher",
     "switchLanguage": "{{lang}}",
-    "changeThemeMode": "Changer le mode de thème"
+    "changeThemeMode": "Changer le mode de thème",
+    "cancel": "Annuler"
   },
   "mainMenu": {
     "home": "Accueil",
@@ -111,8 +112,10 @@
       "markAsUnread": "Marquer comme non lu",
       "delete": "Supprimer",
       "moveToInbox": "Déplacer vers la boîte de réception",
+      "moveTo": "Déplacer vers {{value}}",
       "restore": "Restaurer",
-      "reply": "Répondre"
+      "reply": "Répondre",
+      "rename": "Renommer"
     },
     "modal": {
       "from": "De {{value}}",
@@ -122,7 +125,22 @@
       "all": "Tout",
       "user": "Communauté",
       "system": "Application",
-      "trash": "Corbeille"
+      "trash": "Corbeille",
+      "folders": "Dossiers"
+    },
+    "folderDialog": {
+      "creation": {
+        "title": "Create Folder",
+        "description": "Create a new folder to organize your notifications",
+        "name": "Folder Name",
+        "create": "Create"
+      },
+      "rename": {
+        "title": "Rename Folder",
+        "description": "Rename the selected folder",
+        "name": "Folder Name",
+        "rename": "Rename"
+      }
     }
   },
   "footer": {

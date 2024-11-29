@@ -11,6 +11,8 @@ import {
   KeyboardDoubleArrowRight,
   AccessTime,
   Person,
+  Drafts,
+  DriveFileMove,
 } from "@mui/icons-material";
 import {
   Dialog,
@@ -27,11 +29,15 @@ import {
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import { useState, MouseEvent } from "react";
+import { mutate } from "swr";
 
-const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNotification }) => {
+const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNotification, folders }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
+
+  const inboxFolder = folders.filter((el) => el.name === "Inbox")[0]?.id;
+  const trashFolder = folders.filter((el) => el.name === "Trash")[0]?.id;
 
   const handleOpenMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -41,30 +47,18 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
     setAnchorEl(null);
   };
 
-  const moveNotification = async (id?: number, folder?: string) => {
+  const updateNotification = async (id, payload) => {
     // Mettre à jour la notification dans la base de données
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     await fetch(`/api/notifications/${id}`, {
       method: "PATCH",
-      body: JSON.stringify({ folder }),
+      body: JSON.stringify(payload),
       headers: myHeaders,
     });
     // Mettre à jour l'état de la notification localement
-    setSelectedNotification((prevNotification) => ({ ...prevNotification, folder }));
-  };
-
-  const unreadNotification = async (id) => {
-    // Mettre à jour la notification dans la base de données
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    await fetch(`/api/notifications/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({ status: "unread" }),
-      headers: myHeaders,
-    });
-    // Mettre à jour l'état de la notification localement
-    setSelectedNotification((prevNotification) => ({ ...prevNotification, status: "unread" }));
+    setSelectedNotification((prevNotification) => ({ ...prevNotification, ...payload }));
+    mutate("/api/notifications");
   };
 
   return (
@@ -95,38 +89,84 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
           }}
         >
           <MenuItem
-            onClick={() => moveNotification(notification?.id, notification?.folder === "trash" ? "inbox" : "trash")}
+            onClick={() =>
+              updateNotification(notification?.id, {
+                folder_id: notification?.folder_id === trashFolder ? inboxFolder : trashFolder,
+              })
+            }
             color="primary"
           >
             <ListItemIcon>
-              {notification?.folder === "trash" ? <MoveToInbox color="secondary" /> : <Delete color="secondary" />}
+              {notification?.folder_id === trashFolder ? (
+                <MoveToInbox color="secondary" />
+              ) : (
+                <Delete color="secondary" />
+              )}
             </ListItemIcon>
-            {notification?.folder === "trash" ? t("notifications.actions.restore") : t("notifications.actions.delete")}
+            {notification?.folder_id === trashFolder
+              ? t("notifications.actions.restore")
+              : t("notifications.actions.delete")}
           </MenuItem>
           {notification?.status === "read" && (
-            <MenuItem onClick={() => unreadNotification(notification?.id)} color="primary">
+            <MenuItem
+              onClick={() =>
+                updateNotification(notification?.id, {
+                  status: "unread",
+                })
+              }
+              color="primary"
+            >
               <ListItemIcon>
                 <Markunread color="secondary" />
               </ListItemIcon>
               {t("notifications.actions.markAsUnread")}
             </MenuItem>
           )}
-          {notification?.folder === "inbox" && (
-            <MenuItem color="primary">
+          {notification?.status === "unread" && (
+            <MenuItem
+              onClick={() =>
+                updateNotification(notification?.id, {
+                  status: "read",
+                })
+              }
+              color="primary"
+            >
               <ListItemIcon>
-                <Reply color="secondary" />
+                <Drafts color="secondary" />
               </ListItemIcon>
-              {t("notifications.actions.reply")}
+              {t("notifications.actions.markAsRead")}
             </MenuItem>
           )}
-          {notification?.folder !== "inbox" && (
-            <MenuItem onClick={() => moveNotification(notification?.id, "inbox")} color="primary">
+          <MenuItem color="primary">
+            <ListItemIcon>
+              <Reply color="secondary" />
+            </ListItemIcon>
+            {t("notifications.actions.reply")}
+          </MenuItem>
+          {notification?.folder_id !== inboxFolder && (
+            <MenuItem onClick={() => updateNotification(notification?.id, { folder_id: inboxFolder })} color="primary">
               <ListItemIcon>
-                <MoveToInbox color="secondary" />
+                <DriveFileMove color="secondary" />
               </ListItemIcon>
               {t("notifications.actions.moveToInbox")}
             </MenuItem>
           )}
+          {folders
+            .filter(
+              (folder) => folder.name !== "Inbox" && folder.name !== "Trash" && folder.id !== notification?.folder_id,
+            )
+            .map((folder) => (
+              <MenuItem
+                key={folder.id}
+                onClick={() => updateNotification(notification?.id, { folder_id: folder.id })}
+                color="primary"
+              >
+                <ListItemIcon>
+                  <DriveFileMove color="secondary" />
+                </ListItemIcon>
+                {t("notifications.actions.moveTo", { value: folder.name })}
+              </MenuItem>
+            ))}
         </Menu>
       </DialogTitle>
       <DialogContent>
@@ -151,7 +191,7 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Person sx={{ mr: 1, color: "text.secondary" }} />
             <Typography variant="caption" color="text.secondary">
-              {t("notifications.modal.from", { value: notification?.sender })}
+              {t("notifications.modal.from", { value: notification?.sender_name })}
             </Typography>
           </Box>
 

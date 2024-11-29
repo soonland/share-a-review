@@ -10,7 +10,8 @@
     "signIn": "Sign in",
     "search": "Search",
     "switchLanguage": "{{lang}}",
-    "changeThemeMode": "Change Theme Mode"
+    "changeThemeMode": "Change Theme Mode",
+    "cancel": "Cancel"
   },
   "mainMenu": {
     "home": "Home",
@@ -112,8 +113,10 @@
       "delete": "Delete",
       "close": "Close",
       "moveToInbox": "Move to Inbox",
+      "moveTo": "Move to {{value}}",
       "restore": "Restore",
-      "reply": "Reply"
+      "reply": "Reply",
+      "rename": "Rename"
     },
     "modal": {
       "from": "From {{value}}",
@@ -123,7 +126,22 @@
       "all": "All",
       "user": "Community",
       "system": "App",
-      "trash": "Trash"
+      "trash": "Trash",
+      "folders": "Folders"
+    },
+    "folderDialog": {
+      "creation": {
+        "title": "Create Folder",
+        "description": "Create a new folder to organize your notifications",
+        "name": "Folder Name",
+        "create": "Create"
+      },
+      "rename": {
+        "title": "Rename Folder",
+        "description": "Rename the selected folder",
+        "name": "Folder Name",
+        "rename": "Rename"
+      }
     }
   },
   "footer": {

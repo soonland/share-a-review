@@ -200,10 +200,16 @@ export const getNotificationsQuery = (userId: number) => {
   n.message,
   n.status,
   n.type,
-  n.folder,
-  n.sent_at
+  n.sent_at,
+  f.name AS folder,
+  f.id AS folder_id,
+  u.name AS user_name,
+  u2.name AS sender_name
 FROM
   notifications n
+LEFT JOIN notifications_folders f ON n.folder_id = f.id
+LEFT JOIN users u ON n.user_id = u.id
+LEFT JOIN users u2 ON n.sender_id = u2.id
 WHERE
   n.user_id = ${userId}
 ORDER BY
@@ -211,5 +217,20 @@ ORDER BY
 };
 
 export const getNotificationsCountQuery = (userId: number) => {
-  return `SELECT COUNT(*) as count FROM notifications WHERE user_id = ${userId} AND status = 'unread' and folder != 'trash';`;
+  return `SELECT COUNT(*) as count FROM notifications WHERE user_id = ${userId} AND status = 'unread' and folder_id != (SELECT
+  id FROM notifications_folders WHERE user_id = ${userId} AND type = 'system' AND name = 'Trash');`;
+};
+
+export const getNotificationsFoldersQuery = (userId: number) => {
+  return `SELECT
+  n.id,
+  n.name,
+  n.type,
+  n.created_at
+FROM
+  notifications_folders n
+WHERE
+  n.user_id = ${userId}
+ORDER BY
+  n.name ASC;`;
 };

@@ -7,8 +7,9 @@ DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS notifications;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS notifications_folders;
 DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS users;
 
 -- User table
 -- The user table stores information about the users of the application
@@ -111,6 +112,21 @@ CREATE TABLE IF NOT EXISTS comments (
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Notifications folders table
+-- The notifications_folders table stores information about user-specific notification folders
+-- It includes fields for the user ID, folder name, type and creation date
+-- The user ID field is a reference to the user who owns the folder
+-- The folder name field stores the name of the folder
+-- The type field stores the type of the folder (e.g. system, user)
+-- The creation date field stores the timestamp of when the folder was created
+CREATE TABLE IF NOT EXISTS notifications_folders (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  name VARCHAR(20) NOT NULL,
+  type VARCHAR(20) NOT NULL DEFAULT 'system', -- 'system', 'user'
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Notifications table
 -- The notifications table stores information about notifications sent to users
 -- It includes fields for the user ID, message, sent date and hidden status
@@ -125,19 +141,22 @@ CREATE TABLE IF NOT EXISTS notifications (
   message TEXT NOT NULL,
   status VARCHAR(10) NOT NULL DEFAULT 'unread', -- 'read', 'unread'
   type VARCHAR(20) NOT NULL DEFAULT 'system', -- 'system', 'user'
-  folder VARCHAR(20) NOT NULL DEFAULT 'inbox', -- 'inbox', 'sent', 'trash'
+  folder_id INTEGER REFERENCES notifications_folders(id),
   sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Truncate tables and reset identities
-TRUNCATE TABLE users RESTART IDENTITY CASCADE;
-TRUNCATE TABLE categories RESTART IDENTITY CASCADE;
-TRUNCATE TABLE items RESTART IDENTITY CASCADE;
-TRUNCATE TABLE reviews RESTART IDENTITY CASCADE;
 TRUNCATE TABLE comments RESTART IDENTITY CASCADE;
+TRUNCATE TABLE reviews RESTART IDENTITY CASCADE;
+TRUNCATE TABLE items RESTART IDENTITY CASCADE;
+TRUNCATE TABLE categories RESTART IDENTITY CASCADE;
+TRUNCATE TABLE notifications RESTART IDENTITY CASCADE;
+TRUNCATE TABLE notifications_folders RESTART IDENTITY CASCADE;
+TRUNCATE TABLE users RESTART IDENTITY CASCADE;
 
 -- Inserting users
 INSERT INTO users (name, email, password) VALUES 
+('SAR Admin', '', ''),
 ('Amelia Earhart', 'amelia@example.com', 'admin'),
 ('Christopher Columbus', 'columbus@example.com', 'password1'),
 ('Marco Polo', 'polo@example.com', 'password2'),
@@ -161,8 +180,8 @@ INSERT INTO users (name, email, password) VALUES
 
 -- Inserting categories
 INSERT INTO categories (name, slug, description_template) VALUES 
-('Electronics', 'electronics', '{"brand": "text", "model": "text", "price": "number", "color": "text"}'),
-('Movies', 'movies', '{"title": "text", "director": "text", "year": "number", "genre": "text"}'),
+('Electronics', 'electronics', '{"name": "text","brand": "text", "model": "text", "price": "number", "color": "text"}'),
+('Movies', 'movies', '{"name": "text","title": "text", "director": "text", "year": "number", "genre": "text"}'),
 ('Restaurants', 'restaurants', '{"name": "text", "cuisine": "text", "location": "text", "rating": "number"}');
 
 -- Inserting items into Electronics category

@@ -7,6 +7,12 @@ export interface Change {
   projectConfiguration?: string[];
 }
 
+export interface NotificationFolder {
+  id: number;
+  name: string;
+  type: string;
+}
+
 export interface Notification {
   id: number;
   title: string;
