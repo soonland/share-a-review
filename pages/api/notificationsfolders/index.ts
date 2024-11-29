@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.json(await getNotificationsFolders(session.user.id));
     case "POST": {
       // Envoie une notification
-      const { name: folderName } = req.body;
+      const { folderName } = req.body;
       if (!folderName) {
         return res.status(400).json({ success: false, message: "Paramètres manquants" });
       }

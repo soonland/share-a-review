@@ -115,7 +115,8 @@
       "moveToInbox": "Move to Inbox",
       "moveTo": "Move to {{value}}",
       "restore": "Restore",
-      "reply": "Reply"
+      "reply": "Reply",
+      "rename": "Rename"
     },
     "modal": {
       "from": "From {{value}}",
@@ -128,11 +129,19 @@
       "trash": "Trash",
       "folders": "Folders"
     },
-    "createFolder": {
-      "title": "Create Folder",
-      "description": "Create a new folder to organize your notifications",
-      "name": "Folder Name",
-      "create": "Create"
+    "folderDialog": {
+      "creation": {
+        "title": "Create Folder",
+        "description": "Create a new folder to organize your notifications",
+        "name": "Folder Name",
+        "create": "Create"
+      },
+      "rename": {
+        "title": "Rename Folder",
+        "description": "Rename the selected folder",
+        "name": "Folder Name",
+        "rename": "Rename"
+      }
     }
   },
   "footer": {

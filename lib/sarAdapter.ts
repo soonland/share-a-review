@@ -6,10 +6,32 @@ const createUserNotification = async (userId: number, title: string, type: "syst
   const client = await pool.connect();
   try {
     const notificationMessage = "Bienvenue sur notre plateforme !";
+    // Ouvrir la transaction
+    await client.query("BEGIN");
+    const folderId = await client
+      .query("INSERT INTO notifications_folders (user_id, name, type) VALUES ($1, $2, $3) RETURNING id", [
+        userId,
+        "Inbox",
+        "system",
+      ])
+      .then((res) => {
+        return res.rows[0].id;
+      });
+    await client.query("INSERT INTO notifications_folders (user_id, name, type) VALUES ($1, $2, $3) RETURNING id", [
+      userId,
+      "Trash",
+      "system",
+    ]);
     await client.query(
-      "INSERT INTO notifications (sender_id, user_id, title, message, type) VALUES ($1, $2, $3, $4, $5)",
-      [0, userId, title, notificationMessage, type],
+      "INSERT INTO notifications (sender_id, user_id, title, message, type, folder_id) VALUES ($1, $2, $3, $4, $5, $6)",
+      [1, userId, title, notificationMessage, type, folderId],
     );
+    // Fermer la transaction
+    await client.query("COMMIT");
+  } catch (error) {
+    // Annuler la transaction en cas d'erreur
+    await client.query("ROLLBACK");
+    throw error;
   } finally {
     client.release();
   }

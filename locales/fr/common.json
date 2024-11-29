@@ -114,7 +114,8 @@
       "moveToInbox": "Déplacer vers la boîte de réception",
       "moveTo": "Déplacer vers {{value}}",
       "restore": "Restaurer",
-      "reply": "Répondre"
+      "reply": "Répondre",
+      "rename": "Renommer"
     },
     "modal": {
       "from": "De {{value}}",
@@ -127,11 +128,19 @@
       "trash": "Corbeille",
       "folders": "Dossiers"
     },
-    "createFolder": {
-      "title": "Créer un dossier",
-      "description": "Créez un nouveau dossier pour organiser vos notifications",
-      "name": "Nom du dossier",
-      "create": "Créer"
+    "folderDialog": {
+      "creation": {
+        "title": "Create Folder",
+        "description": "Create a new folder to organize your notifications",
+        "name": "Folder Name",
+        "create": "Create"
+      },
+      "rename": {
+        "title": "Rename Folder",
+        "description": "Rename the selected folder",
+        "name": "Folder Name",
+        "rename": "Rename"
+      }
     }
   },
   "footer": {

@@ -29,11 +29,15 @@ import {
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import { useState, MouseEvent } from "react";
+import { mutate } from "swr";
 
 const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNotification, folders }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
+
+  const inboxFolder = folders.filter((el) => el.name === "Inbox")[0]?.id;
+  const trashFolder = folders.filter((el) => el.name === "Trash")[0]?.id;
 
   const handleOpenMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -41,19 +45,6 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
-  };
-
-  const moveNotification = async (id?: number, folder?: string) => {
-    // Mettre à jour la notification dans la base de données
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    await fetch(`/api/notifications/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({ folder }),
-      headers: myHeaders,
-    });
-    // Mettre à jour l'état de la notification localement
-    setSelectedNotification((prevNotification) => ({ ...prevNotification, folder }));
   };
 
   const updateNotification = async (id, payload) => {
@@ -67,6 +58,7 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
     });
     // Mettre à jour l'état de la notification localement
     setSelectedNotification((prevNotification) => ({ ...prevNotification, ...payload }));
+    mutate("/api/notifications");
   };
 
   return (
@@ -97,13 +89,23 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
           }}
         >
           <MenuItem
-            onClick={() => moveNotification(notification?.id, notification?.folder === "trash" ? "inbox" : "trash")}
+            onClick={() =>
+              updateNotification(notification?.id, {
+                folder_id: notification?.folder_id === trashFolder ? inboxFolder : trashFolder,
+              })
+            }
             color="primary"
           >
             <ListItemIcon>
-              {notification?.folder === "trash" ? <MoveToInbox color="secondary" /> : <Delete color="secondary" />}
+              {notification?.folder_id === trashFolder ? (
+                <MoveToInbox color="secondary" />
+              ) : (
+                <Delete color="secondary" />
+              )}
             </ListItemIcon>
-            {notification?.folder === "trash" ? t("notifications.actions.restore") : t("notifications.actions.delete")}
+            {notification?.folder_id === trashFolder
+              ? t("notifications.actions.restore")
+              : t("notifications.actions.delete")}
           </MenuItem>
           {notification?.status === "read" && (
             <MenuItem
@@ -135,16 +137,14 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
               {t("notifications.actions.markAsRead")}
             </MenuItem>
           )}
-          {notification?.folder === "inbox" && (
-            <MenuItem color="primary">
-              <ListItemIcon>
-                <Reply color="secondary" />
-              </ListItemIcon>
-              {t("notifications.actions.reply")}
-            </MenuItem>
-          )}
-          {notification?.folder !== "inbox" && (
-            <MenuItem onClick={() => moveNotification(notification?.id, "inbox")} color="primary">
+          <MenuItem color="primary">
+            <ListItemIcon>
+              <Reply color="secondary" />
+            </ListItemIcon>
+            {t("notifications.actions.reply")}
+          </MenuItem>
+          {notification?.folder_id !== inboxFolder && (
+            <MenuItem onClick={() => updateNotification(notification?.id, { folder_id: inboxFolder })} color="primary">
               <ListItemIcon>
                 <DriveFileMove color="secondary" />
               </ListItemIcon>
@@ -153,10 +153,14 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
           )}
           {folders
             .filter(
-              (folder) => folder.name !== "inbox" && folder.name !== "trash" && folder.name !== notification?.folder,
+              (folder) => folder.name !== "Inbox" && folder.name !== "Trash" && folder.id !== notification?.folder_id,
             )
             .map((folder) => (
-              <MenuItem key={folder.id} onClick={() => moveNotification(notification?.id, folder.name)} color="primary">
+              <MenuItem
+                key={folder.id}
+                onClick={() => updateNotification(notification?.id, { folder_id: folder.id })}
+                color="primary"
+              >
                 <ListItemIcon>
                   <DriveFileMove color="secondary" />
                 </ListItemIcon>

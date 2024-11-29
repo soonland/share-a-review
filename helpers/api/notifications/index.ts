@@ -41,11 +41,12 @@ const sendNotification = async (senderId: number, userId: number, title: string,
 };
 
 interface UpdateNotificationPayload {
-  folder?: string;
+  folder_id?: number;
   status?: string;
 }
 
 const updateNotification = async (notificationId: number, payload: UpdateNotificationPayload) => {
+  console.log("payload", payload);
   const client = await pool.connect();
 
   // Filtrer les champs valides (ni null ni undefined)
@@ -71,4 +72,13 @@ const updateNotification = async (notificationId: number, payload: UpdateNotific
   return { success: true };
 };
 
-export { getNotifications, getNotificationsCount, sendNotification, updateNotification };
+const moveNotifications = async (folderId: number, inboxFolderId: number) => {
+  const client = await pool.connect();
+
+  // Déplacer les notifications du dossier à la boîte de réception
+  await client.query("UPDATE notifications SET folder_id = $1 WHERE folder_id = $2", [inboxFolderId, folderId]);
+
+  client.release();
+};
+
+export { getNotifications, getNotificationsCount, sendNotification, updateNotification, moveNotifications };

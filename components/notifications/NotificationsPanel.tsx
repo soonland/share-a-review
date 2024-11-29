@@ -3,10 +3,13 @@ import {
   ClearAll as ClearAllIcon,
   Add as AddIcon,
   Delete as DeleteIcon,
+  Edit as EditIcon,
+  MoreVert as MoreVertIcon,
 } from "@mui/icons-material";
-import { Grid, Typography, Button, Box, Divider, Badge, IconButton } from "@mui/material";
+import { Grid, Typography, Button, Box, Divider, Badge, IconButton, MenuItem, Menu } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import { FC, ReactElement, useState } from "react";
+import { mutate } from "swr";
 
 import { CurrentNotificationView, Notification, NotificationFolder } from "@/models/types";
 
@@ -26,6 +29,9 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
   const [openNotificationDialog, setOpenNotificationDialog] = useState(false);
   const [openFolderDialog, setOpenFolderDialog] = useState(false);
   const [hoveredFolder, setHoveredFolder] = useState<number | null>(null);
+  const [selectedFolder, setSelectedFolder] = useState<NotificationFolder | null>(null);
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const [selectedFolderId, setSelectedFolderId] = useState<number | null>(null);
 
   const filteredNotifications = notifications.filter(
     (notification) =>
@@ -74,6 +80,7 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
       });
       // Mettre à jour l'état de la notification localement
       setSelectedNotification((prevNotification) => ({ ...prevNotification, status: "read" }));
+      mutate("/api/notifications");
     }, 1000);
   };
 
@@ -91,6 +98,16 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
       method: "DELETE",
       headers: myHeaders,
     });
+  };
+
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>, folderId: number) => {
+    setMenuAnchor(event.currentTarget.parentElement);
+    setSelectedFolderId(folderId);
+  };
+
+  const handleCloseMenu = () => {
+    setMenuAnchor(null);
+    setSelectedFolderId(null);
   };
 
   return (
@@ -122,7 +139,7 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
           <Badge
             color="error"
             badgeContent={
-              notifications.filter((n) => n.status === "unread" && n.type === "user" && n.folder !== "trash").length
+              notifications.filter((n) => n.status === "unread" && n.type === "user" && n.folder === "inbox").length
             }
           />
         </Button>
@@ -136,7 +153,7 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
           <Badge
             color="error"
             badgeContent={
-              notifications.filter((n) => n.status === "unread" && n.type === "system" && n.folder !== "trash").length
+              notifications.filter((n) => n.status === "unread" && n.type === "system" && n.folder == "inbox").length
             }
           />
         </Button>
@@ -155,43 +172,93 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
         <Divider sx={{ my: 2 }} />
         <Typography variant="h6" gutterBottom>
           {t("notifications.sidebar.folders")}
-          <IconButton size="small" sx={{ ml: 1 }} onClick={() => setOpenFolderDialog(true)}>
+          <IconButton
+            size="small"
+            sx={{ ml: 1 }}
+            onClick={() => {
+              setSelectedFolder(null);
+              setOpenFolderDialog(true);
+            }}
+          >
             <AddIcon />
           </IconButton>
         </Typography>
-        {folders.map((folder) => (
-          <Button
-            key={folder.id}
-            variant={currentView.folder === folder.name.toLowerCase() ? "contained" : "text"}
-            fullWidth
-            sx={{ justifyContent: "space-between" }}
-            onClick={() => setCurrentView({ folder: folder.name.toLowerCase(), type: "all" })}
-            onMouseEnter={() => setHoveredFolder(folder.id)}
-            onMouseLeave={() => setHoveredFolder(null)}
-          >
-            {folder.name}
-            <Badge
-              color="error"
-              badgeContent={
-                notifications.filter(
-                  (n) => n.status === "unread" && n.folder.toLowerCase() === folder.name.toLowerCase(),
-                ).length
-              }
-            />
-            {hoveredFolder === folder.id && (
-              <IconButton
-                size="small"
-                sx={{ position: "absolute", right: 8 }}
-                onClick={(e) => {
-                  e.stopPropagation(); // Empêche le clic d'affecter le bouton parent
-                  deleteFolder(folder.id);
+        {folders
+          .filter((folder) => folder.type === "user")
+          .map((folder) => (
+            <Box key={folder.id} position="relative">
+              <Button
+                variant={currentView.folder === folder.name.toLowerCase() ? "contained" : "text"}
+                fullWidth
+                sx={{ justifyContent: "space-between" }}
+                onClick={() => setCurrentView({ folder: folder.name.toLowerCase(), type: "all" })}
+                onMouseEnter={() => setHoveredFolder(folder.id)}
+                onMouseLeave={() => setHoveredFolder(null)}
+              >
+                {folder.name}
+                <Badge
+                  color="error"
+                  badgeContent={
+                    notifications.filter(
+                      (n) => n.status === "unread" && n.folder.toLowerCase() === folder.name.toLowerCase(),
+                    ).length
+                  }
+                />
+                {hoveredFolder === folder.id && (
+                  <IconButton
+                    size="small"
+                    sx={{ position: "absolute", right: 8 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpenMenu(e, folder.id);
+                    }}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                )}
+              </Button>
+
+              {/* Menu pour les actions de dossier */}
+              <Menu
+                id="folder-menu"
+                anchorEl={menuAnchor}
+                open={Boolean(menuAnchor) && selectedFolderId === folder.id}
+                onClose={handleCloseMenu}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right", // Positionnement du menu par rapport à l'icône
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left", // Le menu s'étend à partir de cette position
+                }}
+                MenuListProps={{
+                  "aria-labelledby": "folder-menu",
                 }}
               >
-                <DeleteIcon />
-              </IconButton>
-            )}
-          </Button>
-        ))}
+                <MenuItem
+                  onClick={() => {
+                    handleCloseMenu();
+                    setSelectedFolder(folder);
+                    setOpenFolderDialog(true); // Ouvre le dialogue de renommage
+                  }}
+                >
+                  <EditIcon sx={{ mr: 1 }} />
+                  {t("notifications.actions.rename")}
+                </MenuItem>
+                <MenuItem
+                  onClick={async () => {
+                    handleCloseMenu();
+                    await deleteFolder(folder.id); // Supprime le dossier
+                    mutate("/api/notificationsfolders"); // Met à jour les dossiers de notification
+                  }}
+                >
+                  <DeleteIcon sx={{ mr: 1 }} />
+                  {t("notifications.actions.delete")}
+                </MenuItem>
+              </Menu>
+            </Box>
+          ))}{" "}
       </Grid>
 
       <Grid item xs={9} sx={{ display: "flex", flexDirection: "column" }}>
@@ -246,7 +313,11 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
           setSelectedNotification={setSelectedNotification}
           folders={folders}
         />
-        <NotificationFolderDialog openDialog={openFolderDialog} onClose={() => setOpenFolderDialog(false)} />
+        <NotificationFolderDialog
+          openDialog={openFolderDialog}
+          onClose={() => setOpenFolderDialog(false)}
+          selectedFolder={selectedFolder}
+        />
       </Grid>
     </Grid>
   );
