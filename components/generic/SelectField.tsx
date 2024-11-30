@@ -56,7 +56,6 @@ const SelectField: FC<SelectFieldProps> = ({
                 fullWidth
                 variant="outlined"
                 error={!!error}
-                placeholder={placeholder}
                 onChange={field.onChange}
               >
                 <MenuItem value="" disabled>
