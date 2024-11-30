@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Card, CardActionArea, CardContent, Grid, styled, Typography } from "@mui/material";
+import { Card, CardActionArea, CardContent, Grid, styled, Typography } from "@mui/material";
 import { NextPage } from "next";
 import { useState } from "react";
 
@@ -30,28 +30,26 @@ const CreateItem: NextPage = () => {
   if (categories.length === 0) return <Alert severity="info" message="No categories found" />;
 
   return (
-    <>
-      <Grid container spacing={2}>
-        {categories.map((category: any) => (
-          <Grid item key={category.value} xs={12} sm={6} md={3}>
-            <CustomCard variant={selectedCategory.value === category.value ? "elevation" : "outlined"}>
-              <CardActionArea onClick={() => setSelectedCategory(category)}>
-                <CardContent>
-                  <Typography variant="h6" component="h2" sx={{ textAlign: "center" }}>
-                    {category.label}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </CustomCard>
-          </Grid>
-        ))}
-      </Grid>
+    <Grid container spacing={2}>
+      {categories.map((category: any) => (
+        <Grid item key={category.value} xs={12} sm={6} md={3}>
+          <CustomCard variant={selectedCategory.value === category.value ? "elevation" : "outlined"}>
+            <CardActionArea onClick={() => setSelectedCategory(category)}>
+              <CardContent>
+                <Typography variant="h6" component="h2" sx={{ textAlign: "center" }}>
+                  {category.label}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </CustomCard>
+        </Grid>
+      ))}
       {selectedCategory.description_template && (
-        <Box mt={4}>
+        <Grid item xs={12}>
           <CreateForm descriptionTemplate={selectedCategory.description_template} categoryId={selectedCategory.id} />
-        </Box>
+        </Grid>
       )}
-    </>
+    </Grid>
   );
 };
 
