@@ -34,7 +34,7 @@
     "next-translate": "^2.6.2",
     "pg": "^8.11.5",
     "react": "^18.2.0",
-    "react-dom": "^18",
+    "react-dom": "^19",
     "react-hook-form": "^7.51.5",
     "swr": "^2.2.5",
     "zod": "^3.23.8"
@@ -51,7 +51,7 @@
     "@types/node": "^22.5.5",
     "@types/pg": "^8.11.10",
     "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react-dom": "^19",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
     "cypress": "^13.9.0",
