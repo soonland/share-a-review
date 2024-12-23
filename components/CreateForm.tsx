@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Collapse } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { FC, JSX, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import Alert, { AlertProps } from "@/components/Alert";
