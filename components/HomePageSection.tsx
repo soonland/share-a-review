@@ -1,6 +1,6 @@
 import { Grid, Link, Typography } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
-import { FC, useState } from "react";
+import { FC, JSX, useState } from "react";
 
 import { useFetch } from "@/helpers/utils";
 
