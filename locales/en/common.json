@@ -43,7 +43,8 @@
     "profile": "My Profile",
     "signIn": "Sign in",
     "signOut": "Sign out",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "admin": "Admin"
   },
   "home": {
     "welcomeTitle": "Welcome to Share-A-Review - The Voice of the Community!",
