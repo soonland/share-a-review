@@ -1,4 +1,6 @@
-import Switch from "@mui/material/Switch"; // Importer le composant Switch
+import { Container, Typography, CircularProgress, TextField } from "@mui/material"; // Importer les composants MUI
+import Switch from "@mui/material/Switch";
+import { DataGrid } from "@mui/x-data-grid"; // Importer le composant DataGrid
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -14,22 +16,35 @@ const AdminPage = () => {
       created_at: string;
     }[]
   >([]);
-  const [loading, setLoading] = useState(true); // État de chargement
+  const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState(""); // État pour le texte de recherche
+  const [filteredUsers, setFilteredUsers] = useState(users); // État pour les utilisateurs filtrés
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/api/users");
-        setUsers(response.data.data); // Mise à jour de l'état des utilisateurs
+        setUsers(response.data.data);
+        setFilteredUsers(response.data.data); // Initialiser les utilisateurs filtrés
       } catch (error) {
         console.error("Erreur lors de la récupération des utilisateurs:", error);
       } finally {
-        setLoading(false); // Fin du chargement
+        setLoading(false);
       }
     };
 
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    setFilteredUsers(
+      users.filter(
+        (user) =>
+          user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchText.toLowerCase()),
+      ),
+    );
+  }, [searchText, users]);
 
   const handleAdminToggle = async (userId, isAdmin) => {
     try {
@@ -40,43 +55,50 @@ const AdminPage = () => {
     }
   };
 
+  const columns = [
+    { field: "name", headerName: "Nom", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    {
+      field: "is_admin",
+      headerName: "Admin",
+      renderCell: (params) => (
+        <Switch checked={params.value} onChange={() => handleAdminToggle(params.row.id, params.value)} />
+      ),
+    },
+    { field: "active", headerName: "Actif", flex: 1, renderCell: (params) => (params.value ? "Oui" : "Non") },
+    { field: "last_login", headerName: "Dernière connexion", flex: 1 },
+    { field: "created_at", headerName: "Créé le", flex: 1 },
+  ];
+
   return (
-    <div>
-      <h1>Section Administration</h1>
-      <p>Bienvenue dans la section administration</p>
-      {/* Ajoutez ici les composants et fonctionnalités d'administration */}
-      <h2>Liste des utilisateurs</h2>
+    <Container>
+      <Typography variant="h2">Section Administration</Typography>
+      <Typography variant="h3">Liste des utilisateurs</Typography>
+      <TextField
+        label="Rechercher"
+        variant="outlined"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        style={{ marginBottom: 20 }}
+        size="small"
+      />
       {loading ? (
-        <p>Chargement...</p> // Afficher un message de chargement
+        <CircularProgress /> // Afficher un indicateur de chargement
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Admin</th>
-              <th>Actif</th>
-              <th>Dernière connexion</th>
-              <th>Créé le</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  <Switch checked={user.is_admin} onChange={() => handleAdminToggle(user.id, user.is_admin)} />
-                </td>
-                <td>{user.active ? "Oui" : "Non"}</td>
-                <td>{user.last_login}</td>
-                <td>{user.created_at}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <DataGrid
+            rows={filteredUsers}
+            columns={columns}
+            pageSizeOptions={[5, 10, 20]}
+            initialState={{
+              pagination: {
+                paginationModel: { pageSize: 5, page: 0 },
+              },
+            }}
+          />
+        </div>
       )}
-    </div>
+    </Container>
   );
 };
 
