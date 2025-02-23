@@ -198,12 +198,18 @@ export const CategoryForm = ({ open, onClose, onSubmit, category }: CategoryForm
   );
 
   const generateSlug = (text: string): string => {
-    return text
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[-]/g, "") // Remove accents
-      .replace(/[^a-z0-9]+/g, "-") // Replace special chars with hyphens
-      .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+    // Limit input length for safety
+    const maxLength = 100;
+    const truncated = text.slice(0, maxLength);
+
+    return truncated
+      .toLowerCase() // Convert to lowercase first
+      .normalize("NFD") // Decompose characters into base + diacritic marks
+      .replace(/[\u0300-\u036f]/g, "") // Remove combining diacritical marks
+      .replace(/[^a-z0-9]/g, "-") // Replace non-alphanumeric with hyphen
+      .replace(/-{2,}/g, "-") // Replace multiple hyphens with single one
+      .replace(/^-/, "") // Remove leading hyphen
+      .replace(/-$/, ""); // Remove trailing hyphen
   };
 
   useEffect(() => {
