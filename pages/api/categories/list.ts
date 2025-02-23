@@ -6,7 +6,7 @@ export default async function handler(req, res) {
       const client = await pool.connect();
 
       const result = await client.query(
-        `SELECT id, slug, LOWER(slug) as value, LOWER(slug) as label, description_template 
+        `SELECT id, name, slug, description_template 
         FROM categories
         ORDER BY 
             CASE 
@@ -16,9 +16,18 @@ export default async function handler(req, res) {
             slug`,
       );
 
+      const data = result.rows.map((category) => ({
+        id: category.id,
+        name: category.name,
+        slug: category.slug,
+        description_template: category.description_template,
+        value: category.slug.toLowerCase(),
+        label: category.name,
+      }));
+
       client.release();
 
-      res.status(200).json({ data: result.rows, success: true });
+      res.status(200).json({ data, success: true });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       res.status(500).json({ success: false, message: "Error fetching reviews" });

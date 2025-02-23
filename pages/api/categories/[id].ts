@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case "PATCH":
       try {
         const { id } = req.query;
-        const { slug, description_template } = req.body;
+        const { name, slug, description_template } = req.body;
 
         const client = await pool.connect();
 
@@ -28,10 +28,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Update category
         const result = await client.query(
           `UPDATE categories 
-           SET slug = $1, description_template = $2 
-           WHERE id = $3 
-           RETURNING id, slug, description_template`,
-          [slug, JSON.stringify(description_template), id],
+           SET name = $1, slug = $2, description_template = $3 
+           WHERE id = $4 
+           RETURNING id, name, slug, description_template`,
+          [name, slug, JSON.stringify(description_template), id],
         );
 
         client.release();
@@ -47,9 +47,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json({
           success: true,
           data: {
-            ...category,
+            id: category.id,
+            name: category.name,
+            slug: category.slug,
+            description_template: category.description_template,
             value: category.slug.toLowerCase(),
-            label: category.slug.toLowerCase(),
+            label: category.name,
           },
         });
       } catch (error) {
