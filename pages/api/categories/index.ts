@@ -7,15 +7,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case "GET":
       try {
         const client = await pool.connect();
-        const result = await client.query("SELECT id, slug, description_template FROM categories");
+        const result = await client.query("SELECT id, name, slug, description_template FROM categories");
         client.release();
 
         return res.status(200).json({
           success: true,
           data: result.rows.map((category) => ({
-            ...category,
+            id: category.id,
+            name: category.name,
+            slug: category.slug,
+            description_template: category.description_template,
             value: category.slug.toLowerCase(),
-            label: category.slug.toLowerCase(),
+            label: category.name,
           })),
         });
       } catch (error) {
@@ -28,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     case "POST":
       try {
-        const { slug, description_template } = req.body;
+        const { name, slug, description_template } = req.body;
 
         const client = await pool.connect();
 
@@ -45,10 +48,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         // Insert new category
         const result = await client.query(
-          `INSERT INTO categories (slug, description_template) 
-           VALUES ($1, $2) 
-           RETURNING id, slug, description_template`,
-          [slug, JSON.stringify(description_template)],
+          `INSERT INTO categories (name, slug, description_template) 
+           VALUES ($1, $2, $3) 
+           RETURNING id, name, slug, description_template`,
+          [name, slug, JSON.stringify(description_template)],
         );
 
         client.release();
@@ -57,9 +60,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(201).json({
           success: true,
           data: {
-            ...category,
+            id: category.id,
+            name: category.name,
+            slug: category.slug,
+            description_template: category.description_template,
             value: category.slug.toLowerCase(),
-            label: category.slug.toLowerCase(),
+            label: category.name,
           },
         });
       } catch (error) {

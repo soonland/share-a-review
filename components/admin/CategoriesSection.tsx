@@ -58,7 +58,7 @@ export const CategoriesSection = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "slug", headerName: "Slug", flex: 1 },
+    { field: "name", headerName: "Slug", flex: 1 },
     {
       field: "description_template",
       headerName: "Champs",

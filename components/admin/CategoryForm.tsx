@@ -36,12 +36,28 @@ interface FieldState {
 }
 
 export const CategoryForm = ({ open, onClose, onSubmit, category }: CategoryFormProps) => {
+  const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [fields, setFields] = useState<FieldState[]>([]);
   const [newOption, setNewOption] = useState("");
 
+  const generateSlug = (text: string): string => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // Remove accents
+      .replace(/[^a-z0-9]+/g, "-") // Replace special chars with hyphens
+      .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+  };
+
+  // Update slug when name changes
+  useEffect(() => {
+    setSlug(generateSlug(name));
+  }, [name]);
+
   useEffect(() => {
     if (category) {
+      setName(category.name || "");
       setSlug(category.slug);
       const initialFields = Object.entries(category.description_template || {}).map(([name, field]) => {
         const fieldConfig = typeof field === "string" ? { type: field } : field;
@@ -124,7 +140,8 @@ export const CategoryForm = ({ open, onClose, onSubmit, category }: CategoryForm
     );
 
     onSubmit({
-      slug: slug.toLowerCase(),
+      name,
+      slug,
       description_template,
     });
 
@@ -138,12 +155,20 @@ export const CategoryForm = ({ open, onClose, onSubmit, category }: CategoryForm
       <DialogContent>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}>
           <TextField
-            label="Slug"
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
+            label="Nom de la catégorie"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             fullWidth
             required
-            helperText="Identifiant unique de la catégorie (ex: smartphones, laptops)"
+            autoFocus
+          />
+          <TextField
+            label="Slug"
+            value={slug}
+            disabled
+            fullWidth
+            helperText="Identifiant unique généré automatiquement à partir du nom"
+            sx={{ bgcolor: "action.disabledBackground" }}
           />
 
           <Box>

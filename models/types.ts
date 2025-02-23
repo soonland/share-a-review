@@ -16,6 +16,7 @@ export interface CategoryFieldType {
 
 export interface CategoryType {
   id: number;
+  name: string;
   slug: string;
   description_template: Record<string, CategoryFieldType>;
 }
