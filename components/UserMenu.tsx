@@ -1,6 +1,5 @@
 import { AccountCircle, Logout, Notifications } from "@mui/icons-material";
 import { Avatar, Badge, Box, IconButton, Menu, MenuItem, SxProps, Theme } from "@mui/material";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
@@ -91,9 +90,6 @@ const UserMenu: FC<UserMenuProps> = ({ sx }): ReactElement => {
             <MenuItem key="signOut" onClick={() => signOut()} data-testid="testid.menu.signOut">
               {t("userMenu.signOut")}
               <Logout fontSize="small" sx={{ mr: 1 }} />
-            </MenuItem>,
-            <MenuItem key="admin" onClick={handleClose} data-testid="testid.menu.admin">
-              <Link href="/admin">{t("userMenu.admin")}</Link>
             </MenuItem>,
           ]
         ) : (

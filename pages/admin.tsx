@@ -1,9 +1,27 @@
 import { Typography, Grid } from "@mui/material";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 import { CategoriesSection } from "@/components/admin/CategoriesSection";
 import { UsersSection } from "@/components/admin/UsersSection";
+
+import { authOptions } from "./api/auth/[...nextauth]";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (!session?.user?.is_admin) {
+    return {
+      notFound: true, // Returns 404 page
+    };
+  }
+
+  return {
+    props: {}, // Will be passed to the page component as props
+  };
+};
 
 const AdminPage = () => {
   const router = useRouter();
