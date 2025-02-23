@@ -4,6 +4,28 @@ import pool from "../../../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
+    case "GET":
+      try {
+        const client = await pool.connect();
+        const result = await client.query("SELECT id, slug, description_template FROM categories");
+        client.release();
+
+        return res.status(200).json({
+          success: true,
+          data: result.rows.map((category) => ({
+            ...category,
+            value: category.slug.toLowerCase(),
+            label: category.slug.toLowerCase(),
+          })),
+        });
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        return res.status(500).json({
+          success: false,
+          message: "Erreur lors de la récupération des catégories",
+        });
+      }
+
     case "POST":
       try {
         const { slug, description_template } = req.body;
@@ -49,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
     default:
-      res.setHeader("Allow", ["POST"]);
+      res.setHeader("Allow", ["GET", "POST"]);
       res.status(405).json({
         success: false,
         message: `Method ${req.method} not allowed`,

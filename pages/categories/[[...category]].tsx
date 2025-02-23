@@ -7,13 +7,11 @@ import { useFetch } from "@/helpers/utils";
 const Reviews: NextPage = () => {
   const router = useRouter();
   const { category = "", q = "" } = router.query;
-  let url = `/api/categories`;
-  if (category) {
-    url += `/${category}`;
-  }
-  if (q) {
-    url += `?q=${q}`;
-  }
+  let url = "/api/reviews";
+  const params = new URLSearchParams();
+  if (category) params.append("category", category as string);
+  if (q) params.append("q", q as string);
+  if (params.toString()) url += `?${params.toString()}`;
   const { data, isLoading, error } = useFetch(url);
 
   return <ReviewsList data={data} isLoading={isLoading} error={error} />;
