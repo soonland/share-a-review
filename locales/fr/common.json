@@ -46,6 +46,10 @@
     "notifications": "Notifications",
     "admin": "Administration"
   },
+  "adminMenu": {
+    "users": "Gestion des utilisateurs",
+    "categories": "Gestion des catégories"
+  },
   "home": {
     "welcomeTitle": "Bienvenue sur Share-A-Review - La Voix de la Communauté!",
     "subtitle": "Partagez vos avis et expériences avec le monde",

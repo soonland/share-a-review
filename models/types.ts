@@ -1,29 +1,21 @@
-export interface Change {
-  version: string;
-  date: string;
-  description?: string;
-  features?: string[];
-  fixes?: string[];
-  projectConfiguration?: string[];
-}
-
-export interface NotificationFolder {
+export interface UserType {
   id: number;
   name: string;
-  type: string;
+  email: string;
+  is_admin: boolean;
+  active: boolean;
+  last_login: string;
+  created_at: string;
 }
 
-export interface Notification {
+export interface CategoryFieldType {
+  type: "select" | "text" | "number";
+  options?: string[];
+  required?: boolean;
+}
+
+export interface CategoryType {
   id: number;
-  title: string;
-  message: string;
-  type: string;
-  status: string;
-  folder: string;
-  sent_at: string;
-}
-
-export interface CurrentNotificationView {
-  folder: string;
-  type: string;
+  slug: string;
+  description_template: Record<string, CategoryFieldType>;
 }

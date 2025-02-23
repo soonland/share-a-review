@@ -4,18 +4,20 @@ import { FC, JSX, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import Alert, { AlertProps } from "@/components/Alert";
-import InputField from "@/components/generic/InputField"; // Adapter le chemin selon la structure de ton projet
+import InputField from "@/components/generic/InputField";
+import SelectField from "@/components/generic/SelectField";
+import { CategoryType } from "@/models/types";
 
 interface CreateFormProps {
   categoryId: number;
-  descriptionTemplate: any;
+  descriptionTemplate: CategoryType["description_template"];
 }
 
 const CreateForm: FC<CreateFormProps> = ({ categoryId, descriptionTemplate }): JSX.Element => {
   const [formFields, setFormFields] = useState<string[]>([]);
   const [feedbackMessage, setFeedbackMessage] = useState<AlertProps>();
   const [feedbackMessageOpen, setFeedbackMessageOpen] = useState(false);
-  const { control, handleSubmit, reset, clearErrors, register } = useForm();
+  const { control, handleSubmit, reset, clearErrors } = useForm();
 
   useEffect(() => {
     if (descriptionTemplate) {
@@ -23,7 +25,14 @@ const CreateForm: FC<CreateFormProps> = ({ categoryId, descriptionTemplate }): J
       setFormFields(fields);
       const defaultValues: Record<string, any> = {};
       fields.forEach((field) => {
-        defaultValues[field] = descriptionTemplate[field] === "text" ? "" : 0;
+        const fieldDef = descriptionTemplate[field];
+        if (typeof fieldDef === "object" && fieldDef.type === "select") {
+          defaultValues[field] = "";
+        } else if (typeof fieldDef === "object" && fieldDef.type === "number") {
+          defaultValues[field] = 0;
+        } else {
+          defaultValues[field] = "";
+        }
       });
       reset(defaultValues);
     }
@@ -43,6 +52,7 @@ const CreateForm: FC<CreateFormProps> = ({ categoryId, descriptionTemplate }): J
     console.log("data", data);
     const payload = {
       ...data,
+      categoryId,
     };
     await fetch("/api/items/create", {
       method: "POST",
@@ -71,14 +81,42 @@ const CreateForm: FC<CreateFormProps> = ({ categoryId, descriptionTemplate }): J
         </Collapse>
       )}
       <form onSubmit={handleSubmit(onSubmit)}>
-        {formFields.map((field) => (
-          <>
-            <input type="hidden" value={categoryId} {...register("categoryId")} />
+        {formFields.map((field) => {
+          const fieldDef = descriptionTemplate[field];
+
+          if (typeof fieldDef === "object" && fieldDef.type === "select" && fieldDef.options) {
+            return (
+              <div key={field}>
+                <SelectField
+                  name={field}
+                  label={field}
+                  control={control}
+                  options={fieldDef.options.map((opt) => ({ value: opt, label: opt }))}
+                  size="small"
+                />
+              </div>
+            );
+          }
+
+          return (
             <div key={field}>
-              <InputField name={field} label={field} control={control} size="small" />
+              <InputField
+                name={field}
+                label={field}
+                control={control}
+                size="small"
+                rules={{
+                  ...(fieldDef?.required && { required: "Ce champ est requis" }),
+                  ...(typeof fieldDef === "object" &&
+                    fieldDef.type === "number" && {
+                      valueAsNumber: true,
+                      validate: (value) => !isNaN(value) || "Ce champ doit être un nombre",
+                    }),
+                }}
+              />
             </div>
-          </>
-        ))}
+          );
+        })}
         <Button type="submit" variant="contained" color="primary">
           Submit
         </Button>

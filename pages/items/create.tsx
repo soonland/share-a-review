@@ -6,6 +6,7 @@ import { useState } from "react";
 import Alert from "@/components/Alert";
 import CreateForm from "@/components/CreateForm";
 import { useFetch } from "@/helpers/utils";
+import { CategoryType } from "@/models/types";
 
 const CustomCard = styled(Card)(({ theme }) => ({
   "&.MuiPaper-root.MuiPaper-elevation.MuiCard-root": {
@@ -14,13 +15,20 @@ const CustomCard = styled(Card)(({ theme }) => ({
   },
 }));
 
+interface CategoryWithTemplate {
+  id: number;
+  value: string;
+  label: string;
+  description_template: CategoryType["description_template"];
+}
+
 const CreateItem: NextPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState<{
-    id: number;
-    value: string;
-    label: string;
-    description_template: unknown;
-  }>({ id: 0, value: "", label: "", description_template: null });
+  const [selectedCategory, setSelectedCategory] = useState<CategoryWithTemplate>({
+    id: 0,
+    value: "",
+    label: "",
+    description_template: { name: { type: "text" } },
+  });
 
   const { data, error } = useFetch("/api/categories/list");
   const categories = data?.data;
@@ -32,12 +40,12 @@ const CreateItem: NextPage = () => {
   return (
     <Grid container spacing={2}>
       {categories.map((category: any) => (
-        <Grid item key={category.value} xs={12} sm={6} md={3}>
-          <CustomCard variant={selectedCategory.value === category.value ? "elevation" : "outlined"}>
+        <Grid item key={category.id} xs={12} sm={6} md={3}>
+          <CustomCard variant={selectedCategory.id === category.id ? "elevation" : "outlined"}>
             <CardActionArea onClick={() => setSelectedCategory(category)}>
               <CardContent>
                 <Typography variant="h6" component="h2" sx={{ textAlign: "center" }}>
-                  {category.label}
+                  {category.slug}
                 </Typography>
               </CardContent>
             </CardActionArea>

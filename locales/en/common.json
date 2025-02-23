@@ -46,6 +46,10 @@
     "notifications": "Notifications",
     "admin": "Admin"
   },
+  "adminMenu": {
+    "users": "User Management",
+    "categories": "Category Management"
+  },
   "home": {
     "welcomeTitle": "Welcome to Share-A-Review - The Voice of the Community!",
     "subtitle": "Share your reviews and experiences with the world",
