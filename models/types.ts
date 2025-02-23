@@ -49,3 +49,27 @@ export interface NotificationFolder {
   name: string;
   type: string;
 }
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  image?: string;
+  is_admin: boolean;
+  active: boolean;
+  last_login?: string;
+  created_at: string;
+}
+
+// Extend next-auth session type
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      image?: string;
+      is_admin: boolean;
+    };
+  }
+}
