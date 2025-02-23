@@ -6,7 +6,7 @@ export default async function handler(req, res) {
       const client = await pool.connect();
 
       const result = await client.query(
-        `SELECT id, LOWER(slug) as value, LOWER(slug) as label, description_template 
+        `SELECT id, slug, LOWER(slug) as value, LOWER(slug) as label, description_template 
         FROM categories
         ORDER BY 
             CASE 

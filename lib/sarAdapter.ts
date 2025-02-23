@@ -41,9 +41,9 @@ export default function SarAdapter(): Adapter {
   const createUser = async (user: Omit<AdapterUser, "id">) => {
     const { name, email, emailVerified, image } = user;
     const sql = `
-      INSERT INTO users (name, email, "emailVerified", image) 
-      VALUES ($1, $2, $3, $4) 
-      RETURNING id, name, email, "emailVerified", image`;
+      INSERT INTO users (name, email, "emailVerified", image, is_admin) 
+      VALUES ($1, $2, $3, $4, false) 
+      RETURNING id, name, email, "emailVerified", image, is_admin`;
     const result = await pool.query(sql, [name, email, emailVerified, image]);
     await createUserNotification(result.rows[0].id, "Bienvenue sur notre plateforme !", "system");
 
@@ -52,7 +52,7 @@ export default function SarAdapter(): Adapter {
 
   const getUser = async (id: string) => {
     const sql = `
-      SELECT id, name, email, "emailVerified", image
+      SELECT id, name, email, "emailVerified", image, is_admin
       FROM users
       WHERE id = $1`;
     const result = await pool.query(sql, [id]);
@@ -62,7 +62,7 @@ export default function SarAdapter(): Adapter {
 
   const getUserByEmail = async (email: string) => {
     const sql = `
-      SELECT id, name, email, "emailVerified", image
+      SELECT id, name, email, "emailVerified", image, is_admin
       FROM users
       WHERE email = $1`;
     const result = await pool.query(sql, [email]);
@@ -72,11 +72,11 @@ export default function SarAdapter(): Adapter {
 
   const getUserByAccount = async ({ providerAccountId, provider }): Promise<AdapterUser | null> => {
     const sql = `
-        select u.* from users u join accounts a on u.id = a."userId"
-        where 
-        a.provider = $1 
-        and 
-        a."providerAccountId" = $2`;
+      select u.* from users u join accounts a on u.id = a."userId"
+      where 
+      a.provider = $1 
+      and 
+      a."providerAccountId" = $2`;
 
     const result = await pool.query(sql, [provider, providerAccountId]);
     return result.rowCount !== 0 ? result.rows[0] : null;
@@ -88,7 +88,7 @@ export default function SarAdapter(): Adapter {
       UPDATE users
       SET name = $2, email = $3, "emailVerified" = $4, image = $5
       WHERE id = $1
-      RETURNING id, name, email, "emailVerified", image`;
+      RETURNING id, name, email, "emailVerified", image, is_admin`;
     const result = await pool.query(sql, [id, name, email, emailVerified, image]);
 
     return result.rows[0];

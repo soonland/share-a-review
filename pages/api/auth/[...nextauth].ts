@@ -40,7 +40,7 @@ const credentialsProvider = CredentialsProvider({
       return null;
     }
 
-    return { id: user.id, name: user.name, email: user.email, image: user.image };
+    return { id: user.id, name: user.name, email: user.email, image: user.image, is_admin: user.is_admin };
   },
 });
 
@@ -55,12 +55,22 @@ const providersList = (): Provider[] => {
           name: profile.display_name,
           email: profile.email,
           image: profile.images?.[0]?.url,
+          is_admin: false,
         };
       },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      profile: (profile) => {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          is_admin: false,
+        };
+      },
     }),
   ];
 
@@ -78,10 +88,24 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        // Initial sign in
+        token.is_admin = user.is_admin;
+      } else if (token?.sub) {
+        // Subsequent token refreshes
+        const dbUser = await pool.query("SELECT is_admin FROM users WHERE id = $1", [token.sub]);
+        if (dbUser.rows[0]) {
+          token.is_admin = dbUser.rows[0].is_admin;
+        }
+      }
+      return token;
+    },
     async session({ session, token }) {
       if (token?.sub) {
         session.user.id = token.sub;
       }
+      session.user.is_admin = token.is_admin as boolean;
       return session;
     },
   },

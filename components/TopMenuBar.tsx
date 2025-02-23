@@ -9,6 +9,8 @@ import Link from "next/link";
 import useTranslation from "next-translate/useTranslation";
 import { FC, ReactElement } from "react";
 
+import AdminMenu from "@/components/admin/AdminMenu";
+
 import ChangeThemeMode from "./ChangeThemeMode";
 import LeftMenu from "./LeftMenu";
 import MainMenu from "./MainMenu";
@@ -56,6 +58,7 @@ const TopMenuBar: FC = (): ReactElement => {
           </Link>
           <Box sx={{ flexGrow: 1 }}>{!isExtraSmallSize && <MainMenu />}</Box>
           <ChangeThemeMode sx={{ display: { xs: "none", md: "flex" } }} />
+          <AdminMenu />
           <UserMenu />
         </Toolbar>
       </Container>

@@ -1,3 +1,25 @@
+export interface UserType {
+  id: number;
+  name: string;
+  email: string;
+  is_admin: boolean;
+  active: boolean;
+  last_login: string;
+  created_at: string;
+}
+
+export interface CategoryFieldType {
+  type: "select" | "text" | "number";
+  options?: string[];
+  required?: boolean;
+}
+
+export interface CategoryType {
+  id: number;
+  slug: string;
+  description_template: Record<string, CategoryFieldType>;
+}
+
 export interface Change {
   version: string;
   date: string;
@@ -7,9 +29,8 @@ export interface Change {
   projectConfiguration?: string[];
 }
 
-export interface NotificationFolder {
-  id: number;
-  name: string;
+export interface CurrentNotificationView {
+  folder: string;
   type: string;
 }
 
@@ -23,7 +44,8 @@ export interface Notification {
   sent_at: string;
 }
 
-export interface CurrentNotificationView {
-  folder: string;
+export interface NotificationFolder {
+  id: number;
+  name: string;
   type: string;
 }
