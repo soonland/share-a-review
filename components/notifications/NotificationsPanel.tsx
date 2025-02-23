@@ -5,8 +5,15 @@ import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   MoreVert as MoreVertIcon,
+  ChevronLeft as CollapseIcon,
+  MenuOpen as ExpandIcon,
+  InboxOutlined as InboxIcon,
+  PersonOutline as PersonIcon,
+  ComputerOutlined as SystemIcon,
+  DeleteOutline as TrashIcon,
+  FolderOutlined as FolderIcon,
 } from "@mui/icons-material";
-import { Grid, Typography, Button, Box, Divider, Badge, IconButton, MenuItem, Menu } from "@mui/material";
+import { Grid, Typography, Button, Box, Divider, Badge, IconButton, MenuItem, Menu, TextField } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import { FC, ReactElement, useState } from "react";
 import { mutate } from "swr";
@@ -32,19 +39,25 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
   const [selectedFolder, setSelectedFolder] = useState<NotificationFolder | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const [selectedFolderId, setSelectedFolderId] = useState<number | null>(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
-  const filteredNotifications = notifications.filter(
-    (notification) =>
-      (notification.folder.toLowerCase() === currentView.folder.toLowerCase() &&
-        currentView.type.toLowerCase() === "all") ||
-      (notification.folder.toLowerCase() === currentView.folder.toLowerCase() &&
-        notification.type === currentView.type),
-  );
+  const filteredNotifications = notifications.filter((notification) => {
+    const matchesSearch =
+      !searchText ||
+      (notification.title?.toLowerCase().includes(searchText.toLowerCase()) ?? false) ||
+      (notification.message?.toLowerCase().includes(searchText.toLowerCase()) ?? false);
+
+    const matchesFolder = notification.folder.toLowerCase() === currentView.folder.toLowerCase();
+    const matchesType = currentView.type.toLowerCase() === "all" || notification.type === currentView.type;
+
+    return matchesSearch && matchesFolder && matchesType;
+  });
 
   const unreadNotifications = filteredNotifications.filter((notification) => notification.status === "unread");
   const readNotifications = filteredNotifications.filter((notification) => notification.status === "read");
 
-  const handleSelectNotification = (id) => {
+  const handleSelectNotification = (id: number) => {
     setSelectedNotifications((prevSelected) => {
       if (prevSelected.includes(id)) {
         return prevSelected.filter((notificationId) => notificationId !== id);
@@ -113,76 +126,163 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
   return (
     <Grid container spacing={2} sx={{ overflow: "hidden" }}>
       {/* Barre latérale des filtres */}
-      <Grid item xs={3} sx={{ borderRight: "1px solid #ddd", p: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          {t("notifications.title")}
-        </Typography>
-        <Button
-          variant={currentView.folder === "inbox" && currentView.type === "all" ? "contained" : "text"}
-          fullWidth
-          sx={{ mb: 1, justifyContent: "space-between" }}
-          onClick={() => setCurrentView({ folder: "inbox", type: "all" })}
-        >
-          {t("notifications.sidebar.all")}
-          <Badge
-            color="error"
-            badgeContent={notifications.filter((n) => n.status === "unread" && n.folder === "inbox").length}
-          />
-        </Button>
-        <Button
-          variant={currentView.folder === "inbox" && currentView.type === "user" ? "contained" : "text"}
-          fullWidth
-          sx={{ mb: 1, justifyContent: "space-between" }}
-          onClick={() => setCurrentView({ folder: "inbox", type: "user" })}
-        >
-          {t("notifications.sidebar.user")}
-          <Badge
-            color="error"
-            badgeContent={
-              notifications.filter((n) => n.status === "unread" && n.type === "user" && n.folder === "inbox").length
-            }
-          />
-        </Button>
-        <Button
-          variant={currentView.folder === "inbox" && currentView.type === "system" ? "contained" : "text"}
-          fullWidth
-          sx={{ justifyContent: "space-between" }}
-          onClick={() => setCurrentView({ folder: "inbox", type: "system" })}
-        >
-          {t("notifications.sidebar.system")}
-          <Badge
-            color="error"
-            badgeContent={
-              notifications.filter((n) => n.status === "unread" && n.type === "system" && n.folder == "inbox").length
-            }
-          />
-        </Button>
-        <Button
-          variant={currentView.folder === "trash" && currentView.type === "all" ? "contained" : "text"}
-          fullWidth
-          sx={{ justifyContent: "space-between" }}
-          onClick={() => setCurrentView({ folder: "trash", type: "all" })}
-        >
-          {t("notifications.sidebar.trash")}
-          <Badge
-            color="error"
-            badgeContent={notifications.filter((n) => n.status === "unread" && n.folder === "trash").length}
-          />
-        </Button>
-        <Divider sx={{ my: 2 }} />
-        <Typography variant="h6" gutterBottom>
-          {t("notifications.sidebar.folders")}
+      <Grid
+        item
+        xs={isCollapsed ? 1 : 3}
+        sx={{
+          width: isCollapsed ? 80 : "auto",
+          minWidth: isCollapsed ? 80 : "auto",
+          maxWidth: isCollapsed ? 80 : "25%",
+          borderRight: "1px solid #ddd",
+          p: 2,
+          transition: "all 0.2s ease-in-out",
+          overflow: "hidden",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+          {!isCollapsed && (
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              {t("notifications.title")}
+            </Typography>
+          )}
           <IconButton
+            onClick={() => setIsCollapsed(!isCollapsed)}
             size="small"
-            sx={{ ml: 1 }}
-            onClick={() => {
-              setSelectedFolder(null);
-              setOpenFolderDialog(true);
+            sx={{
+              border: "1px solid",
+              borderColor: "divider",
+              borderRadius: 1,
+              ml: isCollapsed ? "auto" : 1,
             }}
           >
-            <AddIcon />
+            {isCollapsed ? <ExpandIcon /> : <CollapseIcon />}
           </IconButton>
-        </Typography>
+        </Box>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Button
+            variant={currentView.folder === "inbox" && currentView.type === "all" ? "contained" : "text"}
+            fullWidth
+            sx={{
+              justifyContent: "flex-start",
+              minWidth: isCollapsed ? 48 : "auto",
+              width: "100%",
+              px: isCollapsed ? 1 : 2,
+            }}
+            onClick={() => setCurrentView({ folder: "inbox", type: "all" })}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <InboxIcon sx={{ mr: 1 }} />
+              {!isCollapsed && (
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                  <span>{t("notifications.sidebar.all")}</span>
+                  <Badge
+                    color="error"
+                    badgeContent={notifications.filter((n) => n.status === "unread" && n.folder === "inbox").length}
+                  />
+                </Box>
+              )}
+            </Box>
+          </Button>
+          <Button
+            variant={currentView.folder === "inbox" && currentView.type === "user" ? "contained" : "text"}
+            fullWidth
+            sx={{
+              justifyContent: "flex-start",
+              minWidth: isCollapsed ? 48 : "auto",
+              width: "100%",
+              px: isCollapsed ? 1 : 2,
+            }}
+            onClick={() => setCurrentView({ folder: "inbox", type: "user" })}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <PersonIcon sx={{ mr: 1 }} />
+              {!isCollapsed && (
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                  <span>{t("notifications.sidebar.user")}</span>
+                  <Badge
+                    color="error"
+                    badgeContent={
+                      notifications.filter((n) => n.status === "unread" && n.type === "user" && n.folder === "inbox")
+                        .length
+                    }
+                  />
+                </Box>
+              )}
+            </Box>
+          </Button>
+          <Button
+            variant={currentView.folder === "inbox" && currentView.type === "system" ? "contained" : "text"}
+            fullWidth
+            sx={{
+              justifyContent: "flex-start",
+              minWidth: isCollapsed ? 48 : "auto",
+              width: "100%",
+              px: isCollapsed ? 1 : 2,
+            }}
+            onClick={() => setCurrentView({ folder: "inbox", type: "system" })}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <SystemIcon sx={{ mr: 1 }} />
+              {!isCollapsed && (
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                  <span>{t("notifications.sidebar.system")}</span>
+                  <Badge
+                    color="error"
+                    badgeContent={
+                      notifications.filter((n) => n.status === "unread" && n.type === "system" && n.folder === "inbox")
+                        .length
+                    }
+                  />
+                </Box>
+              )}
+            </Box>
+          </Button>
+          <Button
+            variant={currentView.folder === "trash" && currentView.type === "all" ? "contained" : "text"}
+            fullWidth
+            sx={{
+              justifyContent: "flex-start",
+              minWidth: isCollapsed ? 48 : "auto",
+              width: "100%",
+              px: isCollapsed ? 1 : 2,
+            }}
+            onClick={() => setCurrentView({ folder: "trash", type: "all" })}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <TrashIcon sx={{ mr: 1 }} />
+              {!isCollapsed && (
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                  <span>{t("notifications.sidebar.trash")}</span>
+                  <Badge
+                    color="error"
+                    badgeContent={notifications.filter((n) => n.status === "unread" && n.folder === "trash").length}
+                  />
+                </Box>
+              )}
+            </Box>
+          </Button>
+        </Box>
+        <Divider sx={{ my: 2 }} />
+        {/* Titre de la section dossiers */}
+        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+          {!isCollapsed && (
+            <>
+              <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                {t("notifications.sidebar.folders")}
+              </Typography>
+              <IconButton
+                size="small"
+                onClick={() => {
+                  setSelectedFolder(null);
+                  setOpenFolderDialog(true);
+                }}
+              >
+                <AddIcon />
+              </IconButton>
+            </>
+          )}
+        </Box>
+        {/* Liste des dossiers */}
         {folders
           .filter((folder) => folder.type === "user")
           .map((folder) => (
@@ -190,20 +290,32 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
               <Button
                 variant={currentView.folder === folder.name.toLowerCase() ? "contained" : "text"}
                 fullWidth
-                sx={{ justifyContent: "space-between" }}
+                sx={{
+                  justifyContent: "flex-start",
+                  minWidth: isCollapsed ? 48 : "auto",
+                  width: "100%",
+                  px: isCollapsed ? 1 : 2,
+                }}
                 onClick={() => setCurrentView({ folder: folder.name.toLowerCase(), type: "all" })}
                 onMouseEnter={() => setHoveredFolder(folder.id)}
                 onMouseLeave={() => setHoveredFolder(null)}
               >
-                {folder.name}
-                <Badge
-                  color="error"
-                  badgeContent={
-                    notifications.filter(
-                      (n) => n.status === "unread" && n.folder.toLowerCase() === folder.name.toLowerCase(),
-                    ).length
-                  }
-                />
+                <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+                  <FolderIcon sx={{ mr: isCollapsed ? 0 : 1 }} />
+                  {!isCollapsed && (
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                      <span>{folder.name}</span>
+                      <Badge
+                        color="error"
+                        badgeContent={
+                          notifications.filter(
+                            (n) => n.status === "unread" && n.folder.toLowerCase() === folder.name.toLowerCase(),
+                          ).length
+                        }
+                      />
+                    </Box>
+                  )}
+                </Box>
                 {hoveredFolder === folder.id && (
                   <IconButton
                     size="small"
@@ -258,24 +370,42 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
                 </MenuItem>
               </Menu>
             </Box>
-          ))}{" "}
+          ))}
       </Grid>
 
-      <Grid item xs={9} sx={{ display: "flex", flexDirection: "column" }}>
-        <Box sx={{ px: 2 }}>
-          <Typography variant="h6" sx={{ mt: 2 }}>
-            {t("notifications.unread")}
+      <Grid
+        item
+        xs={isCollapsed ? 11 : 9}
+        sx={{
+          transition: "all 0.2s ease-in-out",
+        }}
+      >
+        <Box sx={{ p: 2 }}>
+          <Typography variant="h4" gutterBottom>
+            {t("notifications.title")}
           </Typography>
 
-          <Button
-            variant="outlined"
-            fullWidth
-            sx={{ mb: 2, display: "flex", justifyContent: "space-between" }}
-            onClick={handleSelectAll}
-          >
-            {selectAll ? t("notifications.deselectAll") : t("notifications.selectAll")}
-            <Box sx={{ display: "flex", alignItems: "center" }}>{selectAll ? <ClearAllIcon /> : <SelectAllIcon />}</Box>
-          </Button>
+          <Box sx={{ mb: 3, display: "flex", gap: 2 }}>
+            <TextField
+              label={t("notifications.search")}
+              variant="outlined"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              size="small"
+              sx={{ flexGrow: 1 }}
+            />
+            <Button
+              variant="outlined"
+              onClick={handleSelectAll}
+              startIcon={selectAll ? <ClearAllIcon /> : <SelectAllIcon />}
+            >
+              {selectAll ? t("notifications.deselectAll") : t("notifications.selectAll")}
+            </Button>
+          </Box>
+
+          <Typography variant="h6" gutterBottom>
+            {t("notifications.unread")}
+          </Typography>
 
           {unreadNotifications.map((notification) => (
             <NotificationItem
