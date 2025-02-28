@@ -1,32 +1,54 @@
-describe("Test for Brightness7Icon", () => {
+describe("Theme Switcher", () => {
   beforeEach(() => {
-    cy.intercept("GET", "/api/maintenance", {
-      statusCode: 200,
-      body: {
-        maintenanceMode: "false",
-      },
-    });
+    cy.mockApiMaintenance("false");
     cy.visit("/");
+    cy.wait("@maintenanceMode");
   });
 
-  it("Check if Brightness7Icon exist", () => {
-    cy.get('[data-testid="Brightness4Icon"]').should("exist");
+  it("should have correct initial theme state", () => {
+    // Vérification de l'état initial (thème clair)
+    cy.get("body")
+      .should("have.css", "background-color", "rgb(248, 247, 245)")
+      .and("have.css", "color", "rgb(32, 33, 38)");
+
+    cy.get('[data-testid="Brightness4Icon"]').should("be.visible").and("have.css", "cursor", "pointer");
   });
 
-  it("Verify theme change from Light to Dark and Dark to Light", () => {
-    cy.get('[data-testid="Brightness4Icon"]')
-      .should("exist")
-      .then(() => {
-        cy.get('[data-testid="Brightness4Icon"]').click();
-        cy.wait(1000);
-        cy.get('[data-testid="Brightness7Icon"]').should("exist");
-      });
-    cy.get('[data-testid="Brightness7Icon"]')
-      .should("exist")
-      .then(() => {
-        cy.get('[data-testid="Brightness7Icon"]').click();
-        cy.wait(1000);
-        cy.get('[data-testid="Brightness4Icon"]').should("exist");
-      });
+  it("should change theme with proper visual feedback", () => {
+    // Passage au thème sombre
+    cy.get('[data-testid="Brightness4Icon"]').should("be.visible").click();
+
+    // Vérification du thème sombre
+    cy.get("body")
+      .should("have.css", "background-color", "rgb(0, 94, 123)")
+      .and("have.css", "color", "rgb(146, 167, 175)");
+
+    cy.get('[data-testid="Brightness7Icon"]').should("be.visible").and("have.css", "cursor", "pointer");
+
+    // Retour au thème clair
+    cy.get('[data-testid="Brightness7Icon"]').click();
+
+    // Vérification du retour au thème clair
+    cy.get("body")
+      .should("have.css", "background-color", "rgb(248, 247, 245)")
+      .and("have.css", "color", "rgb(32, 33, 38)");
+
+    cy.get('[data-testid="Brightness4Icon"]').should("be.visible");
+  });
+
+  it("should persist theme preference", () => {
+    // Passage au thème sombre
+    cy.get('[data-testid="Brightness4Icon"]').click();
+
+    // Rechargement de la page
+    cy.reload();
+    cy.wait("@maintenanceMode");
+
+    // Vérification que le thème sombre est conservé
+    cy.get("body")
+      .should("have.css", "background-color", "rgb(0, 94, 123)")
+      .and("have.css", "color", "rgb(146, 167, 175)");
+
+    cy.get('[data-testid="Brightness7Icon"]').should("be.visible");
   });
 });

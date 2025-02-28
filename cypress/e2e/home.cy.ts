@@ -6,7 +6,7 @@ describe("Home page", () => {
         cy.mockApiAuthSession(true);
         cy.mockApiNotificationsCount(3);
         cy.intercept("GET", "/api/reviews", { fixture: "reviews.json" }).as("allReviews");
-        cy.intercept("GET", "/api/categories/movies", { fixture: "reviews.json" }).as("movieReviews");
+        cy.intercept("GET", "/api/reviews?category=movies", { fixture: "reviews.json" }).as("movieReviews");
         cy.intercept("GET", "/api/categories/list", {
           body: {
             success: true,
@@ -24,18 +24,30 @@ describe("Home page", () => {
         cy.wait("@session");
       });
 
-      it("Then the UI should display elements for an authenticated user", () => {
+      it("Then the UI should display complete navigation elements", () => {
         cy.wait("@allReviews");
+
+        // Vérification de la navigation principale
+        cy.checkMainNavigation();
+
+        // Vérification détaillée du menu utilisateur
         cy.openUserMenu();
-        cy.get("[data-testid='testid.menu.accountButton']").should("exist").click();
-        cy.get("[data-testid='testid.menu.notifications']").should("exist");
-        cy.get("[data-testid='testid.menu.notifications']").contains("3");
+        cy.get("[data-testid='testid.menu.accountButton']").and("be.visible").click();
+
+        // Vérification des notifications
+        cy.get("[data-testid='testid.menu.notifications']").should("be.visible").and("contain", "3");
+
         cy.get("body").type("{esc}");
+
+        // Vérification détaillée des reviews
         cy.openReviewsMenu("movies");
         cy.wait("@movieReviews");
-        cy.get('[data-testid="testid.mainMenu.reviews"]').should("exist").contains("Reviews (39)");
-        cy.get('[data-testid="testid.mainMenu.myReviews"]').should("exist");
-        cy.get('[data-testid="testid.mainMenu.writeReview"]').should("exist");
+        cy.get('[data-testid="testid.mainMenu.reviews"]').should("contain", "Reviews (39)");
+        cy.get("body").type("{esc}");
+
+        // Vérification des boutons de review
+        cy.get('[data-testid="testid.mainMenu.myReviews"]').should("be.visible").and("be.enabled");
+        cy.get('[data-testid="testid.mainMenu.writeReview"]').should("be.visible").and("be.enabled");
       });
     });
 
@@ -44,7 +56,7 @@ describe("Home page", () => {
         cy.mockApiMaintenance("false");
         cy.mockApiAuthSession(false);
         cy.intercept("GET", "/api/items?type=latest.reviewed", { fixture: "items.json" }).as("items");
-        cy.intercept("GET", "/api/categories/movies", { fixture: "reviews.json" }).as("movieReviews");
+        cy.intercept("GET", "/api/reviews?category=movies", { fixture: "reviews.json" }).as("movieReviews");
         cy.intercept("GET", "/api/categories/list", {
           body: {
             success: true,

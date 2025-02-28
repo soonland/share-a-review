@@ -1,4 +1,12 @@
 /// <reference types="cypress" />
+
+// Nouvelles commandes de navigation et validation
+Cypress.Commands.add("checkMainNavigation", () => {
+  cy.get("[data-testid='testid.mainMenu.reviews']").should("be.visible").and("be.enabled");
+
+  cy.get("[data-testid='testid.menu.accountButton']").should("be.visible").and("be.enabled");
+});
+
 Cypress.Commands.overwrite("visit", (originalFn, url: string, options?: Partial<Cypress.VisitOptions>) => {
   const vercelProtectionBypass = Cypress.env("X_VERCEL_PROTECTION_BYPASS");
   cy.log(`Vercel protection bypass: ${vercelProtectionBypass}`);

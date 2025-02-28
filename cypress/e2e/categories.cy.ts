@@ -12,7 +12,7 @@ describe("Categories page", () => {
       cy.intercept("GET", "/api/reviews", (req) => {
         req.reply({ body: { ...this.reviews } });
       }).as("allReviews");
-      cy.intercept("GET", "/api/categories/*", (req) => {
+      cy.intercept("GET", "/api/reviews?category*", (req) => {
         req.reply({
           body: {
             ...this.reviews,
@@ -37,19 +37,56 @@ describe("Categories page", () => {
     });
 
     context("When the user visits the review page", () => {
-      it("Then the UI should display elements", () => {
+      it("Then the UI should display complete category elements", () => {
         cy.wait("@allReviews");
-        cy.get('[data-testid="testid.mainMenu.reviews"]').should("exist").contains("Reviews (39)");
-        cy.get('[data-testid="testid.form.selectField.category"]').should("exist").click();
-        cy.get('[id="menu-category"] ul').should("exist").children().should("have.length", 5);
+
+        // Vérification de la navigation principale
+        cy.checkMainNavigation();
+
+        // Vérification détaillée du menu reviews
+        cy.get('[data-testid="testid.mainMenu.reviews"]')
+          .should("be.visible")
+          .and("contain", "Reviews (39)")
+          .and("have.css", "font-weight", "900");
+
+        // Vérification complète du select de catégories
+        const categorySelect = cy.get('[data-testid="testid.form.selectField.category"]');
+        categorySelect.should("be.visible").click();
+
+        // Vérification détaillée du menu de catégories
+        const categoryMenu = cy.get('[id="menu-category"] ul');
+        categoryMenu.should("be.visible").and("have.class", "MuiList-root").children().should("have.length", 5);
+
+        // Vérification des options de catégorie
         cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
-          .should("exist")
-          .and("have.length", 4)
+          .should("have.length", 4)
+          .each(($el) => {
+            cy.wrap($el).should("be.visible").and("have.css", "cursor", "pointer");
+          });
+
+        // Sélection d'une catégorie
+        cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
           .eq(2)
           .should("contain.text", "electronics")
+          .and("not.have.class", "Mui-disabled")
           .click();
-        cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist").type("test");
-        cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
+
+        // Vérification du champ de recherche
+        const searchInput = cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input');
+        searchInput
+          .should("be.visible")
+          .and("be.enabled")
+          // .and("have.attr", "placeholder")
+          .and("not.have.class", "Mui-error");
+
+        searchInput.type("test");
+
+        // Vérification du bouton de recherche
+        cy.get('[data-testid="testid.form.button.search"]')
+          .should("be.visible")
+          .and("be.enabled")
+          // .and("have.css", "background-color")
+          .click();
       });
     });
 
