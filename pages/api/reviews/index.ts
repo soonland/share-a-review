@@ -1,6 +1,37 @@
 import pool from "../../../db";
 import { selectReviewsByCategory } from "../constants";
 
+/**
+ * API handler for managing reviews. Supports GET (listing/searching) and POST (creating) operations.
+ *
+ * GET (/api/reviews):
+ * - Lists all reviews or searches reviews by query
+ * - Query params:
+ *   - q (optional): Search term to filter reviews
+ * - Returns:
+ *   - 200: { data: Review[], success: true }
+ *   - 500: { success: false, message: string }
+ *
+ * POST (/api/reviews):
+ * - Creates a new review
+ * - Request body:
+ *   ```
+ *   {
+ *     title: string,
+ *     content: string,
+ *     userId: number,
+ *     item: { id: number },
+ *     rating: number
+ *   }
+ *   ```
+ * - Returns:
+ *   - 201: Review object
+ *   - 500: { error: string }
+ *
+ * @param {Object} req - The HTTP request object
+ * @param {Object} res - The HTTP response object
+ * @returns {Promise<void>} Resolves when the response has been sent
+ */
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {

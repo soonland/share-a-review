@@ -5,6 +5,23 @@ import Link from "next/link";
 
 import CommentsSection from "./CommentsSection";
 
+/**
+ * A component that displays a detailed review including the item name, category,
+ * rating, date, content, likes, and comments section.
+ *
+ * @param {Object} props - The component props
+ * @param {Object} props.review - The review object
+ * @param {string} props.review.id - Unique identifier for the review
+ * @param {string} props.review.item_name - Name of the reviewed item
+ * @param {string} props.review.item_category_slug - URL slug for the item category
+ * @param {string} props.review.item_category_name - Display name of the item category
+ * @param {number} props.review.review_rating - Rating value (0-5)
+ * @param {string} props.review.review_date_created - Creation date of the review
+ * @param {string} props.review.review_content - Main content of the review
+ * @param {number} props.review.review_likes - Number of helpful votes
+ * @param {Array} props.review.comments - Array of comments on the review
+ * @returns {JSX.Element} A styled stack containing the review details and comments
+ */
 const Review = ({ review }) => {
   const theme = useTheme();
   return (

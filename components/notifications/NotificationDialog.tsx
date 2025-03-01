@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Dialog component for displaying and managing notification details
+ */
+
 import {
   MoreVert,
   Close,
@@ -31,6 +35,31 @@ import useTranslation from "next-translate/useTranslation";
 import { useState, MouseEvent } from "react";
 import { mutate } from "swr";
 
+/**
+ * A dialog component that displays notification details and provides actions for managing notifications.
+ * Features include:
+ * - Reading notification content
+ * - Moving notifications between folders
+ * - Marking as read/unread
+ * - Deleting/restoring notifications
+ *
+ * @param {Object} props - Component props
+ * @param {Object} props.notification - The notification object to display
+ * @param {string} props.notification.id - Unique identifier for the notification
+ * @param {string} props.notification.title - Title of the notification
+ * @param {string} props.notification.message - Main content of the notification
+ * @param {string} props.notification.status - Current status ('read' or 'unread')
+ * @param {number} props.notification.folder_id - ID of the current folder
+ * @param {string} props.notification.sender_name - Name of the notification sender
+ * @param {string} props.notification.sent_at - Timestamp when notification was sent
+ * @param {boolean} props.openDialog - Controls dialog visibility
+ * @param {Function} props.onClose - Handler for closing the dialog
+ * @param {Function} props.setSelectedNotification - Updates the selected notification state
+ * @param {Array<Object>} props.folders - List of available folders
+ * @param {number} props.folders[].id - Folder ID
+ * @param {string} props.folders[].name - Folder name
+ * @returns {JSX.Element} A dialog displaying notification details and action options
+ */
 const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNotification, folders }) => {
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,6 +76,15 @@ const NotificationDialog = ({ notification, openDialog, onClose, setSelectedNoti
     setAnchorEl(null);
   };
 
+  /**
+   * Updates a notification's properties and refreshes the notifications list.
+   *
+   * @param {string} id - ID of the notification to update
+   * @param {Object} payload - Properties to update
+   * @param {string} [payload.status] - New status ('read' or 'unread')
+   * @param {number} [payload.folder_id] - New folder ID
+   * @returns {Promise<void>}
+   */
   const updateNotification = async (id, payload) => {
     // Mettre à jour la notification dans la base de données
     const myHeaders = new Headers();
