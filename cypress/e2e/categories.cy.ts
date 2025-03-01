@@ -75,44 +75,44 @@ describe("Categories page", () => {
       it("Then the UI should display complete category elements", () => {
         cy.wait("@allReviews");
 
-        // Vérification de la navigation principale
+        // Check main navigation
         cy.checkMainNavigation();
 
-        // Vérification détaillée du menu reviews
+        // Detailed check of reviews menu
         cy.get('[data-testid="testid.mainMenu.reviews"]')
           .should("be.visible")
           .and("contain", "Reviews (39)")
           .and("have.css", "font-weight", "900");
 
-        // Vérification complète du select de catégories
+        // Complete check of category select
         const categorySelect = cy.get('[data-testid="testid.form.selectField.category"]');
         categorySelect.should("be.visible").click();
 
-        // Vérification détaillée du menu de catégories
+        // Detailed check of categories menu
         const categoryMenu = cy.get('[id="menu-category"] ul');
         categoryMenu.should("be.visible").and("have.class", "MuiList-root").children().should("have.length", 5);
 
-        // Vérification des options de catégorie
+        // Check category options
         cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
           .should("have.length", 4)
           .each(($el) => {
             cy.wrap($el).should("be.visible").and("have.css", "cursor", "pointer");
           });
 
-        // Sélection d'une catégorie
+        // Category selection
         cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
           .eq(2)
           .should("contain.text", "electronics")
           .and("not.have.class", "Mui-disabled")
           .click();
 
-        // Vérification du champ de recherche
+        // Check search field
         const searchInput = cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input');
         searchInput.should("be.visible").and("be.enabled").and("not.have.class", "Mui-error");
 
         searchInput.type("test");
 
-        // Vérification du bouton de recherche
+        // Check search button
         cy.get('[data-testid="testid.form.button.search"]').should("be.visible").and("be.enabled").click();
       });
     });

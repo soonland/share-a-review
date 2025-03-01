@@ -58,25 +58,25 @@ describe("Home page", () => {
       it("Then the UI should display complete navigation elements", () => {
         cy.wait("@allReviews");
 
-        // Vérification de la navigation principale
+        // Check main navigation
         cy.checkMainNavigation();
 
-        // Vérification détaillée du menu utilisateur
+        // Detailed check of user menu
         cy.openUserMenu();
         cy.get("[data-testid='testid.menu.accountButton']").and("be.visible").click();
 
-        // Vérification des notifications
+        // Check notifications
         cy.get("[data-testid='testid.menu.notifications']").should("be.visible").and("contain", "3");
 
         cy.get("body").type("{esc}");
 
-        // Vérification détaillée des reviews
+        // Detailed check of reviews
         cy.openReviewsMenu("movies");
         cy.wait("@movieReviews");
         cy.get('[data-testid="testid.mainMenu.reviews"]').should("contain", "Reviews (39)");
         cy.get("body").type("{esc}");
 
-        // Vérification des boutons de review
+        // Check review buttons
         cy.get('[data-testid="testid.mainMenu.myReviews"]').should("be.visible").and("be.enabled");
         cy.get('[data-testid="testid.mainMenu.writeReview"]').should("be.visible").and("be.enabled");
       });
