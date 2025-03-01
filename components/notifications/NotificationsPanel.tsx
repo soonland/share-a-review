@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Main panel for displaying and managing notifications with folder organization
+ */
+
 import {
   SelectAll as SelectAllIcon,
   ClearAll as ClearAllIcon,
@@ -24,6 +28,21 @@ import NotificationFolderDialog from "./NotificationFolderDialog";
 import NotificationItem from "./NotificationItem";
 import { SidebarButton, getUnreadCount } from "./SidebarNavigation";
 
+/**
+ * Main panel component for managing notifications with folder organization.
+ * Features include:
+ * - Collapsible sidebar with folders
+ * - Read/Unread notifications grouping
+ * - Search functionality
+ * - Bulk selection actions
+ * - Notification type filtering (All/User/System)
+ * - Custom folder management
+ *
+ * @param {Object} props - Component props
+ * @param {Notification[]} props.notifications - Array of notifications to display
+ * @param {NotificationFolder[]} props.folders - Array of available notification folders
+ * @returns {ReactElement} A grid layout containing sidebar and notifications list
+ */
 const NotificationsPanel: FC<{ notifications: Notification[]; folders: NotificationFolder[] }> = ({
   notifications,
   folders,
@@ -57,6 +76,11 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
   const unreadNotifications = filteredNotifications.filter((notification) => notification.status === "unread");
   const readNotifications = filteredNotifications.filter((notification) => notification.status === "read");
 
+  /**
+   * Toggles selection state of a notification.
+   *
+   * @param {number} id - ID of the notification to toggle
+   */
   const handleSelectNotification = (id: number) => {
     setSelectedNotifications((prevSelected) => {
       if (prevSelected.includes(id)) {
@@ -76,6 +100,11 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
     setSelectAll(!selectAll);
   };
 
+  /**
+   * Opens notification dialog and marks notification as read after delay.
+   *
+   * @param {Notification} notification - Notification to display and mark as read
+   */
   const handleOpenDialog = async (notification: Notification) => {
     setSelectedNotification(notification);
     setOpenNotificationDialog(true);
@@ -98,6 +127,12 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
     setOpenNotificationDialog(false);
   };
 
+  /**
+   * Deletes a notification folder.
+   *
+   * @param {number} folderId - ID of the folder to delete
+   * @returns {Promise<void>}
+   */
   const deleteFolder = async (folderId: number) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

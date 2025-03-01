@@ -1,9 +1,33 @@
+/**
+ * @fileoverview End-to-end tests for the categories page functionality
+ */
+
+/**
+ * Test suite for categories page features and behaviors
+ * Tests search functionality, category selection, and form validation
+ */
 describe("Categories page", () => {
+  /**
+   * Tests for online website state
+   */
   context("Given the website is online", () => {
+    /**
+     * Filters reviews based on item name
+     *
+     * @param {Array} data - Array of review objects
+     * @param {string} itemName - Name to filter by
+     * @returns {Array} Filtered reviews array
+     */
     const filterReviews = (data, itemName) => {
       return data.filter((el) => el.item_name.toLowerCase().includes(itemName));
     };
 
+    /**
+     * Sets up test environment before each test
+     * - Mocks maintenance mode
+     * - Loads review fixtures
+     * - Intercepts API calls for reviews and categories
+     */
     beforeEach(() => {
       cy.mockApiMaintenance("false");
       cy.fixture("reviews").then((reviews) => {
@@ -36,7 +60,18 @@ describe("Categories page", () => {
       cy.wait("@maintenanceMode");
     });
 
+    /**
+     * Tests for initial page load and category UI elements
+     */
     context("When the user visits the review page", () => {
+      /**
+       * Tests category UI elements and interactions
+       * Verifies:
+       * - Navigation elements
+       * - Category dropdown functionality
+       * - Search input behavior
+       * - Search button functionality
+       */
       it("Then the UI should display complete category elements", () => {
         cy.wait("@allReviews");
 
@@ -73,24 +108,22 @@ describe("Categories page", () => {
 
         // Vérification du champ de recherche
         const searchInput = cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input');
-        searchInput
-          .should("be.visible")
-          .and("be.enabled")
-          // .and("have.attr", "placeholder")
-          .and("not.have.class", "Mui-error");
+        searchInput.should("be.visible").and("be.enabled").and("not.have.class", "Mui-error");
 
         searchInput.type("test");
 
         // Vérification du bouton de recherche
-        cy.get('[data-testid="testid.form.button.search"]')
-          .should("be.visible")
-          .and("be.enabled")
-          // .and("have.css", "background-color")
-          .click();
+        cy.get('[data-testid="testid.form.button.search"]').should("be.visible").and("be.enabled").click();
       });
     });
 
+    /**
+     * Tests form validation for empty search
+     */
     context("When the user leaves the search field empty with no category", () => {
+      /**
+       * Verifies error display for empty search
+       */
       it("Then the UI should display error", () => {
         cy.wait("@allReviews");
         cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
@@ -98,7 +131,13 @@ describe("Categories page", () => {
       });
     });
 
+    /**
+     * Tests search with term only
+     */
     context("When the user only types in a search term", () => {
+      /**
+       * Verifies form submission with search term only
+       */
       it("Then the UI should allow form submit", () => {
         cy.wait("@allReviews");
         cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input').should("exist").type("test");
@@ -112,6 +151,11 @@ describe("Categories page", () => {
       });
     });
 
+    /**
+     * Helper function to select a category from the dropdown
+     *
+     * @param {string} category - Category name to select
+     */
     const selectCategory = (category) => {
       cy.get('[data-testid="testid.form.selectField.category"]').should("exist").click();
       cy.get('[id="menu-category"] ul li:not(.Mui-disabled)')
@@ -122,6 +166,12 @@ describe("Categories page", () => {
         .click();
     };
 
+    /**
+     * Helper function to perform search with category and optional term
+     *
+     * @param {string} category - Category to search in
+     * @param {string} [term=""] - Optional search term
+     */
     const searchWithCategoryAndTerm = (category, term = "") => {
       cy.wait("@allReviews");
       const inputField = cy.get('[data-testid="testid.form.inputField.item"] > .MuiInputBase-input');
@@ -131,7 +181,13 @@ describe("Categories page", () => {
       cy.get('[data-testid="testid.form.button.search"]').should("exist").click();
     };
 
+    /**
+     * Tests category-only search
+     */
     context("When the user only selects a category", () => {
+      /**
+       * Verifies form submission with category only
+       */
       it("Then the UI should allow form submit", () => {
         searchWithCategoryAndTerm("electronics");
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
@@ -139,7 +195,13 @@ describe("Categories page", () => {
       });
     });
 
+    /**
+     * Tests search with both category and term
+     */
     context("When the user selects a category and types in a search term", () => {
+      /**
+       * Verifies form submission with both category and search term
+       */
       it("Then the UI should allow form submit", () => {
         searchWithCategoryAndTerm("electronics", "test");
         cy.get('[data-testid="testid.form.inputField.item"]').should("not.have.class", "Mui-error");
@@ -147,7 +209,13 @@ describe("Categories page", () => {
       });
     });
 
+    /**
+     * Tests search results display
+     */
     context("When the user selects a category and types in a search term and submits the form", () => {
+      /**
+       * Verifies search results display correctly
+       */
       it("Then the UI should display the results", () => {
         searchWithCategoryAndTerm("electronics", "iphone");
         cy.wait("@movieReviews");

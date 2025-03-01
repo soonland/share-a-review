@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Dialog component for creating and renaming notification folders
+ */
+
 import { CreateNewFolder as CreateNewFolderIcon } from "@mui/icons-material";
 import {
   Dialog,
@@ -17,6 +21,23 @@ import { mutate } from "swr";
 
 import Alert, { AlertProps } from "../Alert";
 
+/**
+ * A dialog component for creating new notification folders or renaming existing ones.
+ * Features include:
+ * - Create new folders
+ * - Rename existing folders
+ * - Input validation
+ * - Success/error feedback
+ * - Internationalization support
+ *
+ * @param {Object} props - Component props
+ * @param {boolean} props.openDialog - Controls dialog visibility
+ * @param {Function} props.onClose - Handler for closing the dialog
+ * @param {Object|null} props.selectedFolder - Folder to rename (null for creation mode)
+ * @param {number} props.selectedFolder.id - ID of the folder to rename
+ * @param {string} props.selectedFolder.name - Current name of the folder
+ * @returns {JSX.Element} A dialog for folder creation/renaming with feedback
+ */
 const NotificationFolderDialog = ({ openDialog, onClose, selectedFolder }) => {
   const { t } = useTranslation();
   const [feedbackMessage, setFeedbackMessage] = useState<AlertProps | null>();
@@ -28,6 +49,12 @@ const NotificationFolderDialog = ({ openDialog, onClose, selectedFolder }) => {
     setFolderName(selectedFolder?.name || "");
   }, [selectedFolder]);
 
+  /**
+   * Handles folder creation or renaming operation.
+   * Makes API call to create/update folder and manages feedback state.
+   *
+   * @returns {Promise<void>}
+   */
   const handleFolder = async () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");

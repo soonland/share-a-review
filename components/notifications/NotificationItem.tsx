@@ -1,6 +1,26 @@
 import { Drafts, Markunread, Delete } from "@mui/icons-material";
 import { Box, Checkbox, Badge, Typography, IconButton } from "@mui/material";
 
+/**
+ * A component that renders an individual notification item in a list.
+ * Features include:
+ * - Visual distinction between read/unread states
+ * - Checkbox for bulk selection
+ * - Delete action
+ * - Click handling for opening notification details
+ *
+ * @param {Object} props - Component props
+ * @param {Object} props.notification - The notification to display
+ * @param {number} props.notification.id - Notification identifier
+ * @param {string} props.notification.title - Notification title
+ * @param {string} props.notification.status - Current status ('read' or 'unread')
+ * @param {string} props.notification.sent_at - Timestamp when notification was sent
+ * @param {Function} props.handleOpenDialog - Handler for opening the notification dialog
+ * @param {Array<number>} props.selectedNotifications - Array of selected notification IDs
+ * @param {Function} props.handleSelectNotification - Handler for notification selection
+ * @param {Function} props.setSelectedNotification - Updates the selected notification state
+ * @returns {JSX.Element} A box containing the notification information and actions
+ */
 const NotificationItem = ({
   notification,
   handleOpenDialog,
@@ -8,6 +28,13 @@ const NotificationItem = ({
   handleSelectNotification,
   setSelectedNotification,
 }) => {
+  /**
+   * Moves a notification to a different folder.
+   *
+   * @param {number} [id] - ID of the notification to move
+   * @param {string} [folder] - Destination folder name
+   * @returns {Promise<void>}
+   */
   const moveNotification = async (id?: number, folder?: string) => {
     // Mettre à jour la notification dans la base de données
     const myHeaders = new Headers();

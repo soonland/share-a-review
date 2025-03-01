@@ -1,3 +1,7 @@
+/**
+ * @fileoverview A reusable autocomplete component with grouping and custom styling
+ */
+
 import {
   Autocomplete,
   Box,
@@ -16,6 +20,10 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 import { Controller } from "react-hook-form";
 
+/**
+ * Styled component for group headers in the autocomplete dropdown.
+ * Features sticky positioning and themed background color.
+ */
 const GroupHeader = styled("div")(({ theme }) => ({
   position: "sticky",
   top: "-8px",
@@ -23,6 +31,10 @@ const GroupHeader = styled("div")(({ theme }) => ({
   backgroundColor: darken(theme.palette.primary.main, 0.2),
 }));
 
+/**
+ * Styled component for the group items list.
+ * Customizes selection and hover states.
+ */
 const GroupItems = styled("ul")({
   padding: 0,
   '& .MuiAutocomplete-option[aria-selected="true"]': {
@@ -36,10 +48,17 @@ const GroupItems = styled("ul")({
   },
 });
 
+/**
+ * Validation rules for the autocomplete field
+ */
 interface AutoCompleteRules {
   required?: string;
 }
 
+/**
+ * Props interface for the AutoCompleteItem component
+ * @interface SelectFieldProps
+ */
 interface SelectFieldProps {
   name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,6 +75,31 @@ interface SelectFieldProps {
   sx?: SxProps;
 }
 
+/**
+ * A reusable autocomplete component that supports grouping, loading states,
+ * and form integration with react-hook-form.
+ *
+ * Features:
+ * - Grouped options with sticky headers
+ * - Loading state indicator
+ * - Form validation integration
+ * - Custom styling for selected/focused states
+ * - "Add New" button with navigation
+ *
+ * @param {SelectFieldProps} props - Component props
+ * @param {string} props.name - Field name for form registration
+ * @param {any} props.control - react-hook-form control object
+ * @param {string} [props.label] - Input label
+ * @param {"small" | "medium"} [props.size] - Size variant of the field
+ * @param {AutoCompleteRules} [props.rules] - Validation rules
+ * @param {string} [props.error] - Error message to display
+ * @param {Array<{id: string, label: string}>} props.options - Autocomplete options
+ * @param {boolean} [props.isLoading] - Show loading indicator
+ * @param {boolean} [props.disabled] - Disable the field
+ * @param {boolean} [props.withLabel] - Show field label
+ * @param {SxProps} [props.sx] - MUI system props for styling
+ * @returns {JSX.Element} An autocomplete field with grouping and custom styling
+ */
 const AutoCompleteItem: FC<SelectFieldProps> = ({
   name,
   control,

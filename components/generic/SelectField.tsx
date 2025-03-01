@@ -1,11 +1,23 @@
+/**
+ * @fileoverview A reusable select field component with form integration and validation
+ */
+
 import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select, SxProps } from "@mui/material";
 import { FC } from "react";
 import { Controller } from "react-hook-form";
 
+/**
+ * Validation rules for the select field
+ * @interface SelectFieldRules
+ */
 interface SelectFieldRules {
   required?: string;
 }
 
+/**
+ * Props interface for the SelectField component
+ * @interface SelectFieldProps
+ */
 interface SelectFieldProps {
   name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,6 +34,32 @@ interface SelectFieldProps {
   sx?: SxProps;
 }
 
+/**
+ * A form-integrated select field component with validation and accessibility features.
+ *
+ * Features:
+ * - MUI Select integration
+ * - react-hook-form compatibility
+ * - Error handling and validation
+ * - Optional label display
+ * - Placeholder support
+ * - Disabled state support
+ *
+ * @param {SelectFieldProps} props - Component props
+ * @param {string} props.name - Field name for form registration
+ * @param {any} [props.control] - react-hook-form control object
+ * @param {string} [props.label] - Input label
+ * @param {"small" | "medium"} [props.size] - Size variant of the field
+ * @param {SelectFieldRules} [props.rules] - Validation rules
+ * @param {string} [props.error] - Error message to display
+ * @param {Array<{value: string, label: string}>} props.options - Select options
+ * @param {string} [props.placeholder] - Placeholder text (defaults to label)
+ * @param {boolean} [props.isLoading] - Loading state flag
+ * @param {boolean} [props.disabled] - Disable the field
+ * @param {boolean} [props.withLabel] - Show field label
+ * @param {SxProps} [props.sx] - MUI system props for styling
+ * @returns {JSX.Element} A select field with form integration and validation
+ */
 const SelectField: FC<SelectFieldProps> = ({
   name,
   control,
