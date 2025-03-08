@@ -1,5 +1,7 @@
 # Share-a-Review
 
+[![Node.js CI](https://github.com/soonland/share-a-review/actions/workflows/node.js.yml/badge.svg)](https://github.com/soonland/share-a-review/actions/workflows/node.js.yml)
+
 Share-a-Review is a platform where users can share and discover reviews for various categories such as restaurants, books, movies, and more. This repository contains the source code for the Share-a-Review web application built using Next.js.
 
 ## Features
