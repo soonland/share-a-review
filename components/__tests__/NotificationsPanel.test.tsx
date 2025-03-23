@@ -181,6 +181,7 @@ describe("NotificationsPanel", () => {
 
   describe("folder management", () => {
     it("should show folder options only on hover", async () => {
+      setupApiMock();
       render(<NotificationsPanel {...mockProps} />);
       const user = userEvent.setup();
 
