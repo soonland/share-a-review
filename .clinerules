@@ -1,0 +1,135 @@
+# Jest Testing Guidelines
+
+## File Structure
+- Test files must be named with the pattern `*.test.tsx` or `*.test.ts`
+- Place test files in a `__tests__` directory adjacent to the components being tested
+- Each component must have its corresponding test file with the same name (e.g., `Component.tsx` -> `Component.test.tsx`)
+
+## Required Imports
+```typescript
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event"; // When testing user interactions
+```
+
+## Test Organization
+- Use `describe` blocks to group related tests for a component
+- Name tests clearly using either `it` or `test` with descriptive messages
+- Use `beforeEach` for common setup and `afterEach` for cleanup
+- Follow the Arrange-Act-Assert pattern in test cases
+
+Example:
+```typescript
+describe("ComponentName", () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); // When using mocks
+  });
+
+  it("should render component with expected props", () => {
+    // Arrange
+    const props = {...};
+    
+    // Act
+    render(<Component {...props} />);
+    
+    // Assert
+    expect(...).toBeInTheDocument();
+  });
+});
+```
+
+## Test IDs
+- Use data-testid attributes for element selection
+- Follow the format: `testid.{component}.{element}`
+- Example: `testid.changeThemeMode`, `testid.comment.${id}`
+
+## Mocking
+- Clear mocks in beforeEach using `jest.clearAllMocks()`
+- Mock context providers when testing components that use context
+- Define mock implementations for external services/APIs
+
+Example:
+```typescript
+const mockFunction = jest.fn();
+const mockContext = {
+  someFunction: mockFunction,
+  someValue: "test"
+};
+```
+
+## Testing Scenarios
+1. Component Rendering
+   - Test initial render state
+   - Verify presence of key elements
+   - Check correct class names and attributes
+
+2. User Interactions
+   - Use userEvent for interaction testing
+   - Test click handlers, form submissions, etc.
+   - Verify state changes after interactions
+
+3. Conditional Rendering
+   - Test different prop combinations
+   - Verify correct rendering for empty/loading states
+   - Test error state handling
+
+4. Props and State
+   - Verify component behavior with different prop values
+   - Test state updates and their effects
+   - Validate prop type requirements
+
+## Assertions
+- Use semantic queries when possible: getByRole, getByText, getByLabelText
+- Fall back to testid when semantic queries aren't suitable
+- Write positive and negative assertions
+- Test accessibility when applicable
+
+Example assertions:
+```typescript
+expect(element).toBeInTheDocument();
+expect(element).toHaveClass("expected-class");
+expect(element).toHaveAttribute("attr", "value");
+expect(mockFunction).toHaveBeenCalledTimes(1);
+expect(mockFunction).toHaveBeenCalledWith(expectedArgs);
+```
+
+## Async Testing
+- Use async/await for asynchronous operations
+- Handle loading states and transitions
+- Test error scenarios for async operations
+
+Example:
+```typescript
+it("should handle async operations", async () => {
+  render(<AsyncComponent />);
+  await userEvent.click(screen.getByRole("button"));
+  expect(await screen.findByText("loaded")).toBeInTheDocument();
+});
+```
+
+## Common Patterns
+1. Testing Context Providers:
+```typescript
+render(
+  <ThemeContext.Provider value={mockContext}>
+    <Component />
+  </ThemeContext.Provider>
+);
+```
+
+2. Testing Lists:
+```typescript
+const items = screen.getAllByRole("listitem");
+expect(items).toHaveLength(expectedLength);
+items.forEach((item, index) => {
+  expect(item).toHaveTextContent(expectedContent[index]);
+});
+```
+
+3. Testing Error States:
+```typescript
+it("should display error message when error occurs", () => {
+  render(<Component error="Error message" />);
+  expect(screen.getByRole("alert")).toHaveTextContent("Error message");
+});
+```

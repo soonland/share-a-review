@@ -136,10 +136,13 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
   const deleteFolder = async (folderId: number) => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    await fetch(`/api/notificationsfolders/${folderId}`, {
+    const response = await fetch(`/api/notificationsfolders/${folderId}`, {
       method: "DELETE",
       headers: myHeaders,
     });
+    if (!response.ok) {
+      throw new Error(`Failed to delete folder: ${response.status} ${response.statusText}`);
+    }
   };
 
   const handleOpenMenu = (event: React.MouseEvent<HTMLElement>, folderId: number) => {
@@ -166,11 +169,12 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
           transition: "all 0.2s ease-in-out",
           overflow: "hidden",
         }}
+        data-testid="testid.notificationsPanel.sidebar"
       >
         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
           {!isCollapsed && (
             <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              {t("notifications.title")}
+              {t("notifications.mailboxes.title")}
             </Typography>
           )}
           <IconButton
@@ -259,10 +263,12 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
                   handleOpenMenu(e, folder.id);
                 }}
                 showOptions={hoveredFolder === folder.id}
+                data-testid={`testid.notificationsPanel.folderButton-${folder.id}`}
               />
               <Menu
                 id="folder-menu"
                 anchorEl={menuAnchor}
+                data-testid="testid.notificationsPanel.folderOptions"
                 open={Boolean(menuAnchor) && selectedFolderId === folder.id}
                 onClose={handleCloseMenu}
                 anchorOrigin={{
@@ -289,9 +295,14 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
                 </MenuItem>
                 <MenuItem
                   onClick={async () => {
-                    handleCloseMenu();
-                    await deleteFolder(folder.id);
-                    mutate("/api/notificationsfolders");
+                    try {
+                      handleCloseMenu();
+                      await deleteFolder(folder.id);
+                      mutate("/api/notificationsfolders");
+                    } catch (error) {
+                      console.error("Error deleting folder:", error);
+                      // Keep menu closed but don't mutate on error
+                    }
                   }}
                 >
                   <DeleteIcon sx={{ mr: 1 }} />
