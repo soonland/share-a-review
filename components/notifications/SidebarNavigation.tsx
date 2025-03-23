@@ -1,22 +1,49 @@
 import { MoreVert as MoreVertIcon, SvgIconComponent } from "@mui/icons-material";
-import { Box, Button, Badge, styled, IconButton } from "@mui/material";
+import { Box, Badge, styled, IconButton } from "@mui/material";
 
 import { Notification } from "@/models/types";
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  justifyContent: "flex-start",
-  width: "100%",
-  "&.collapsed": {
-    minWidth: 48,
-    padding: theme.spacing(0, 1),
+const StyledContainer = styled(Box)(({ theme }) => ({
+  position: "relative",
+  "& .options-button": {
+    transition: "opacity 0.2s ease-in-out",
+    opacity: 0,
+    visibility: "hidden",
   },
-  "&:not(.collapsed)": {
-    minWidth: "auto",
-    padding: theme.spacing(0, 2),
+  "&:hover .options-button, & .options-button.force-visible": {
+    opacity: 1,
+    visibility: "visible",
+  },
+  "& .clickable-area": {
+    cursor: "pointer",
+    display: "flex",
+    justifyContent: "flex-start",
+    width: "100%",
+    backgroundColor: "transparent",
+    border: "none",
+    borderRadius: theme.shape.borderRadius,
+    "&:hover": {
+      backgroundColor: theme.palette.action.hover,
+    },
+    "&.selected": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+      "&:hover": {
+        backgroundColor: theme.palette.primary.dark,
+      },
+    },
+    "&.collapsed": {
+      minWidth: 48,
+      padding: theme.spacing(0, 1),
+    },
+    "&:not(.collapsed)": {
+      minWidth: "auto",
+      padding: theme.spacing(0, 2),
+    },
   },
 }));
 
-const ButtonContent = styled(Box)({
+const ContentWrapper = styled(Box)({
   display: "flex",
   alignItems: "center",
   width: "100%",
@@ -51,14 +78,20 @@ export const SidebarButton = ({
   showOptions,
 }: SidebarButtonProps) => {
   return (
-    <Box position="relative">
-      <StyledButton
-        variant={isSelected ? "contained" : "text"}
-        fullWidth
-        className={isCollapsed ? "collapsed" : ""}
+    <StyledContainer>
+      <Box
+        component="div"
+        role="button"
+        tabIndex={0}
+        className={`clickable-area ${isCollapsed ? "collapsed" : ""} ${isSelected ? "selected" : ""}`}
         onClick={onClick}
+        onKeyPress={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            onClick();
+          }
+        }}
       >
-        <ButtonContent>
+        <ContentWrapper>
           <Icon sx={{ mr: isCollapsed ? 0 : 1 }} />
           {!isCollapsed && (
             <BadgeContainer>
@@ -66,18 +99,31 @@ export const SidebarButton = ({
               {unreadCount > 0 && <Badge color="error" badgeContent={unreadCount} />}
             </BadgeContainer>
           )}
-        </ButtonContent>
-        {showOptions && onOptionsClick && (
-          <IconButton
-            size="small"
-            sx={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)" }}
-            onClick={onOptionsClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-        )}
-      </StyledButton>
-    </Box>
+        </ContentWrapper>
+      </Box>
+      {onOptionsClick && (
+        <IconButton
+          size="small"
+          className={`options-button ${showOptions ? "force-visible" : ""}`}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: "50%",
+            transform: "translateY(-50%)",
+            backgroundColor: (theme) => theme.palette.background.paper,
+            "&:hover": {
+              backgroundColor: (theme) => theme.palette.action.hover,
+            },
+          }}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering the parent's onClick
+            onOptionsClick(e);
+          }}
+        >
+          <MoreVertIcon />
+        </IconButton>
+      )}
+    </StyledContainer>
   );
 };
 

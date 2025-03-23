@@ -36,22 +36,60 @@ const NotificationItem = ({
    * @returns {Promise<void>}
    */
   const moveNotification = async (id?: number, folder?: string) => {
-    // Mettre à jour la notification dans la base de données
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    await fetch(`/api/notifications/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify({ folder }),
-      headers: myHeaders,
-    });
-    // Mettre à jour l'état de la notification localement
-    setSelectedNotification((prevNotification) => ({ ...prevNotification, folder }));
+    try {
+      // Mettre à jour la notification dans la base de données
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const response = await fetch(`/api/notifications/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ folder }),
+        headers: myHeaders,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Mettre à jour l'état de la notification localement
+      setSelectedNotification((prevNotification) => ({ ...prevNotification, folder }));
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
+
+  /**
+   * Handles the delete action with error handling
+   */
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      await moveNotification(notification.id, "trash");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const isRead = notification.status === "read";
 
   return (
     <Box
+      data-testid="testid.notificationItem.container"
       key={notification.id}
       onClick={() => handleOpenDialog(notification)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e: React.KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+        }
+      }}
+      onKeyUp={(e: React.KeyboardEvent) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleOpenDialog(notification);
+        }
+      }}
       sx={{
         display: "flex",
         alignItems: "center",
@@ -65,6 +103,7 @@ const NotificationItem = ({
       }}
     >
       <Checkbox
+        data-testid="testid.notificationItem.checkbox"
         checked={selectedNotifications.includes(notification.id)}
         onClick={(e) => e.stopPropagation()}
         onChange={() => handleSelectNotification(notification.id)}
@@ -73,11 +112,18 @@ const NotificationItem = ({
       />
 
       <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-        <Badge color="error" variant="dot" invisible={notification.status === "read"}>
-          {notification.status === "read" ? <Drafts color="action" /> : <Markunread color="action" />}
+        <Badge
+          color="error"
+          variant="dot"
+          invisible={isRead}
+          role="status"
+          className={`MuiBadge-dot ${isRead ? "MuiBadge-invisible" : ""}`}
+        >
+          {isRead ? <Drafts color="action" /> : <Markunread color="action" />}
         </Badge>
         <Typography
           variant="subtitle1"
+          data-testid="testid.notificationItem.title"
           sx={{ fontWeight: notification.status === "unread" ? "700" : "400", ml: 2, flexGrow: 1 }}
         >
           {notification.title}
@@ -85,17 +131,15 @@ const NotificationItem = ({
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Typography variant="caption" color="text.secondary" sx={{ mr: 2 }}>
+        <Typography
+          variant="caption"
+          data-testid="testid.notificationItem.timestamp"
+          color="text.secondary"
+          sx={{ mr: 2 }}
+        >
           {notification.sent_at}
         </Typography>
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          onClick={(e) => {
-            e.stopPropagation();
-            moveNotification(notification.id, "trash");
-          }}
-        >
+        <IconButton edge="end" aria-label="delete" data-testid="testid.notificationItem.delete" onClick={handleDelete}>
           <Delete />
         </IconButton>
       </Box>
