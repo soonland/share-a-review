@@ -33,14 +33,14 @@ const CreateItem: NextPage = () => {
   const { data, error } = useFetch("/api/categories/list");
   const categories = data?.data;
 
-  if (error) return <Alert severity="error" message={error.message || "An error occurred"} />;
+  if (error) return <Alert severity="error" message={error.message ?? "An error occurred"} />;
   if (!categories) return <div>Loading...</div>;
   if (categories.length === 0) return <Alert severity="info" message="No categories found" />;
 
   return (
     <Grid container spacing={2}>
       {categories.map((category: any) => (
-        <Grid item key={category.id} xs={12} sm={6} md={3}>
+        <Grid key={category.id} size={12}>
           <CustomCard variant={selectedCategory.id === category.id ? "elevation" : "outlined"}>
             <CardActionArea onClick={() => setSelectedCategory(category)}>
               <CardContent>
@@ -53,7 +53,7 @@ const CreateItem: NextPage = () => {
         </Grid>
       ))}
       {selectedCategory.description_template && (
-        <Grid item xs={12}>
+        <Grid size={12}>
           <CreateForm descriptionTemplate={selectedCategory.description_template} categoryId={selectedCategory.id} />
         </Grid>
       )}

@@ -26,8 +26,8 @@ const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = f
   const { data, isLoading, error } = useFetch(apiPath);
   const { data: dataCategories } = useFetch("/api/categories/list");
 
-  const categories = dataCategories?.data || [];
-  const items = data?.data || [];
+  const categories = dataCategories?.data ?? [];
+  const items = data?.data ?? [];
   const success = data?.success;
   const message = data?.message;
 
@@ -35,9 +35,9 @@ const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = f
   if (isLoading) {
     banner = <div>Loading...</div>;
   } else if (error) {
-    banner = <Alert severity="error" message={error.message || "An error occurred"} />;
+    banner = <Alert severity="error" message={error.message ?? "An error occurred"} />;
   } else if (!success) {
-    banner = <Alert severity="error" message={message || "An error occurred"} />;
+    banner = <Alert severity="error" message={message ?? "An error occurred"} />;
   }
 
   const filteredItems = items.filter((item) => activeCategory === "all" || item.item_category_slug === activeCategory);
@@ -72,7 +72,7 @@ const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = f
           <Alert severity="info" message={t("home.noItemsFound")} />
         ) : (
           filteredItems.slice(0, 4).map((item) => (
-            <Grid item key={item.item_id} xs={12} sm={6} md={3}>
+            <Grid key={item.item_id} size={6}>
               <ItemCard item={item} withAverageRating={withAverageRating} />
             </Grid>
           ))
