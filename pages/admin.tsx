@@ -29,7 +29,7 @@ const AdminPage = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12} sx={{ p: 2 }}>
+      <Grid size={12} sx={{ p: 2 }}>
         <Typography variant="h4" gutterBottom>
           Section Administration
         </Typography>

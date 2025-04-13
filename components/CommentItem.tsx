@@ -17,7 +17,6 @@ const CommentItem = ({ comment }) => {
   return (
     <Grid
       data-testid={`testid.comment.${comment.id}`}
-      item
       sx={{
         paddingLeft: theme.spacing(2),
         borderLeft: `2px solid ${theme.palette.grey[300]}`,

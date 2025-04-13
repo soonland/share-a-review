@@ -40,7 +40,7 @@ const CreateItem: NextPage = () => {
   return (
     <Grid container spacing={2}>
       {categories.map((category: any) => (
-        <Grid item key={category.id} xs={12} sm={6} md={3}>
+        <Grid key={category.id} size={12}>
           <CustomCard variant={selectedCategory.id === category.id ? "elevation" : "outlined"}>
             <CardActionArea onClick={() => setSelectedCategory(category)}>
               <CardContent>
@@ -53,7 +53,7 @@ const CreateItem: NextPage = () => {
         </Grid>
       ))}
       {selectedCategory.description_template && (
-        <Grid item xs={12}>
+        <Grid size={12}>
           <CreateForm descriptionTemplate={selectedCategory.description_template} categoryId={selectedCategory.id} />
         </Grid>
       )}

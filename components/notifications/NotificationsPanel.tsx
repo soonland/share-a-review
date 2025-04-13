@@ -158,8 +158,7 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
   return (
     <Grid container spacing={2} sx={{ overflow: "hidden" }}>
       <Grid
-        item
-        xs={isCollapsed ? 1 : 3}
+        size={isCollapsed ? 1 : 3}
         sx={{
           width: isCollapsed ? 80 : "auto",
           minWidth: isCollapsed ? 80 : "auto",
@@ -314,8 +313,7 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
       </Grid>
 
       <Grid
-        item
-        xs={isCollapsed ? 11 : 9}
+        size={isCollapsed ? 11 : 9}
         sx={{
           transition: "all 0.2s ease-in-out",
         }}

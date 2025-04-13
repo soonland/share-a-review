@@ -18,7 +18,7 @@ const MyProfile: FC = (): ReactElement => {
 
   if (session.status === "authenticated") {
     return (
-      <Grid item container flexDirection={"row"} alignItems={"center"} data-testid="testid.grid" mb={2}>
+      <Grid container flexDirection={"row"} alignItems={"center"} data-testid="testid.grid" mb={2}>
         <Avatar src={session?.data?.user?.image} alt={session.data?.user?.name}>
           {session.data?.user?.name?.charAt(0)}
         </Avatar>
