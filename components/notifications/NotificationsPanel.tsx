@@ -64,8 +64,8 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
   const filteredNotifications = notifications.filter((notification) => {
     const matchesSearch =
       !searchText ||
-      (notification.title?.toLowerCase().includes(searchText.toLowerCase()) ?? false) ||
-      (notification.message?.toLowerCase().includes(searchText.toLowerCase()) ?? false);
+      notification.title?.toLowerCase().includes(searchText.toLowerCase()) ||
+      notification.message?.toLowerCase().includes(searchText.toLowerCase());
 
     const matchesFolder = notification.folder.toLowerCase() === currentView.folder.toLowerCase();
     const matchesType = currentView.type.toLowerCase() === "all" || notification.type === currentView.type;

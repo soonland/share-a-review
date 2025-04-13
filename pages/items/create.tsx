@@ -33,7 +33,7 @@ const CreateItem: NextPage = () => {
   const { data, error } = useFetch("/api/categories/list");
   const categories = data?.data;
 
-  if (error) return <Alert severity="error" message={error.message || "An error occurred"} />;
+  if (error) return <Alert severity="error" message={error.message ?? "An error occurred"} />;
   if (!categories) return <div>Loading...</div>;
   if (categories.length === 0) return <Alert severity="info" message="No categories found" />;
 

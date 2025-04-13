@@ -294,7 +294,7 @@ export const CategoriesSection = () => {
           setSelectedCategory(null);
         }}
         onSubmit={handleCreateOrUpdateCategory}
-        category={selectedCategory || undefined}
+        category={selectedCategory ?? undefined}
       />
 
       <Menu
