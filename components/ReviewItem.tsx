@@ -14,10 +14,10 @@ import Review from "./Review";
 const ReviewItem = ({ review }) => {
   return (
     <Grid container size={12}>
-      <Grid>
+      <Grid size={3}>
         <ProfileCard user={review} />
       </Grid>
-      <Grid>
+      <Grid size={9}>
         <Review review={review} />
       </Grid>
     </Grid>

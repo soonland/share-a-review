@@ -72,7 +72,7 @@ const HomePageSection: FC<HomePageSectionProps> = ({ type, withAverageRating = f
           <Alert severity="info" message={t("home.noItemsFound")} />
         ) : (
           filteredItems.slice(0, 4).map((item) => (
-            <Grid key={item.item_id} size={6}>
+            <Grid key={item.item_id} size={4}>
               <ItemCard item={item} withAverageRating={withAverageRating} />
             </Grid>
           ))
