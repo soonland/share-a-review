@@ -29,7 +29,7 @@
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
     "@mui/material-nextjs": "^7.0.2",
-    "@mui/x-data-grid": "^7.5.0",
+    "@mui/x-data-grid": "^8.5.0",
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.11",
