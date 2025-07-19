@@ -26,7 +26,9 @@ const ReviewsList: FC<ReviewsListProps> = ({ data, isLoading, error }) => {
       <br />
       {banner}
       <Grid container spacing={2}>
-        {reviews?.map((review) => <ReviewItem key={review.review_id} review={review} />)}
+        {reviews?.map((review) => (
+          <ReviewItem key={review.review_id} review={review} />
+        ))}
       </Grid>
     </>
   );
