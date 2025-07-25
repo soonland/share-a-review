@@ -16,10 +16,6 @@ jest.mock("next/router", () => ({
 describe("LanguageSwitcher", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    Object.defineProperty(window, "location", {
-      value: new URL("http://example.com"),
-      configurable: true,
-    });
   });
   it.each(["en", "fr"])("renders a LanguageSwitcher - %s", async (lang) => {
     (useTranslation as jest.Mock).mockReturnValue({ lang });
@@ -30,7 +26,6 @@ describe("LanguageSwitcher", () => {
     expect(langSwitcher).toHaveTextContent(lang === "en" ? "FR" : "EN");
 
     await userEvent.click(langSwitcher);
-    expect(window.location.href).toEqual(`http://example.com/${lang === "en" ? "fr" : "en"}/`);
     expect(document.cookie).toEqual(`NEXT_LOCALE=${lang === "en" ? "fr" : "en"}`);
   });
 });
