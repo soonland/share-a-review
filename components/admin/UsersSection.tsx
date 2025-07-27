@@ -142,7 +142,6 @@ export const UsersSection = () => {
         initialState={{
           pagination: { paginationModel: { pageSize: 5 } },
         }}
-        autoHeight
         hideFooterSelectedRowCount
       />
     </Box>

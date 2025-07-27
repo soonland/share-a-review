@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ZodTooBigIssue, ZodTooSmallIssue, z } from "zod";
+import z from "zod";
 
 import Alert, { AlertProps } from "@/components/Alert";
 import AutoCompleteItem from "@/components/generic/AutoCompleteItem";
@@ -70,28 +70,27 @@ const WriteReviews = () => {
     });
   };
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = (data: IFormInputs) => {
     const validation = schema.safeParse(data);
     if (!validation.success) {
-      validation.error.errors.forEach((error) => {
+      validation.error.issues.forEach((error: z.core.$ZodIssue) => {
+        const field = error.path[0] as keyof IFormInputs;
         switch (error.code) {
           case "invalid_type":
-            if (error.received === "null")
-              setError(error.path[0] as keyof IFormInputs, { message: t("form.fieldRequired") });
-            else setError(error.path[0] as keyof IFormInputs, { message: t("form.invalidType") });
+            setError(field, { message: t("form.invalidType") });
             break;
           case "too_small":
-            setError(error.path[0] as keyof IFormInputs, {
-              message: t(error.message, { value: (error as ZodTooSmallIssue).minimum }),
+            setError(field, {
+              message: t(error.message, { value: "minimum" in error ? error.minimum : undefined }),
             });
             break;
           case "too_big":
-            setError(error.path[0] as keyof IFormInputs, {
-              message: t(error.message, { value: (error as ZodTooBigIssue).maximum }),
+            setError(field, {
+              message: t(error.message, { value: "maximum" in error ? error.maximum : undefined }),
             });
             break;
           default:
-            setError(error.path[0] as keyof IFormInputs, { message: t(error.message) });
+            setError(field, { message: t(error.message) });
             break;
         }
       });
