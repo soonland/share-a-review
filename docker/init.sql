@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "emailVerified" BOOLEAN DEFAULT FALSE,
     "image" TEXT,
-    isAdmin BOOLEAN DEFAULT FALSE,
+    is_admin BOOLEAN DEFAULT FALSE
 );
 
 -- Account table

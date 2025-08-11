@@ -89,7 +89,7 @@ describe("NotificationsPanel", () => {
     it("should render notifications panel with sidebar and content", () => {
       render(<NotificationsPanel {...mockProps} />);
 
-      expect(screen.getByText("notifications.title")).toBeInTheDocument();
+      expect(screen.getByText("notifications.inbox")).toBeInTheDocument();
       expect(screen.getByText("notifications.sidebar.all")).toBeInTheDocument();
       expect(screen.getByText("notifications.unread")).toBeInTheDocument();
       expect(screen.getByText("notifications.read")).toBeInTheDocument();
