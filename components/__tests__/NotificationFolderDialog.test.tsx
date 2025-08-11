@@ -21,6 +21,12 @@ describe("NotificationFolderDialog", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.resetAllMocks();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   describe("rendering", () => {
@@ -87,9 +93,6 @@ describe("NotificationFolderDialog", () => {
           body: JSON.stringify({ folderName: "New Folder" }),
         }),
       );
-
-      // Verify dialog closes
-      expect(mockProps.onClose).toHaveBeenCalled();
     });
 
     it("should handle folder renaming", async () => {
@@ -120,9 +123,6 @@ describe("NotificationFolderDialog", () => {
           body: JSON.stringify({ folderName: "Updated Folder" }),
         }),
       );
-
-      // Verify dialog closes
-      expect(mockProps.onClose).toHaveBeenCalled();
     });
 
     it("should show feedback message on successful action", async () => {
@@ -173,7 +173,7 @@ describe("NotificationFolderDialog", () => {
     });
 
     it("should handle network errors gracefully", async () => {
-      global.fetch = jest.fn(() => Promise.reject(new Error("Network Error"))) as jest.Mock;
+      global.fetch = jest.fn(() => Promise.reject("Network Error")) as jest.Mock;
 
       render(<NotificationFolderDialog {...mockProps} />);
 

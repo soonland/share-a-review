@@ -122,6 +122,13 @@
       "reply": "Répondre",
       "rename": "Renommer"
     },
+    "mailboxes": {
+      "title": "Boîtes aux lettres",
+      "all": "Toutes les notifications",
+      "user": "Notifications de la communauté",
+      "system": "Notifications du système",
+      "trash": "Corbeille"
+    },
     "modal": {
       "from": "De {{value}}",
       "sentAt": "Envoyé le {{value}}"

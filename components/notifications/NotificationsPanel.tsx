@@ -156,7 +156,7 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
   };
 
   return (
-    <Grid container spacing={2} sx={{ overflow: "hidden" }}>
+    <Grid container spacing={1} sx={{ overflow: "hidden" }}>
       <Grid
         size={isCollapsed ? 1 : 3}
         sx={{
@@ -166,7 +166,6 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
           borderRight: "1px solid #ddd",
           p: 2,
           transition: "all 0.2s ease-in-out",
-          overflow: "hidden",
         }}
         data-testid="testid.notificationsPanel.sidebar"
       >
@@ -278,9 +277,6 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
                   vertical: "top",
                   horizontal: "left",
                 }}
-                MenuListProps={{
-                  "aria-labelledby": "folder-menu",
-                }}
               >
                 <MenuItem
                   onClick={() => {
@@ -320,7 +316,7 @@ const NotificationsPanel: FC<{ notifications: Notification[]; folders: Notificat
       >
         <Box sx={{ p: 2 }}>
           <Typography variant="h4" gutterBottom>
-            {t("notifications.title")}
+            {currentView.folder === "inbox" ? t("notifications.inbox") : currentView.folder || t("notifications.inbox")}
           </Typography>
 
           <Box sx={{ mb: 3, display: "flex", gap: 2 }}>

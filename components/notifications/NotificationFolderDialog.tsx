@@ -80,10 +80,8 @@ const NotificationFolderDialog = ({ openDialog, onClose, selectedFolder }) => {
 
       const successKey = isRename ? "renameFolder.success" : "createFolder.success";
       setFeedbackMessage({ severity: "success", message: t(`notifications.${successKey}`) });
-      setFolderName("");
-      onClose();
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
+      console.error("Error handling folder operation:", error);
       setFeedbackMessage({ severity: "error", message: t("notifications.generalError") });
     }
   };
@@ -91,12 +89,14 @@ const NotificationFolderDialog = ({ openDialog, onClose, selectedFolder }) => {
   useEffect(() => {
     if (feedbackMessage) {
       setFeedbackMessageOpen(true);
-      const timer = setTimeout(() => {
+      const closeDialog = () => {
         setFeedbackMessageOpen(false);
-      }, 5000);
-      return () => clearTimeout(timer);
+        setFeedbackMessage(null);
+        onClose(); // Ferme le dialogue
+      };
+      setTimeout(closeDialog, 2000); // 2 secondes
     }
-  }, [feedbackMessage]);
+  }, [feedbackMessage, onClose]);
 
   return (
     <Dialog open={openDialog} onClose={onClose} fullWidth maxWidth="sm">

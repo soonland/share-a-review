@@ -123,6 +123,13 @@
       "reply": "Reply",
       "rename": "Rename"
     },
+    "mailboxes": {
+      "title": "Mailboxes",
+      "all": "All Notifications",
+      "user": "Community Notifications",
+      "system": "App Notifications",
+      "trash": "Trash"
+    },
     "modal": {
       "from": "From {{value}}",
       "sentAt": "Sent at {{value}}"

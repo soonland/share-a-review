@@ -1,5 +1,5 @@
 import { MoreVert as MoreVertIcon, SvgIconComponent } from "@mui/icons-material";
-import { Box, Badge, styled, IconButton } from "@mui/material";
+import { Box, Badge, styled, IconButton, Button } from "@mui/material";
 
 import { Notification } from "@/models/types";
 
@@ -38,16 +38,11 @@ const StyledContainer = styled(Box)(({ theme }) => ({
     },
     "&:not(.collapsed)": {
       minWidth: "auto",
-      padding: theme.spacing(0, 2),
+      padding: theme.spacing(1, 2),
+      border: `1px solid ${theme.palette.divider}`,
     },
   },
 }));
-
-const ContentWrapper = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  width: "100%",
-});
 
 const BadgeContainer = styled(Box)({
   display: "flex",
@@ -79,28 +74,29 @@ export const SidebarButton = ({
 }: SidebarButtonProps) => {
   return (
     <StyledContainer>
-      <Box
-        component="div"
-        role="button"
-        tabIndex={0}
+      <Button
+        variant="text"
+        sx={{
+          width: "100%",
+          justifyContent: isCollapsed ? "center" : "flex-start",
+          textTransform: "none",
+          padding: isCollapsed ? 0 : "8px 16px",
+          minHeight: isCollapsed ? 48 : "auto",
+        }}
         className={`clickable-area ${isCollapsed ? "collapsed" : ""} ${isSelected ? "selected" : ""}`}
         onClick={onClick}
-        onKeyPress={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            onClick();
-          }
-        }}
+        startIcon={!isCollapsed && <Icon />}
+        disableRipple
+        disableFocusRipple
+        disableTouchRipple
       >
-        <ContentWrapper>
-          <Icon sx={{ mr: isCollapsed ? 0 : 1 }} />
-          {!isCollapsed && (
-            <BadgeContainer>
-              <span>{label}</span>
-              {unreadCount > 0 && <Badge color="error" badgeContent={unreadCount} />}
-            </BadgeContainer>
-          )}
-        </ContentWrapper>
-      </Box>
+        {!isCollapsed && (
+          <BadgeContainer>
+            <span>{label}</span>
+            {unreadCount > 0 && <Badge color="error" badgeContent={unreadCount} />}
+          </BadgeContainer>
+        )}
+      </Button>
       {onOptionsClick && (
         <IconButton
           size="small"
