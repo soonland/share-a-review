@@ -1,5 +1,6 @@
+import { selectLatestReviewedItems, selectMostRatedItemsByCategory, selectMostRecentItems } from "@/lib/sql";
+
 import pool from "../../../db";
-import { selectLatestReviewedItems, selectMostRatedItemsByCategory, selectMostRecentItems } from "../constants";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {

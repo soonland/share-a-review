@@ -1,5 +1,5 @@
 import pool from "@/db";
-import { getNotificationsFoldersQuery } from "@/pages/api/constants";
+import { getNotificationsFoldersQuery } from "@/lib/sql";
 
 const getInboxFolderId = async (userId: number) => {
   const client = await pool.connect();

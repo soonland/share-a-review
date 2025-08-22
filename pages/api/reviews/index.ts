@@ -1,5 +1,6 @@
+import { selectReviewsByCategory } from "@/lib/sql";
+
 import pool from "../../../db";
-import { selectReviewsByCategory } from "../constants";
 
 /**
  * API handler for managing reviews. Supports GET (listing/searching) and POST (creating) operations.
