@@ -1,5 +1,5 @@
 import pool from "@/db";
-import { getNotificationsQuery, getNotificationsCountQuery } from "@/pages/api/constants";
+import { getNotificationsQuery, getNotificationsCountQuery } from "@/lib/sql";
 
 const getNotifications = async (userId: number) => {
   const client = await pool.connect();

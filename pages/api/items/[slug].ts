@@ -1,5 +1,6 @@
+import { selectItem } from "@/lib/sql";
+
 import pool from "../../../db";
-import { selectItem } from "../constants";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {

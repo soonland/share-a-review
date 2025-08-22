@@ -19,5 +19,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.json(await getNotificationsCount(session.user.id));
   }
   res.setHeader("Allow", ["POST", "GET", "PUT", "PATCH", "DELETE"]);
-  return res.status(405).end(`Method ${method} Not Allowed`);
+  return res.status(405).json(`Method ${method} Not Allowed`);
 }
