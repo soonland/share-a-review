@@ -17,6 +17,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.json(await updateNotification(Number(notificationId), { folder_id, status }));
   } else {
     res.setHeader("Allow", ["PATCH"]);
-    return res.status(405).end(`Method ${method} Not Allowed`);
+    return res.status(405).json(`Method ${method} Not Allowed`);
   }
 }
