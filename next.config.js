@@ -19,6 +19,7 @@ const nextConfig = nextTranslate({
       },
     ],
   },
+  transpilePackages: ["@mui/x-data-grid"],
 });
 
 module.exports = nextConfig;
